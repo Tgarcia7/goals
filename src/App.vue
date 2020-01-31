@@ -4,7 +4,7 @@
 
     <main class="flex-shrink-0" role="main">
       <div class="container">
-        <img alt="Vue logo" src="./assets/logo.png">
+        
       </div>
     </main>
     
