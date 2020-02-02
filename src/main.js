@@ -7,19 +7,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { 
   faBullseye, 
   faBars, 
   faClipboardList, 
   faClipboardCheck, 
-  faChartBar } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  faChartBar,
+  faPlus,
+  faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faBullseye) 
 library.add(faBars) 
 library.add(faClipboardList) 
 library.add(faClipboardCheck) 
 library.add(faChartBar) 
+library.add(faPlus) 
+library.add(faChevronLeft) 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

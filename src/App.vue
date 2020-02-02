@@ -1,13 +1,7 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
     <TheHeader/>
-
-    <main class="flex-shrink-0" role="main">
-      <div class="container">
-        
-      </div>
-    </main>
-    
+    <Home/>
     <TheFooter/>
   </div>
 </template>
@@ -15,12 +9,14 @@
 <script>
   import TheHeader from './components/TheHeader.vue'
   import TheFooter from './components/TheFooter.vue'
+  import Home from './views/Home'
 
   export default {
     name: 'app',
     components: {
       TheHeader,
-      TheFooter
+      TheFooter,
+      Home
     }
   }
 </script>
@@ -32,5 +28,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    background-color: #1e242a;
   }
 </style>
