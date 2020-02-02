@@ -35,12 +35,13 @@
 <style scoped>
   .navbar {
     margin-bottom: 20px;
+    min-height: 56px;
   }
 
   .navbar-brand {
     position: absolute;
     left: 50%;
-    top: 3px;
+    top: 7px;
     transform: translateX(-50%);
   }
 </style>
