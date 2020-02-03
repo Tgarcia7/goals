@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="d-flex flex-column h-100">
+  <div id="app" class="d-flex flex-column">
     <TheHeader/>
     <Home/>
     <TheFooter/>
@@ -29,5 +29,6 @@
     text-align: center;
     color: #2c3e50;
     background-color: #1e242a;
+    min-height: 140%;
   }
 </style>

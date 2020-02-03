@@ -1,0 +1,103 @@
+{
+  "list": [
+    {
+      "id": 1,
+      "icon": "plus",
+      "title": "Aprender cocina",
+      "date": "16-02-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 25%;",
+      "barWidth": 25
+    },
+    {
+      "id": 2,
+      "icon": "bullseye",
+      "title": "Bajar de peso",
+      "date": "23-12-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 52%;",
+      "barWidth": 52
+    },
+    {
+      "id": 3,
+      "icon": "bars",
+      "title": "Aprender inglés",
+      "date": "26-01-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 77%;",
+      "barWidth": 77
+    },
+    {
+      "id": 4,
+      "icon": "clipboard-list",
+      "title": "Levantarse temprano",
+      "date": "18-02-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 100%;",
+      "barWidth": 100
+    },
+    {
+      "id": 5,
+      "icon": "clipboard-check",
+      "title": "Natación",
+      "date": "30-10-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 0%;",
+      "barWidth": 0
+    },
+    {
+      "id": 6,
+      "icon": "chart-bar",
+      "title": "Levantarse temprano",
+      "date": "07-03-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 90%;",
+      "barWidth": 90
+    },
+    {
+      "id": 7,
+      "icon": "chevron-left",
+      "title": "Natación",
+      "date": "16-02-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 36%;",
+      "barWidth": 36
+    },
+    {
+      "id": 8,
+      "icon": "plus",
+      "title": "Levantarse temprano",
+      "date": "21-08-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 68%;",
+      "barWidth": 68
+    },
+    {
+      "id": 9,
+      "icon": "clipboard-check",
+      "title": "Natación",
+      "date": "22-12-20",
+      "type": "regular", 
+      "status": "1",
+      "progress": "1",
+      "barStyle": "width: 12%;",
+      "barWidth": 12
+    }
+  ]
+}
