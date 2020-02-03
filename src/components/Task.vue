@@ -11,7 +11,7 @@
           <div class="col">
             <h6 class="text-left">{{ title }}</h6>
           </div>
-          <div class="col-3">
+          <div class="col-4">
             <h6>
               <small>{{ date }}</small>
             </h6>
