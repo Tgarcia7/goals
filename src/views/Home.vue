@@ -7,11 +7,13 @@
         :icon="task.icon"
         :title="task.title"
         :date="task.date"
+        :progressBar="task.progressBar"
+        :progress="task.progress"
         :type="task.type"
         :status="task.status"
-        :progress="task.progress"
-        :barStyle="task.barStyle"
-        :barWidth="task.barWidth"/>
+        :from="task.from"
+        :to="task.to"
+        :measure="task.measure"/>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add">
         <font-awesome-icon icon="plus"/>
