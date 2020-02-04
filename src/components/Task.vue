@@ -49,10 +49,10 @@
   }
 
   .circle {
-    width: 35px;
-    height: 35px;
-    padding: 5px;
-    border-radius: 35px;
+    width: 36px;
+    height: 36px;
+    padding: 6px 6px;
+    border-radius: 50%;
     box-shadow: 0px 0px 2px #888;
   }
 

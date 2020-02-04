@@ -43,8 +43,8 @@
     width: 45px;
     height: 45px;
     padding: 0px 10px;
-    border-radius: 35px;
-    box-shadow: 0 2px 2px #888888;
+    border-radius: 50%;
+    box-shadow: 0px 0px 6px #797979;
   } 
 
   .btn-add {
