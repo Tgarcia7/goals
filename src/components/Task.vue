@@ -59,10 +59,10 @@
     },
     methods: {
       generateStyle: function () {
-        if(!this.from) return `width: 0px;`
+        if(!this.from) return `width: 0%;`
         let progressPercentage = this.from / this.to * 100
         console.log(progressPercentage)
-        return `width: ${progressPercentage}px;`
+        return `width: ${progressPercentage}%;`
       },
       generateWidth: function () {
         if(!this.from) return 0
