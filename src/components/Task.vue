@@ -19,12 +19,12 @@
         </div>
         <div class="row">
           <div class="col-7">
-            <div class="progress" style="height: 5px;" v-show="progressBar === 1">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+            <div class="progress" style="height: 5px;" v-show="from && to">
+              <div :class="barClasses" role="progressbar" 
                 :style="barStyle" :aria-valuenow="barWidth" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
-          <div class="col text-right" v-show="measure !== ''">
+          <div class="col text-right" v-show="measure && from && to">
              <p><small>{{ from }} / {{ to }} {{ measure }}</small></p>
           </div>
         </div>
@@ -42,31 +42,33 @@
         'id', 
         'icon', 
         'title', 
-        'date', 
-        'type', 
+        'date',  
         'status', 
         'progress',
         'from',
         'to',
-        'measure',
-        'progressBar'
+        'measure'
     ],
     data: function () {
-      return {
-        barStyle: this.generateStyle(), 
-        barWidth: this.generateWidth(), 
+      return { 
+        
       }
     },
-    methods: {
-      generateStyle: function () {
-        if(!this.from) return `width: 0%;`
-        let progressPercentage = this.from / this.to * 100
-        console.log(progressPercentage)
-        return `width: ${progressPercentage}%;`
-      },
-      generateWidth: function () {
-        if(!this.from) return 0
+    computed: {
+      barWidth: function () {
+        if(!this.from || !this.to) return 0
+
         return this.from / this.to * 100
+      },
+      barStyle: function () {
+        return `width: ${this.barWidth}%;`
+      },
+      barClasses: function () {
+        let classes = 'progress-bar progress-bar-striped progress-bar-animated'
+
+        if(this.barWidth === 100) classes += ' bg-success'
+        
+        return classes
       }
     }
   }
