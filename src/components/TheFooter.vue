@@ -6,7 +6,7 @@
           <a href="#" class="text-decoration-none text-white">
             <font-awesome-icon icon="clipboard-list" size="lg"/>
             <br>
-            <span id="test">In progress</span>
+            <span id="itemActive">In progress</span>
           </a>
         </div>
         <div class="col">
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-  #test {
+  #itemActive {
     text-shadow: 0 0 3px #e1d7d4;
   }
   
