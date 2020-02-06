@@ -15,7 +15,11 @@ import {
   faClipboardCheck, 
   faChartBar,
   faPlus,
-  faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+  faChevronLeft,
+  faChevronRight,
+  faChevronUp,
+  faChevronDown,
+  faTasks} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faBullseye) 
 library.add(faBars) 
@@ -24,6 +28,10 @@ library.add(faClipboardCheck)
 library.add(faChartBar) 
 library.add(faPlus) 
 library.add(faChevronLeft) 
+library.add(faChevronRight) 
+library.add(faChevronUp) 
+library.add(faChevronDown) 
+library.add(faTasks) 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

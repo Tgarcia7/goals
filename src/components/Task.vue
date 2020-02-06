@@ -1,31 +1,49 @@
 <template>
   <div>
-    <div class="row task-row text-secondary">
+    <div :class="taskClasses">
       <div class="col-2">
         <div class="circle">
-          <font-awesome-icon :icon="icon"/>
+          <font-awesome-icon :icon="icon" size="lg"/>
         </div>
       </div>
-      <div class="col">
+      <div class="col-10">
         <div class="row">
-          <div class="col">
-            <h6 class="text-left">{{ title }}</h6>
+          <div class="col text-truncate text-left">
+            {{ title }}
           </div>
-          <div class="col-4 text-right">
-            <h6>
-              <small>{{ date }}</small>
-            </h6>
+          <div class="col-4" v-if="type === 'times'">
+             <small>
+               <span class="badge badge-dark btn-tasks btns-up-down">
+                  <font-awesome-icon icon="chevron-up" size="lg"/>
+                </span>
+             </small>
           </div>
         </div>
-        <div class="row">
-          <div class="col-7">
-            <div class="progress" style="height: 5px;" v-show="from && to">
+        <div class="row" v-if="type !== 'simple'">
+          <div class="col">
+            <div class="progress" style="height: 7px;">
               <div :class="barClasses" role="progressbar" 
                 :style="barStyle" :aria-valuenow="barWidth" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
-          <div class="col text-right" v-show="measure && from && to">
-             <p><small>{{ from }} / {{ to }} {{ measure }}</small></p>
+          <div class="col-4">
+            <small v-if="type === 'times'">{{ from }} / {{ to }}</small>
+            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks">
+              <font-awesome-icon icon="tasks" size="lg"/>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-left">
+            <small>{{ date }}</small>
+          </div>
+          <div class="col-4">
+              <small v-if="type === 'times'">
+                <span class="badge badge-dark btn-tasks btns-up-down">
+                  <font-awesome-icon icon="chevron-down" size="lg"/>
+                </span>
+              </small>
+              <small v-else-if="type === 'steps'">{{ from }} / {{ to }}</small>
           </div>
         </div>
       </div>
@@ -47,7 +65,7 @@
         'progress',
         'from',
         'to',
-        'measure'
+        'type'
     ],
     data: function () {
       return { 
@@ -69,21 +87,41 @@
         if(this.barWidth === 100) classes += ' bg-success'
         
         return classes
+      },
+      taskClasses: function () {
+        let classes = 'row text-secondary'
+
+        classes += this.type === 'simple' ? ' task-row-min' : ' task-row-complete'
+        
+        return classes
       }
     }
   }
 </script>
 
-<style>
-  .task-row {
-    height: 75px;
-    padding-top: 20px;
+<style scoped>
+  .task-row-complete {
+    height: 90px;
+    padding-top: 6px;
+  }
+
+  .task-row-complete .circle {
+    margin-top: 15px;
+  }
+
+  .task-row-min {
+    height: 60px;
+    padding-top: 6px;
+  }
+
+  .task-row-min div.circle {
+    margin-top: 2px;
   }
 
   .circle {
-    width: 36px;
-    height: 36px;
-    padding: 6px 6px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
     border-radius: 50%;
     box-shadow: 0px 0px 2px #888;
   }
@@ -96,7 +134,19 @@
     width: 87%;
   }
 
+  .btn-tasks {
+    box-shadow: 0px 0px 3px #888;
+  }
+
+  .btns-up-down {
+    width: 19px !important;
+    height: 19px !important;
+    padding: 3px !important;
+    border-radius: 50% !important;
+  }
+
   .progress {
     margin-top: 11px;
+    margin-bottom: 5px;
   }
 </style>

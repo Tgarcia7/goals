@@ -11,7 +11,7 @@
         :status="task.status"
         :from="task.from"
         :to="task.to"
-        :measure="task.measure"/>
+        :type="task.type"/>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add">
         <font-awesome-icon icon="plus"/>

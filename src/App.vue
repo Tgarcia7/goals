@@ -29,6 +29,6 @@
     text-align: center;
     color: #2c3e50;
     background-color: #1e242a;
-    min-height: 140%;
+    min-height: 165%;
   }
 </style>

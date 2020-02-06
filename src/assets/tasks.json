@@ -7,7 +7,7 @@
       "date": "16/02/20",
       "from": "2",
       "to": "10",
-      "measure": "steps",
+      "type": "steps",
       "status": "1",
       "progress": "doing"
     },
@@ -18,7 +18,7 @@
       "date": "23/12/20",
       "from": "7",
       "to": "10",
-      "measure": "kg",
+      "type": "times",
       "status": "1",
       "progress": "doing"
     },
@@ -29,7 +29,7 @@
       "date": "",
       "from": "",
       "to": "",
-      "measure": "",
+      "type": "simple",
       "status": "1",
       "progress": "doing"
     },
@@ -40,7 +40,7 @@
       "date": "18/02/20",
       "from": "9",
       "to": "10",
-      "measure": "days",
+      "type": "times",
       "status": "1",
       "progress": "doing"
     },
@@ -51,7 +51,7 @@
       "date": "",
       "from": "10",
       "to": "10",
-      "measure": "steps",
+      "type": "steps",
       "status": "1",
       "progress": "doing"
     },
@@ -62,7 +62,7 @@
       "date": "07/03/20",
       "from": "2",
       "to": "10",
-      "measure": "times",
+      "type": "times",
       "status": "1",
       "progress": "doing"
     },
@@ -73,7 +73,7 @@
       "date": "16/02/20",
       "from": "2",
       "to": "10",
-      "measure": "times",
+      "type": "times",
       "status": "1",
       "progress": "doing"
     },
@@ -84,7 +84,7 @@
       "date": "21/08/20",
       "from": "2",
       "to": "10",
-      "measure": "times",
+      "type": "times",
       "status": "1",
       "progress": "doing"
     },
@@ -95,7 +95,7 @@
       "date": "22/12/20",
       "from": "2",
       "to": "10",
-      "measure": "times",
+      "type": "times",
       "status": "1",
       "progress": "doing"
     }
