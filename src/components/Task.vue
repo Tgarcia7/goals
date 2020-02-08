@@ -13,7 +13,7 @@
           </div>
           <div class="col-4" v-if="type === 'times'">
              <small>
-               <span class="badge badge-dark btn-tasks btns-up-down">
+               <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownSteps('up')">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
                 </span>
              </small>
@@ -27,8 +27,8 @@
             </div>
           </div>
           <div class="col-4">
-            <small v-if="type === 'times'">{{ from }} / {{ to }}</small>
-            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks">
+            <small v-if="type === 'times'">{{ stepsCompleted }} / {{ totalSteps }}</small>
+            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
           </div>
@@ -39,11 +39,11 @@
           </div>
           <div class="col-4">
               <small v-if="type === 'times'">
-                <span class="badge badge-dark btn-tasks btns-up-down">
+                <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownSteps('down')">
                   <font-awesome-icon icon="chevron-down" size="lg"/>
                 </span>
               </small>
-              <small v-else-if="type === 'steps'">{{ from }} / {{ to }}</small>
+              <small v-else-if="type === 'steps'">{{ stepsDone }} / {{ totalSteps }}</small>
           </div>
         </div>
       </div>
@@ -63,20 +63,20 @@
         'date',  
         'status', 
         'progress',
-        'from',
-        'to',
+        'stepsDone',
+        'totalSteps',
         'type'
     ],
     data: function () {
       return { 
-        
+        stepsCompleted: this.stepsDone
       }
     },
     computed: {
       barWidth: function () {
-        if(!this.from || !this.to) return 0
+        if(!this.stepsCompleted || !this.totalSteps) return 0
 
-        return this.from / this.to * 100
+        return this.stepsCompleted / this.totalSteps * 100
       },
       barStyle: function () {
         return `width: ${this.barWidth}%;`
@@ -94,6 +94,15 @@
         classes += this.type === 'simple' ? ' task-row-min' : ' task-row-complete'
         
         return classes
+      }
+    },
+    methods: {
+      upDownSteps: function (action) {
+        if (action === 'up' && Number(this.stepsCompleted) < Number(this.totalSteps)) {
+          this.stepsCompleted ++
+        } else if (action === 'down' && Number(this.stepsCompleted) > 0) {
+          this.stepsCompleted --
+        }
       }
     }
   }
@@ -152,5 +161,9 @@
 
   .task-row {
     color: #aeb0b4 !important;
+  }
+
+  .clickable {
+    cursor: pointer;
   }
 </style>

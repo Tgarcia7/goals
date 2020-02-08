@@ -9,8 +9,8 @@
         :date="task.date"
         :progress="task.progress"
         :status="task.status"
-        :from="task.from"
-        :to="task.to"
+        :stepsDone="task.stepsDone"
+        :totalSteps="task.totalSteps"
         :type="task.type"/>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add">
