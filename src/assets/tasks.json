@@ -3,7 +3,7 @@
     {
       "id": 1,
       "icon": "plus",
-      "title": "Aprender cocina",
+      "title": "Aprender Vue.js",
       "date": "16/02/20",
       "from": "2",
       "to": "10",
@@ -36,7 +36,7 @@
     {
       "id": 4,
       "icon": "clipboard-list",
-      "title": "Levantarse temprano",
+      "title": "Dormir temprano",
       "date": "18/02/20",
       "from": "9",
       "to": "10",
@@ -58,7 +58,7 @@
     {
       "id": 6,
       "icon": "chart-bar",
-      "title": "Levantarse temprano",
+      "title": "Correr",
       "date": "07/03/20",
       "from": "2",
       "to": "10",

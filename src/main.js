@@ -19,7 +19,9 @@ import {
   faChevronRight,
   faChevronUp,
   faChevronDown,
-  faTasks} from '@fortawesome/free-solid-svg-icons'
+  faTasks,
+  faUserAlt,
+  faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faBullseye) 
 library.add(faBars) 
@@ -32,6 +34,8 @@ library.add(faChevronRight)
 library.add(faChevronUp) 
 library.add(faChevronDown) 
 library.add(faTasks) 
+library.add(faUserAlt) 
+library.add(faSignOutAlt) 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

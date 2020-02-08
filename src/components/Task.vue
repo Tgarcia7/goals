@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="task-row">
     <div :class="taskClasses">
       <div class="col-2">
         <div class="circle">
@@ -89,7 +89,7 @@
         return classes
       },
       taskClasses: function () {
-        let classes = 'row text-secondary'
+        let classes = 'row'
 
         classes += this.type === 'simple' ? ' task-row-min' : ' task-row-complete'
         
@@ -123,7 +123,7 @@
     height: 44px;
     padding: 10px;
     border-radius: 50%;
-    box-shadow: 0px 0px 2px #888;
+    box-shadow: 0px 0px 2px #aeb0b4;
   }
 
   .divider {
@@ -148,5 +148,9 @@
   .progress {
     margin-top: 11px;
     margin-bottom: 5px;
+  }
+
+  .task-row {
+    color: #aeb0b4 !important;
   }
 </style>

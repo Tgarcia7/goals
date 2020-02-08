@@ -14,10 +14,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link text-white" href="#">Link</a>
+            <a class="nav-link text-white text-right" href="#">
+              User info
+              <font-awesome-icon icon="user-alt"/>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="#">Link</a>
+            <a class="nav-link text-white text-right" href="#">
+              Log out
+              <font-awesome-icon icon="sign-out-alt"/>
+            </a>
           </li>
         </ul>
       </div>
