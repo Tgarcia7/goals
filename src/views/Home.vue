@@ -4,6 +4,7 @@
 
       <Task v-for="task in tasks" 
         :key="task.id" 
+        :id="task.id" 
         :icon="task.icon"
         :title="task.title"
         :date="task.date"

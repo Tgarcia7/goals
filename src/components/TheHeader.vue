@@ -1,52 +1,59 @@
 <template>
-  <nav class="navbar sticky-top navbar-light bg-dark py-2">
-    <div class="container">
-      <a class="nav mr-auto text-white" href="/">
-        <font-awesome-icon icon="chevron-left" size="lg"/>
-      </a>
-      <a class="nav navbar-brand navbar-logo mx-auto text-white" href="/">
-        <font-awesome-icon icon="bullseye" size="lg"/> Goals
-      </a>
-      <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <font-awesome-icon icon="bars"/>
-      </button>
+  <div class="navbar-container">
+    <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
+      <div class="container">
+        <a class="nav mr-auto text-white" href="/">
+          <font-awesome-icon icon="chevron-left" size="lg" />
+        </a>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link text-white text-right" href="#">
-              User info
-              <font-awesome-icon icon="user-alt"/>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white text-right" href="#">
-              Log out
-              <font-awesome-icon icon="sign-out-alt"/>
-            </a>
-          </li>
-        </ul>
+        <b-navbar-brand href="#">
+          <font-awesome-icon icon="bullseye" size="lg" /> Goals
+        </b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav class="ml-auto">
+
+            <b-nav-item-dropdown text="Lang" right>
+              <b-dropdown-item href="#">EN</b-dropdown-item>
+              <b-dropdown-item href="#">ES</b-dropdown-item>
+            </b-nav-item-dropdown>
+
+            <b-nav-item-dropdown right>
+              <!-- Using 'button-content' slot -->
+              <template v-slot:button-content>
+                <span>User</span>
+              </template>
+              <b-dropdown-item href="#">Profile</b-dropdown-item>
+              <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+        </b-collapse>
       </div>
-    </div>
-  </nav>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'TheHeader'
+    name: "TheHeader"
   }
 </script>
 
 <style scoped>
-  .navbar {
-    margin-bottom: 20px;
-    min-height: 56px;
+  .navbar-container {
+    margin-bottom: 70px;
   }
 
+  .navbar {
+    min-height: 56px;
+  }
+  
   .navbar-brand {
     position: absolute;
     left: 50%;
     top: 7px;
     transform: translateX(-50%);
-  }
+  } 
 </style>

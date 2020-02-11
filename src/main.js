@@ -2,8 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 
 // Bootstrap
-import 'bootstrap'; 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BootstrapVue } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -23,19 +26,20 @@ import {
   faUserAlt,
   faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faBullseye) 
-library.add(faBars) 
-library.add(faClipboardList) 
-library.add(faClipboardCheck) 
-library.add(faChartBar) 
-library.add(faPlus) 
-library.add(faChevronLeft) 
-library.add(faChevronRight) 
-library.add(faChevronUp) 
-library.add(faChevronDown) 
-library.add(faTasks) 
-library.add(faUserAlt) 
-library.add(faSignOutAlt) 
+library.add(
+  faBullseye, 
+  faBars, 
+  faClipboardList, 
+  faClipboardCheck, 
+  faChartBar, 
+  faPlus, 
+  faChevronLeft, 
+  faChevronRight, 
+  faChevronUp, 
+  faChevronDown, 
+  faTasks, 
+  faUserAlt, 
+  faSignOutAlt) 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

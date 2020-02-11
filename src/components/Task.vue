@@ -21,10 +21,7 @@
         </div>
         <div class="row" v-if="type !== 'simple'">
           <div class="col">
-            <div class="progress" style="height: 7px;">
-              <div :class="barClasses" role="progressbar" 
-                :style="barStyle" :aria-valuenow="barWidth" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            <b-progress :value="barFill" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
           <div class="col-4">
             <small v-if="type === 'times'">{{ stepsCompleted }} / {{ totalSteps }}</small>
@@ -69,7 +66,8 @@
     ],
     data: function () {
       return { 
-        stepsCompleted: this.stepsDone
+        stepsCompleted: this.stepsDone,
+        barFill: 0
       }
     },
     computed: {
@@ -78,19 +76,11 @@
 
         return this.stepsCompleted / this.totalSteps * 100
       },
-      barStyle: function () {
-        return `width: ${this.barWidth}%;`
-      },
-      barClasses: function () {
-        let classes = 'progress-bar progress-bar-striped progress-bar-animated'
-
-        if(this.barWidth === 100) classes += ' bg-success'
-        
-        return classes
+      barColor: function () {
+        return this.barWidth === 100 ? 'success' : 'primary'
       },
       taskClasses: function () {
         let classes = 'row'
-
         classes += this.type === 'simple' ? ' task-row-min' : ' task-row-complete'
         
         return classes
@@ -98,12 +88,23 @@
     },
     methods: {
       upDownSteps: function (action) {
-        if (action === 'up' && Number(this.stepsCompleted) < Number(this.totalSteps)) {
+        if (action === 'up' && this.stepsCompleted < this.totalSteps) {
           this.stepsCompleted ++
-        } else if (action === 'down' && Number(this.stepsCompleted) > 0) {
+        } else if (action === 'down' && this.stepsCompleted > 0) {
           this.stepsCompleted --
         }
+        this.barFill = this.barWidth
+      },
+      startTimer() {
+        let vue = this
+        let timer = setInterval(function () {
+          vue.barFill += 10
+          if (vue.barFill >= vue.barWidth) clearInterval(timer)
+        }, 100)
       }
+    },
+    mounted () {
+      this.startTimer()
     }
   }
 </script>
