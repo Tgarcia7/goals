@@ -53,17 +53,17 @@
 <script>
   export default {
     name: 'Task',
-    props: [
-        'id', 
-        'icon', 
-        'title', 
-        'date',  
-        'status', 
-        'progress',
-        'stepsDone',
-        'totalSteps',
-        'type'
-    ],
+    props: {
+      id: {type: Number, required: true}, 
+      icon: {type: String, required: true}, 
+      title: {type: String, required: true}, 
+      date: String,  
+      status: {type: Number, default: 1}, 
+      progress: {type: String, default: 'doing'},
+      stepsDone: Number,
+      totalSteps: Number,
+      type: {type: String, default: 'simple'}
+    },
     data: function () {
       return { 
         stepsCompleted: this.stepsDone,

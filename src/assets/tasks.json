@@ -8,7 +8,7 @@
       "stepsDone": 2,
       "totalSteps": 10,
       "type": "steps",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -19,18 +19,18 @@
       "stepsDone": 7,
       "totalSteps": 10,
       "type": "times",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
       "id": 3,
       "icon": "bars",
       "title": "Aprender inglés",
-      "date": "",
+      "date": null,
       "stepsDone": null,
       "totalSteps": null,
       "type": "simple",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -41,7 +41,7 @@
       "stepsDone": 9,
       "totalSteps": 10,
       "type": "times",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -52,7 +52,7 @@
       "stepsDone": 10,
       "totalSteps": 10,
       "type": "steps",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -63,7 +63,7 @@
       "stepsDone": 2,
       "totalSteps": 10,
       "type": "times",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -74,7 +74,7 @@
       "stepsDone": 2,
       "totalSteps": 10,
       "type": "times",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -85,7 +85,7 @@
       "stepsDone": 2,
       "totalSteps": 10,
       "type": "times",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     },
     {
@@ -96,7 +96,7 @@
       "stepsDone": 2,
       "totalSteps": 10,
       "type": "times",
-      "status": "1",
+      "status": 1,
       "progress": "doing"
     }
   ]
