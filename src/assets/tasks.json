@@ -46,7 +46,7 @@
     },
     {
       "id": 5,
-      "icon": "clipboard-check",
+      "icon": "check",
       "title": "Natación",
       "date": "",
       "stepsDone": 10,

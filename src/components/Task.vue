@@ -1,5 +1,5 @@
 <template>
-  <div class="task-row">
+  <div class="task-row disable-selection">
     <div :class="taskClasses">
       <div class="col-2">
         <div class="circle">
@@ -166,5 +166,14 @@
 
   .clickable {
     cursor: pointer;
+  }
+
+  .disable-selection {
+    user-select: none;
+    -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer */
+    -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
   }
 </style>

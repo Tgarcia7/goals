@@ -11,36 +11,9 @@ Vue.use(BootstrapVue)
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { 
-  faBullseye, 
-  faBars, 
-  faClipboardList, 
-  faClipboardCheck, 
-  faChartBar,
-  faPlus,
-  faChevronLeft,
-  faChevronRight,
-  faChevronUp,
-  faChevronDown,
-  faTasks,
-  faUserAlt,
-  faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
-library.add(
-  faBullseye, 
-  faBars, 
-  faClipboardList, 
-  faClipboardCheck, 
-  faChartBar, 
-  faPlus, 
-  faChevronLeft, 
-  faChevronRight, 
-  faChevronUp, 
-  faChevronDown, 
-  faTasks, 
-  faUserAlt, 
-  faSignOutAlt) 
-
+library.add(fas) 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
