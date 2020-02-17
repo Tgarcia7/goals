@@ -14,22 +14,25 @@
         :totalSteps="task.totalSteps"
         :type="task.type"/>
 
-      <button type="button" class="btn btn-success btn-circle btn-lg btn-add">
+      <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
         <font-awesome-icon icon="plus"/>
       </button>
-
     </div>
+    
+    <AddTask/>
   </main>
 </template>
 
 <script>
   import Task from '../components/Task.vue'
   import tasksData from "../assets/tasks.json"
+  import AddTask from "../views/AddTask"
 
   export default {
     name: 'Home',
     components: {
-      Task
+      Task,
+      AddTask
     },
     data: () => {
       return {
