@@ -31,4 +31,8 @@
     background-color: #1e242a;
     min-height: 155%;
   }
+
+  .clickable {
+    cursor: pointer;
+  }
 </style>

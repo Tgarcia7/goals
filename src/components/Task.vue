@@ -164,10 +164,6 @@
     color: #aeb0b4 !important;
   }
 
-  .clickable {
-    cursor: pointer;
-  }
-
   .disable-selection {
     user-select: none;
     -moz-user-select: none; /* Firefox */
