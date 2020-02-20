@@ -3,12 +3,26 @@
     v-b-modal.modal-lg hide-header hide-footer scrollable
     body-bg-variant="dark" body-text-variant="light">
 
-    <div id="icons">
-      <div class="row icon-row">
-        <div v-for="icon in iconList" :key="icon" class="col-4 mx-auto">
-          <div class="icon-box text-center clickable" @click="select">
-            <font-awesome-icon :icon="icon" size="lg"/>
-          </div>
+    <div class="form-row mt-3">
+      <div class="col">
+        <b-form-input autofocus type="search" class="form-control bg-dark text-white"
+          placeholder="Type something to search an icon" @keyup="applyFilter" v-model="search"/>
+          <p class="text-right searchResult"><small>{{ searchResult }}</small></p>
+      </div>
+    </div>
+
+    <div class="form-row my-5" v-if="showLoader">
+      <div class="col-2 mx-auto">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row" v-show="!showLoader">
+      <div v-for="icon in iconList" :key="icon" class="col-4">
+        <div class="icon-box text-center clickable" @click="select(icon)">
+          <font-awesome-icon :icon="icon" size="lg"/>
         </div>
       </div>
     </div>
@@ -21,27 +35,67 @@
   export default {
     data: () => {
       return {
-        iconList: faIcons.map(icon => icon.replace(/fab fa-|far fa-|fas fa-/gi, '')),
-        hover: false
+        originalIconList: faIcons.map(icon => icon.replace(/fab fa-|far fa-|fas fa-/gi, '')),
+        iconList: [],
+        search: '', 
+        searchResult: '',
+        showLoader: false,
+        showIcons: true
       }
     },
     mounted: function () {
+      this.iconList = this.originalIconList
+
       this.$root.$on('bv::modal::shown', () => {
         let element = document.querySelector('#modal-icons')
 
-        if(element){
+        if(element && this.isApp()){
           element.style.overflowY = 'auto'
           
-          const fullHeight = window.innerHeight * 0.65
-          document.querySelector('#modal-icons .modal-body').style.height = `${fullHeight}px`
+          const height = window.innerHeight * 0.65
+          document.querySelector('#modal-icons .modal-body').style.height = `${height}px`
           document.querySelector('#modal-icons .modal-dialog').style.position = 'fixed'
           document.querySelector('#modal-icons .modal-dialog').style.bottom = '0'
+          document.querySelector('#modal-icons .modal-dialog').style.width = '96%'
         }
       })
     },
     methods: {
-      select: function (){
+      select: function (element) {
+        console.log(`Seleted: ${element}`)
         this.$refs['modal-icons'].hide()
+      },
+      isApp: function () {
+        let w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            window_width = w.innerWidth||e.clientWidth||g.clientWidth
+            
+        return window_width < 992
+      },
+      applyFilter: function () {
+        this.showLoader = true
+        this.searchResult = ''
+        let resultList,
+          resultString
+        
+        if(this.search) {
+          let searchStr = this.search
+          resultList = this.originalIconList.filter(item => item.includes(searchStr))
+  
+          resultString = `${resultList.length || 'No'} results`
+        } else {
+          resultList = this.originalIconList
+          resultString = ''
+        }
+
+        this.iconList = resultList
+        
+        setTimeout(() => {
+          this.showLoader = false
+          this.searchResult = resultString
+        }, 700)
       }
     }
   }
@@ -52,5 +106,14 @@
     border: 1px solid white;
     padding: 4px;
     margin: 7px;
+  }
+
+  .icon-box:hover {
+    border: 1px solid #95c1f0;
+    color: #95c1f0;
+  }
+
+  .searchResult {
+    color: #95c1f0;
   }
 </style>
