@@ -81,8 +81,8 @@
           resultString
         
         if(this.search) {
-          let searchStr = this.search
-          resultList = this.originalIconList.filter(item => item.includes(searchStr))
+          let searchStr = this.search.toLowerCase()
+          resultList = this.originalIconList.filter(item => item.toLowerCase().includes(searchStr))
   
           resultString = `${resultList.length || 'No'} results`
         } else {
