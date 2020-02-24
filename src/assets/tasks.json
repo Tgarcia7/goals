@@ -2,7 +2,7 @@
   "list": [
     {
       "id": 1,
-      "icon": "plus",
+      "icon": ["fab", "vuejs"],
       "title": "Aprender Vue.js",
       "date": "16/02/20",
       "stepsDone": 2,
@@ -13,7 +13,7 @@
     },
     {
       "id": 2,
-      "icon": "bullseye",
+      "icon": ["fas", "weight"],
       "title": "Bajar de peso",
       "date": "23/12/20",
       "stepsDone": 7,
@@ -24,7 +24,7 @@
     },
     {
       "id": 3,
-      "icon": "bars",
+      "icon": ["fas", "language"],
       "title": "Aprender inglés",
       "date": null,
       "stepsDone": null,
@@ -35,7 +35,7 @@
     },
     {
       "id": 4,
-      "icon": "clipboard-list",
+      "icon": ["fas", "bed"],
       "title": "Dormir temprano",
       "date": "18/02/20",
       "stepsDone": 9,
@@ -46,7 +46,7 @@
     },
     {
       "id": 5,
-      "icon": "check",
+      "icon": ["fas", "swimmer"],
       "title": "Natación",
       "date": "",
       "stepsDone": 10,
@@ -57,7 +57,7 @@
     },
     {
       "id": 6,
-      "icon": "chart-bar",
+      "icon": ["fas", "running"],
       "title": "Correr",
       "date": "07/03/20",
       "stepsDone": 2,
@@ -68,8 +68,8 @@
     },
     {
       "id": 7,
-      "icon": "chevron-left",
-      "title": "Natación",
+      "icon": ["fab", "readme"],
+      "title": "Leer",
       "date": "16/02/20",
       "stepsDone": 2,
       "totalSteps": 10,
@@ -79,7 +79,7 @@
     },
     {
       "id": 8,
-      "icon": "plus",
+      "icon": ["fas", "plus"],
       "title": "Levantarse temprano",
       "date": "21/08/20",
       "stepsDone": 2,
@@ -90,7 +90,7 @@
     },
     {
       "id": 9,
-      "icon": "clipboard-check",
+      "icon": ["fas", "clipboard-check"],
       "title": "Natación",
       "date": "22/12/20",
       "stepsDone": 2,

@@ -55,7 +55,7 @@
     name: 'Task',
     props: {
       id: {type: Number, required: true}, 
-      icon: {type: String, required: true}, 
+      icon: {type: Array, required: true}, 
       title: {type: String, required: true}, 
       date: String,  
       status: {type: Number, default: 1}, 

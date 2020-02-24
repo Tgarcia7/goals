@@ -20,7 +20,7 @@
     </div>
 
     <div class="form-row" v-show="!showLoader">
-      <div v-for="icon in iconList" :key="icon" class="col-4">
+      <div v-for="(icon, index) in iconList" :key="index" class="col-4">
         <div class="icon-box text-center clickable" @click="select(icon)">
           <font-awesome-icon :icon="icon" size="lg"/>
         </div>
@@ -35,7 +35,7 @@
   export default {
     data: () => {
       return {
-        originalIconList: faIcons.map(icon => icon.replace(/fab fa-|far fa-|fas fa-/gi, '')),
+        originalIconList: faIcons,
         iconList: [],
         search: '', 
         searchResult: '',
@@ -82,7 +82,7 @@
         
         if(this.search) {
           let searchStr = this.search.toLowerCase()
-          resultList = this.originalIconList.filter(item => item.toLowerCase().includes(searchStr))
+          resultList = this.originalIconList.filter(item => item[1].toLowerCase().includes(searchStr))
   
           resultString = `${resultList.length || 'No'} results`
         } else {
@@ -91,11 +91,8 @@
         }
 
         this.iconList = resultList
-        
-        setTimeout(() => {
-          this.showLoader = false
-          this.searchResult = resultString
-        }, 700)
+        this.showLoader = false
+        this.searchResult = resultString
       }
     }
   }
