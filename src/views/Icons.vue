@@ -62,7 +62,7 @@
     },
     methods: {
       select: function (element) {
-        console.log(`Seleted: ${element}`)
+        this.$emit('iconSelected', element)
         this.$refs['modal-icons'].hide()
       },
       isApp: function () {

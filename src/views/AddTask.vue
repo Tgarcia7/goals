@@ -68,9 +68,12 @@
               </div>
 
               <div class="form-row mt-3">
-                <div class="col-4 ml-auto">
-                  <input type="hidden" name="icon" v-model="icon">
-                  <button type="button" class="btn btn-block btn-sm btn-secondary" v-b-modal.modal-icons>
+                <div class="col-2 ml-auto text-center icon-box" v-if="icon">
+                  <font-awesome-icon :icon="icon" />
+                </div>
+                <div class="col-2 ml-auto" v-else></div>
+                <div class="col-5 mt-1">
+                  <button type="button" id="btn-icons" class="btn btn-block btn-secondary" v-b-modal.modal-icons>
                     Icon
                   </button>
                 </div>
@@ -129,7 +132,7 @@
       </template>
     </b-modal>
 
-    <IconsModal/>
+    <IconsModal @iconSelected="iconSelected"/>
   </div>
 </template>
 
@@ -168,23 +171,30 @@
     methods: {
       add: function (e) {
         e.preventDefault()
+        let error = '',
+          cleanedList = []
 
         if (this.type === 'tasks') {
-          let cleanedList = this.tasksList.filter(item => item)
+          cleanedList = this.tasksList.filter(item => item)
+          this.tasksList = cleanedList
 
           if(!cleanedList.length) {
-            this.$swal.fire({
-              icon: 'error',
-              title: 'You must add at least one task',
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000
-            })
-            return
+            error = 'You must add at least one task'
           }
-          
-          this.tasksList = cleanedList
+        } else if (!this.icon) {
+          error = 'You must select an icon'
+        }
+
+        if (error) {
+          this.$swal.fire({
+            icon: 'error',
+            title: error,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          return
         }
         
         let newTask = {
@@ -219,12 +229,16 @@
       hideForm: function () {
         this.type = ''
         this.tasksList = ['']
+        this.icon = ''
       },
       addSubTask: function () {
         this.tasksList.push('')
       },
       removeSubTask: function (index) {
         this.tasksList.splice(index, index+1)
+      },
+      iconSelected: function (icon) {
+        this.icon = icon
       }
     }
   }
@@ -249,5 +263,15 @@
 
   .sub-task-trash:hover {
     color: #dc3545;
+  }
+
+  .icon-box {
+    border: 1px solid white;
+    padding: 4px;
+    margin: 7px;
+  }
+
+  #btn-icons {
+    margin-top: 2px;
   }
 </style>
