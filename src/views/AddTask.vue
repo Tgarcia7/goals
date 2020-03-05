@@ -41,7 +41,7 @@
               <div class="form-row">
                 <div class="col">
                   <h5>
-                    <span class="clickable" @click="hideForm()">
+                    <span class="clickable" @click="cleanForm()">
                       <font-awesome-icon icon="chevron-left"/>
                     </span>
                     Fill the form to add a new goal
@@ -132,12 +132,14 @@
       </template>
     </b-modal>
 
+    <Swal ref="swal"/>
     <IconsModal @iconSelected="iconSelected"/>
   </div>
 </template>
 
 <script>
   import IconsModal from '../views/Icons'
+  import Swal from "../services/Swal"
 
   export default {
     name: 'AddTask',
@@ -152,9 +154,11 @@
       }
     },
     components: {
-      IconsModal
+      IconsModal,
+      Swal
     },
     mounted: function () {
+
       this.$root.$on('bv::modal::shown', () => {
         let element = document.querySelector('#modal-add')
 
@@ -171,30 +175,20 @@
     methods: {
       add: function (e) {
         e.preventDefault()
-        let error = '',
-          cleanedList = []
 
-        if (this.type === 'tasks') {
-          cleanedList = this.tasksList.filter(item => item)
-          this.tasksList = cleanedList
-
-          if(!cleanedList.length) {
-            error = 'You must add at least one task'
-          }
-        } else if (!this.icon) {
-          error = 'You must select an icon'
+        if (!this.icon) {
+          this.$refs.swal.toast('error', 'You must select an icon')
+          return
         }
 
-        if (error) {
-          this.$swal.fire({
-            icon: 'error',
-            title: error,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-          })
-          return
+        if (this.type === 'tasks') {
+          let cleanedList = this.tasksList.filter(item => item)
+          this.tasksList = cleanedList
+
+          if (!cleanedList.length) {
+            this.$refs.swal.toast('error', 'You must add at least one task')
+            return
+          }
         }
         
         let newTask = {
@@ -206,27 +200,19 @@
           tasksList: this.tasksList
         }
         
-        this.hideForm()
-        this.$refs['modal-add'].hide()
+        this.close()
         console.log(newTask)
-        
-        this.$swal.fire({
-          icon: 'success',
-          title: 'Goal added successfully',
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000
-        })
+
+        this.$refs.swal.toast('success', 'Goal added successfully')
       },
       close: function () {
-        this.hideForm()
+        this.cleanForm()
         this.$refs['modal-add'].hide()
       },
       showForm: function (type) {
         this.type = type
       },
-      hideForm: function () {
+      cleanForm: function () {
         this.type = ''
         this.tasksList = ['']
         this.icon = ''

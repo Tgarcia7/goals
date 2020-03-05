@@ -12,10 +12,13 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/vue-fontawesome": "^0.1.9",
+    "@sweetalert2/theme-dark": "^3.1.1",
     "bootstrap-vue": "^2.4.0",
     "core-js": "^3.4.4",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
+    "sass-loader": "^8.0.2",
+    "sweetalert2": "^9.8.2",
     "vue": "^2.6.11",
     "vue-sweetalert2": "^3.0.3"
   },
@@ -26,6 +29,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.13.1",
     "vue-template-compiler": "^2.6.10"
   }
 }
