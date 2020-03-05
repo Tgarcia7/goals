@@ -1,14 +1,14 @@
 <template>
   <div class="task-row disable-selection">
     <div :class="taskClasses">
-      <div class="col-2">
+      <div class="col-2 clickable" @click="edit()">
         <div class="circle">
           <font-awesome-icon :icon="icon" size="lg"/>
         </div>
       </div>
       <div class="col-10">
         <div class="row">
-          <div class="col text-truncate text-left">
+          <div class="col text-truncate text-left clickable" @click="edit()">
             {{ title }}
           </div>
           <div class="col-4" v-if="type === 'times'">
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="row" v-if="type !== 'simple'">
-          <div class="col">
+          <div class="col clickable" @click="edit()">
             <b-progress :value="barFill" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
           <div class="col-4">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col text-left">
+          <div class="col text-left clickable" @click="edit()">
             <small>{{ date }}</small>
           </div>
           <div class="col-4">
@@ -95,15 +95,18 @@
         }
         this.barFill = this.barWidth
       },
-      startTimer() {
+      startTimer: function () {
         let vue = this
         let timer = setInterval(function () {
           vue.barFill += 10
           if (vue.barFill >= vue.barWidth) clearInterval(timer)
         }, 100)
+      },
+      edit: function () {
+        this.$emit('editTask', this.id)
       }
     },
-    mounted () {
+    mounted: function () {
       this.startTimer()
     }
   }

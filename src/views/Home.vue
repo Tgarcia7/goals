@@ -12,7 +12,8 @@
         :status="task.status"
         :stepsDone="task.stepsDone"
         :totalSteps="task.totalSteps"
-        :type="task.type"/>
+        :type="task.type"
+        @editTask="editTask"/>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
         <font-awesome-icon icon="plus"/>
@@ -20,6 +21,7 @@
     </div>
     
     <AddTask/>
+    <EditTask/>
   </main>
 </template>
 
@@ -27,16 +29,24 @@
   import Task from '../components/Task.vue'
   import tasksData from "../assets/tasks.json"
   import AddTask from "../views/AddTask"
+  import EditTask from "../views/EditTask"
 
   export default {
     name: 'Home',
-    components: {
-      Task,
-      AddTask
-    },
     data: () => {
       return {
         tasks: tasksData.list
+      }
+    },
+    components: {
+      Task,
+      AddTask,
+      EditTask
+    },
+    methods: {
+      editTask: function (task) {
+        console.log(task)
+        this.$bvModal.show('modal-edit')
       }
     }
   }

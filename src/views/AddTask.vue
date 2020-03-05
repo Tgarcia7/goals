@@ -158,7 +158,6 @@
       Swal
     },
     mounted: function () {
-
       this.$root.$on('bv::modal::shown', () => {
         let element = document.querySelector('#modal-add')
 
