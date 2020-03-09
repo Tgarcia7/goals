@@ -103,7 +103,7 @@
         }, 100)
       },
       edit: function () {
-        this.$emit('editTask', this.id)
+        this.$emit('editTask')
       }
     },
     mounted: function () {

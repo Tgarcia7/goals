@@ -13,7 +13,7 @@
         :stepsDone="task.stepsDone"
         :totalSteps="task.totalSteps"
         :type="task.type"
-        @editTask="editTask"/>
+        @editTask="editTask(task)"/>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
         <font-awesome-icon icon="plus"/>
@@ -21,7 +21,16 @@
     </div>
     
     <AddTask/>
-    <EditTask/>
+    <EditTask 
+      :id="this.selectedTask.id" 
+      :icon="this.selectedTask.icon"
+      :title="this.selectedTask.title"
+      :date="this.selectedTask.date"
+      :progress="this.selectedTask.progress"
+      :status="this.selectedTask.status"
+      :stepsDone="this.selectedTask.stepsDone"
+      :totalSteps="this.selectedTask.totalSteps"
+      :type="this.selectedTask.type"/>
   </main>
 </template>
 
@@ -35,7 +44,8 @@
     name: 'Home',
     data: () => {
       return {
-        tasks: tasksData.list
+        tasks: tasksData.list,
+        selectedTask: {}
       }
     },
     components: {
@@ -45,7 +55,7 @@
     },
     methods: {
       editTask: function (task) {
-        console.log(task)
+        this.selectedTask = task
         this.$bvModal.show('modal-edit')
       }
     }
