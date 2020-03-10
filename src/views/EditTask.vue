@@ -7,14 +7,14 @@
       modal-ok="modal-ok">
 
       <div class="my-2">
-        <form name="addTask" id="addTask" method="post" @submit="edit">
+        <form name="editTask" id="editTask" method="post" @submit="edit">
 
           <div class="form-row mt-3">
             <div class="col-3 col-form-label">
               <label for="title">Title <span class="text-danger">*</span></label>
             </div>
             <div class="col-9">
-              <input type="text" class="form-control bg-dark text-white" name="title" v-model="title" required>
+              <input type="text" class="form-control bg-dark text-white" name="title" :value="title" required>
             </div>
           </div>
 
@@ -23,7 +23,7 @@
               <label for="title">End date</label>
             </div>
             <div class="col-9">
-              <input type="date" class="form-control bg-dark text-white" name="date" v-model="formatedDate">
+              <input type="date" class="form-control bg-dark text-white" name="date" :value="formatedDate">
             </div>
           </div>
 
@@ -39,12 +39,12 @@
             </div>
           </div>
 
-          <div class="form-row mt-3" v-if="this.type==='steps'">
+          <div class="form-row mt-3" v-if="type==='steps'">
             <div class="col-4 col-form-label">
               <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required v-model="totalSteps">
+              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required :value="totalSteps">
             </div>
           </div>
 
@@ -85,7 +85,17 @@
     },
     data: () => {
       return {
-        
+        task: {
+          id: '', 
+          icon: '', 
+          title: '', 
+          date: '',  
+          status: '', 
+          progress: '',
+          stepsDone: '',
+          totalSteps: '',
+          type: ''
+        }
       }
     }, 
     components: {
@@ -109,6 +119,19 @@
     methods: {
       edit: function (e) {
         e.preventDefault()
+
+        let formElements = e.target.elements
+
+        //this.task.icon = formElements['icon'].value
+        this.task.title = formElements['title'].value
+        this.task.date = formElements['date'].value
+        this.task.status = 1
+        this.task.progress = 'doing'
+        this.task.stepsDone = this.stepsDone
+        this.task.totalSteps = formElements['totalSteps'].value
+        this.task.type = this.type
+
+        console.log(this.task)
       },
       close: function () {
         this.cleanForm()
@@ -129,7 +152,7 @@
       formatedDate: function () {
         let date = this.date
 
-        if (date) {
+        if (date && date.includes('/')) {
           let splittedDate = date.split('/')
           let tempDate = [splittedDate[1], splittedDate[0], splittedDate[2]].join('/')
           tempDate = new Date(tempDate)
