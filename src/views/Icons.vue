@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="modal-icons" ref="modal-icons" class="text-white"
+  <b-modal :id="`modal-icons-${this.id}`" :ref="`modal-icons-${this.id}`" class="text-white"
     v-b-modal.modal-lg hide-header hide-footer scrollable
     body-bg-variant="dark" body-text-variant="light">
 
@@ -33,6 +33,9 @@
   import faIcons from "../assets/fontAwesome.json"
 
   export default {
+    props: {
+      id: {type: String, default: ''}, 
+    },
     data: () => {
       return {
         originalIconList: faIcons,
@@ -47,23 +50,23 @@
       this.iconList = this.originalIconList
 
       this.$root.$on('bv::modal::shown', () => {
-        let element = document.querySelector('#modal-icons')
+        let element = document.querySelector(`#modal-icons-${this.id}`)
 
         if(element && this.isApp()){
           element.style.overflowY = 'auto'
           
           const height = window.innerHeight * 0.65
-          document.querySelector('#modal-icons .modal-body').style.height = `${height}px`
-          document.querySelector('#modal-icons .modal-dialog').style.position = 'fixed'
-          document.querySelector('#modal-icons .modal-dialog').style.bottom = '0'
-          document.querySelector('#modal-icons .modal-dialog').style.width = '96%'
+          document.querySelector(`#modal-icons-${this.id} .modal-body`).style.height = `${height}px`
+          document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.position = 'fixed'
+          document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.bottom = '0'
+          document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.width = '96%'
         }
       })
     },
     methods: {
       select: function (element) {
         this.$emit('iconSelected', element)
-        this.$refs['modal-icons'].hide()
+        this.$refs[`modal-icons-${this.id}`].hide()
       },
       isApp: function () {
         let w = window,

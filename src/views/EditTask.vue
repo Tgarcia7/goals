@@ -14,7 +14,7 @@
               <label for="title">Title <span class="text-danger">*</span></label>
             </div>
             <div class="col-9">
-              <input type="text" class="form-control bg-dark text-white" name="title" :value="title" required>
+              <input type="text" class="form-control bg-dark text-white" name="title" v-model="task.title" required>
             </div>
           </div>
 
@@ -23,17 +23,17 @@
               <label for="title">End date</label>
             </div>
             <div class="col-9">
-              <input type="date" class="form-control bg-dark text-white" name="date" :value="formatedDate">
+              <input type="date" class="form-control bg-dark text-white" name="date" v-model="task.date">
             </div>
           </div>
 
           <div class="form-row mt-3">
-            <div class="col-2 ml-auto text-center icon-box" v-if="icon">
-              <font-awesome-icon :icon="icon" />
+            <div class="col-2 ml-auto text-center icon-box" v-if="task.icon">
+              <font-awesome-icon :icon="task.icon" />
             </div>
             <div class="col-2 ml-auto" v-else></div>
             <div class="col-5 mt-1">
-              <button type="button" id="btn-icons" class="btn btn-block btn-secondary" v-b-modal.modal-icons>
+              <button type="button" id="btn-icons-edit" class="btn btn-block btn-secondary" v-b-modal.modal-icons-edit>
                 Icon
               </button>
             </div>
@@ -44,7 +44,7 @@
               <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required :value="totalSteps">
+              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required v-model="task.totalSteps">
             </div>
           </div>
 
@@ -62,12 +62,12 @@
     </b-modal>
 
     <Swal ref="swal"/>
-    <IconsModal @iconSelected="iconSelected"/>
+    <IconsModalEdit @iconSelected="iconEdit" :id="'edit'"/>
   </div>
 </template>
 
 <script>
-  import IconsModal from '../views/Icons'
+  import IconsModalEdit from '../views/Icons'
   import Swal from "../services/Swal"
 
   export default {
@@ -95,15 +95,19 @@
           stepsDone: '',
           totalSteps: '',
           type: ''
-        }
+        },
+        initiated: false
       }
     }, 
     components: {
-      IconsModal,
+      IconsModalEdit,
       Swal
     },
     mounted: function () {
-      this.$root.$on('bv::modal::shown', () => {
+      
+      this.$refs['modal-edit'].$on('shown', () => {
+        this.setSelectedTask()
+        
         let element = document.querySelector('#modal-edit')
 
         if(element){
@@ -120,17 +124,6 @@
       edit: function (e) {
         e.preventDefault()
 
-        let formElements = e.target.elements
-
-        //this.task.icon = formElements['icon'].value
-        this.task.title = formElements['title'].value
-        this.task.date = formElements['date'].value
-        this.task.status = 1
-        this.task.progress = 'doing'
-        this.task.stepsDone = this.stepsDone
-        this.task.totalSteps = formElements['totalSteps'].value
-        this.task.type = this.type
-
         console.log(this.task)
       },
       close: function () {
@@ -141,14 +134,23 @@
         this.type = type
       },
       cleanForm: function () {
-        this.type = ''
-        this.icon = ''
+        this.task.type = ''
+        this.task.icon = ''
       },
-      iconSelected: function (icon) {
-        this.icon = icon
-      }
-    },
-    computed: {
+      iconEdit: function (icon) {
+        this.task.icon = icon
+      },
+      setSelectedTask: function () {
+        this.task.id = this.id
+        this.task.icon = this.icon
+        this.task.title = this.title
+        this.task.date = this.formatedDate()
+        this.task.status = this.status
+        this.task.progress = this.progress
+        this.task.stepsDone = this.stepsDone
+        this.task.totalSteps = this.totalSteps
+        this.task.type = this.type
+      },
       formatedDate: function () {
         let date = this.date
 
@@ -177,7 +179,7 @@
     margin: 7px;
   }
 
-  #btn-icons {
+  #btn-icons-edit {
     margin-top: 2px;
   }
 </style>

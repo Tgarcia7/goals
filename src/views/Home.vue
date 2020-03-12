@@ -30,7 +30,8 @@
       :status="this.selectedTask.status"
       :stepsDone="this.selectedTask.stepsDone"
       :totalSteps="this.selectedTask.totalSteps"
-      :type="this.selectedTask.type"/>
+      :type="this.selectedTask.type"
+      :selected="true"/>
   </main>
 </template>
 

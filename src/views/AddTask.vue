@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-2 ml-auto" v-else></div>
                 <div class="col-5 mt-1">
-                  <button type="button" id="btn-icons" class="btn btn-block btn-secondary" v-b-modal.modal-icons>
+                  <button type="button" id="btn-icons" class="btn btn-block btn-secondary" v-b-modal.modal-icons-add>
                     Icon
                   </button>
                 </div>
@@ -133,7 +133,7 @@
     </b-modal>
 
     <Swal ref="swal"/>
-    <IconsModal @iconSelected="iconSelected"/>
+    <IconsModal @iconSelected="iconSelected" :id="'add'"/>
   </div>
 </template>
 
