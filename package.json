@@ -31,6 +31,5 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.13.1",
     "vue-template-compiler": "^2.6.10"
-  },
-  "homepage": "https://Tgarcia7.github.io/goals"
+  }
 }
