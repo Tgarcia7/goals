@@ -1,35 +1,24 @@
-name: github pages
 
+name: Deploy to GitHub Pages
 on:
   push:
     branches:
       - master
-
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v1
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
+    - name: Build
+      run: |
+        npm install
+        npm run build
 
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - run: npm ci
-      - run: npm run build
-
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist
