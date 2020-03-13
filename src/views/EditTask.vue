@@ -39,7 +39,7 @@
             </div>
           </div>
 
-          <div class="form-row mt-3" v-if="type==='steps'">
+          <div class="form-row mt-3" v-if="this.task.type==='steps'">
             <div class="col-4 col-form-label">
               <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
             </div>
@@ -52,7 +52,7 @@
       </div>
 
       <template v-slot:modal-footer>
-        <b-button size="md" variant="secondary">
+        <b-button size="md" variant="secondary" @click="close()">
           Cancel
         </b-button>
         <b-button form="editTask" type="submit" size="md" variant="success">
@@ -62,26 +62,26 @@
     </b-modal>
 
     <Swal ref="swal"/>
-    <IconsModalEdit @iconSelected="iconEdit" :id="'edit'"/>
+    <IconsModal @iconSelected="iconEdit" :id="'edit'"/>
   </div>
 </template>
 
 <script>
-  import IconsModalEdit from '../views/Icons'
+  import IconsModal from '../views/Icons'
   import Swal from "../services/Swal"
 
   export default {
     name: 'EditTask',
     props: {
-      id: {type: Number}, 
-      icon: {type: Array}, 
-      title: {type: String}, 
+      id: Number, 
+      icon: Array, 
+      title: String, 
       date: String,  
-      status: {type: Number, default: 1}, 
-      progress: {type: String, default: 'doing'},
+      status: Number, 
+      progress: String,
       stepsDone: Number,
       totalSteps: Number,
-      type: {type: String, default: 'simple'}
+      type: String
     },
     data: () => {
       return {
@@ -95,47 +95,44 @@
           stepsDone: '',
           totalSteps: '',
           type: ''
-        },
-        initiated: false
+        }
       }
     }, 
     components: {
-      IconsModalEdit,
+      IconsModal,
       Swal
     },
     mounted: function () {
-      
-      this.$refs['modal-edit'].$on('shown', () => {
-        this.setSelectedTask()
-        
-        let element = document.querySelector('#modal-edit')
-
-        if(element){
-          let elementBody = document.querySelector('#modal-edit .modal-body')
-          element.style.overflowY = 'auto'
-          elementBody.style.overflowY = 'scroll'
-          
-          const fullHeight = window.innerHeight * 0.77
-          elementBody.style.height = `${fullHeight}px`
-        }
-      })
+      this.initListeners()
     },
     methods: {
       edit: function (e) {
         e.preventDefault()
 
+        if (!this.task.icon) {
+          this.$refs.swal.toast('error', 'You must select an icon')
+          return
+        }
+
+        this.close()
         console.log(this.task)
+
+        this.$refs.swal.toast('success', 'Goal updated successfully')
       },
       close: function () {
         this.cleanForm()
         this.$refs['modal-edit'].hide()
       },
-      showForm: function (type) {
-        this.type = type
-      },
       cleanForm: function () {
-        this.task.type = ''
+        this.task.id = ''
         this.task.icon = ''
+        this.task.title = ''
+        this.task.date = ''
+        this.task.status = ''
+        this.task.progress = ''
+        this.task.stepsDone = ''
+        this.task.totalSteps = ''
+        this.task.type = this.type
       },
       iconEdit: function (icon) {
         this.task.icon = icon
@@ -167,6 +164,24 @@
         }
 
         return date
+      },
+      initListeners: function () {
+        //Modal size and init
+        this.$refs['modal-edit'].$on('shown', () => {
+          this.setSelectedTask()
+          
+          let element = document.querySelector('#modal-edit')
+
+          if(element){
+            let elementBody = document.querySelector('#modal-edit .modal-body')
+            element.style.overflowY = 'auto'
+            elementBody.style.overflowY = 'scroll'
+            
+            const fullHeight = window.innerHeight * 0.77
+            elementBody.style.height = `${fullHeight}px`
+          }
+        })
+      
       }
     }
   }

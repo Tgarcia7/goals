@@ -77,4 +77,16 @@
     bottom: 3.5em;
     right: 1em;
   }
+
+  /* 
+    ##Device = Desktops
+    ##Screen = 1281px to higher resolution desktops
+  */
+  @media (min-width: 1281px) {
+    .btn-add {
+      position: fixed;
+      bottom: 3.5em;
+      right: 20.5em;
+    }
+  }
 </style>

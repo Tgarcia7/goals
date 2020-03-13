@@ -11,7 +11,7 @@
           <div class="col text-truncate text-left clickable" @click="edit()">
             {{ title }}
           </div>
-          <div class="col-4" v-if="type === 'times'">
+          <div class="col-4" v-if="type === 'steps'">
              <small>
                <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownSteps('up')">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
@@ -24,8 +24,8 @@
             <b-progress :value="barFill" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
           <div class="col-4">
-            <small v-if="type === 'times'">{{ stepsCompleted }} / {{ totalSteps }}</small>
-            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable">
+            <small v-if="type === 'steps'">{{ stepsCompleted }} / {{ totalSteps }}</small>
+            <span v-else-if="type === 'tasks'" class="badge badge-dark btn-tasks clickable">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
           </div>
@@ -35,12 +35,12 @@
             <small>{{ date }}</small>
           </div>
           <div class="col-4">
-              <small v-if="type === 'times'">
+              <small v-if="type === 'steps'">
                 <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownSteps('down')">
                   <font-awesome-icon icon="chevron-down" size="lg"/>
                 </span>
               </small>
-              <small v-else-if="type === 'steps'">{{ stepsDone }} / {{ totalSteps }}</small>
+              <small v-else-if="type === 'tasks'">{{ stepsDone }} / {{ totalSteps }}</small>
           </div>
         </div>
       </div>
@@ -58,11 +58,11 @@
       icon: {type: Array, required: true}, 
       title: {type: String, required: true}, 
       date: String,  
-      status: {type: Number, default: 1}, 
-      progress: {type: String, default: 'doing'},
+      status: { type: Number, default: 1, validator: val => [1, 0].includes(val) }, 
+      progress: { type: String, required: true, validator: val => ['doing', 'done'].includes(val) },
       stepsDone: Number,
       totalSteps: Number,
-      type: {type: String, default: 'simple'}
+      type: { type: String, required: true, validator: val => ['tasks', 'steps', 'simple'].includes(val) }
     },
     data: function () {
       return { 

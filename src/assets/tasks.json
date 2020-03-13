@@ -7,7 +7,7 @@
       "date": "16/02/20",
       "stepsDone": 2,
       "totalSteps": 10,
-      "type": "steps",
+      "type": "tasks",
       "status": 1,
       "progress": "doing"
     },
@@ -18,7 +18,7 @@
       "date": "23/12/20",
       "stepsDone": 7,
       "totalSteps": 10,
-      "type": "times",
+      "type": "steps",
       "status": 1,
       "progress": "doing"
     },
@@ -40,7 +40,7 @@
       "date": "18/02/20",
       "stepsDone": 9,
       "totalSteps": 10,
-      "type": "times",
+      "type": "steps",
       "status": 1,
       "progress": "doing"
     },
@@ -51,7 +51,7 @@
       "date": "",
       "stepsDone": 10,
       "totalSteps": 10,
-      "type": "steps",
+      "type": "tasks",
       "status": 1,
       "progress": "doing"
     },
@@ -62,7 +62,7 @@
       "date": "07/03/20",
       "stepsDone": 2,
       "totalSteps": 10,
-      "type": "times",
+      "type": "steps",
       "status": 1,
       "progress": "doing"
     },
@@ -73,7 +73,7 @@
       "date": "16/02/20",
       "stepsDone": 2,
       "totalSteps": 10,
-      "type": "times",
+      "type": "steps",
       "status": 1,
       "progress": "doing"
     },
@@ -84,7 +84,7 @@
       "date": "21/08/20",
       "stepsDone": 2,
       "totalSteps": 10,
-      "type": "times",
+      "type": "steps",
       "status": 1,
       "progress": "doing"
     },
@@ -95,7 +95,7 @@
       "date": "22/12/20",
       "stepsDone": 2,
       "totalSteps": 10,
-      "type": "times",
+      "type": "steps",
       "status": 1,
       "progress": "doing"
     }

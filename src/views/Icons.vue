@@ -33,8 +33,9 @@
   import faIcons from "../assets/fontAwesome.json"
 
   export default {
+    name: 'Icons',
     props: {
-      id: {type: String, default: ''}, 
+      id: {type: String, validator: val => ['add', 'edit'].includes(val)}, 
     },
     data: () => {
       return {
@@ -48,20 +49,7 @@
     },
     mounted: function () {
       this.iconList = this.originalIconList
-
-      this.$root.$on('bv::modal::shown', () => {
-        let element = document.querySelector(`#modal-icons-${this.id}`)
-
-        if(element && this.isApp()){
-          element.style.overflowY = 'auto'
-          
-          const height = window.innerHeight * 0.65
-          document.querySelector(`#modal-icons-${this.id} .modal-body`).style.height = `${height}px`
-          document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.position = 'fixed'
-          document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.bottom = '0'
-          document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.width = '96%'
-        }
-      })
+      this.initListeners()
     },
     methods: {
       select: function (element) {
@@ -96,6 +84,22 @@
         this.iconList = resultList
         this.showLoader = false
         this.searchResult = resultString
+      },
+      initListeners: function () {
+        //Modal size and init
+        this.$refs[`modal-icons-${this.id}`].$on('shown', () => {
+          let element = document.querySelector(`#modal-icons-${this.id}`)
+
+          if(element && this.isApp()){
+            element.style.overflowY = 'auto'
+            
+            const height = window.innerHeight * 0.65
+            document.querySelector(`#modal-icons-${this.id} .modal-body`).style.height = `${height}px`
+            document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.position = 'fixed'
+            document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.bottom = '0'
+            document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.width = '96%'
+          }
+        })
       }
     }
   }

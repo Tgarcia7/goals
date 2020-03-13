@@ -158,18 +158,7 @@
       Swal
     },
     mounted: function () {
-      this.$root.$on('bv::modal::shown', () => {
-        let element = document.querySelector('#modal-add')
-
-        if(element){
-          let elementBody = document.querySelector('#modal-add .modal-body')
-          element.style.overflowY = 'auto'
-          elementBody.style.overflowY = 'scroll'
-          
-          const fullHeight = window.innerHeight * 0.77
-          elementBody.style.height = `${fullHeight}px`
-        }
-      })
+      this.initListeners()
     },
     methods: {
       add: function (e) {
@@ -224,6 +213,21 @@
       },
       iconSelected: function (icon) {
         this.icon = icon
+      },
+      initListeners: function () {
+        //Modal size and init
+        this.$refs['modal-add'].$on('shown', () => {
+          let element = document.querySelector('#modal-add')
+
+          if(element){
+            let elementBody = document.querySelector('#modal-add .modal-body')
+            element.style.overflowY = 'auto'
+            elementBody.style.overflowY = 'scroll'
+            
+            const fullHeight = window.innerHeight * 0.77
+            elementBody.style.height = `${fullHeight}px`
+          }
+        })
       }
     }
   }
