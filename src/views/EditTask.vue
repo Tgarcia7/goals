@@ -201,7 +201,6 @@
         return true
       },
       checkSteps: function () {
-        console.log(this.task.stepsDone, this.task.totalSteps)
         if (Number(this.task.stepsDone) > Number(this.task.totalSteps)) {
           this.$refs.swal.toast('error', 'The steps done must be lower than the total steps')
           this.task.stepsDone = this.task.totalSteps
