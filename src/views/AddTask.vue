@@ -195,7 +195,7 @@
       },
       close: function () {
         this.cleanForm()
-        this.$refs['modal-add'].hide()
+        this.$refs['modal-edit'].hide()
       },
       showForm: function (type) {
         this.type = type

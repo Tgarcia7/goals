@@ -1,5 +1,6 @@
 <template>
-  <div class="task-row disable-selection">
+  <div :class="`task-row disable-selection ${editableArea ? 'clickable' : ''}`" 
+    @click="editableArea ? edit() : ''">
     <div :class="taskClasses">
       <div class="col-2 clickable" @click="edit()">
         <div class="circle">
@@ -84,6 +85,9 @@
         classes += this.type === 'simple' ? ' task-row-min' : ' task-row-complete'
         
         return classes
+      },
+      editableArea: function () {
+        return this.type === 'simple'
       }
     },
     methods: {
