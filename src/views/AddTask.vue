@@ -195,15 +195,18 @@
       },
       close: function () {
         this.cleanForm()
-        this.$refs['modal-edit'].hide()
+        this.$refs['modal-add'].hide()
       },
       showForm: function (type) {
         this.type = type
       },
       cleanForm: function () {
         this.type = ''
-        this.tasksList = ['']
+        this.title = ''
+        this.date = ''
+        this.totalSteps = ''
         this.icon = ''
+        this.tasksList = ['']
       },
       addSubTask: function () {
         this.tasksList.push('')

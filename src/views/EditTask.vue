@@ -44,7 +44,16 @@
               <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required v-model="task.totalSteps">
+              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required 
+                v-model="task.totalSteps" @keypress="onlyNumbers($event)" @keyup="checkSteps()">
+            </div>
+
+            <div class="col-4 col-form-label">
+              <label for="stepsDone">Steps done <span class="text-danger">*</span></label>
+            </div>
+            <div class="col-8">
+              <input type="number" class="form-control bg-dark text-white" name="stepsDone" min="0" required 
+                v-model="task.stepsDone" @keypress="onlyNumbers($event)" @keyup="checkSteps()">
             </div>
           </div>
 
@@ -181,7 +190,22 @@
             elementBody.style.height = `${fullHeight}px`
           }
         })
-      
+      },
+      onlyNumbers: function (event) {
+        let charCode = event.keyCode
+        
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            event.preventDefault()
+        }
+
+        return true
+      },
+      checkSteps: function () {
+        console.log(this.task.stepsDone, this.task.totalSteps)
+        if (Number(this.task.stepsDone) > Number(this.task.totalSteps)) {
+          this.$refs.swal.toast('error', 'The steps done must be lower than the total steps')
+          this.task.stepsDone = this.task.totalSteps
+        }
       }
     }
   }
