@@ -44,15 +44,15 @@
               <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required 
+              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="1" required 
                 v-model="task.totalSteps" @keypress="onlyNumbers($event)" @keyup="checkSteps()">
             </div>
 
             <div class="col-4 col-form-label">
-              <label for="stepsDone">Steps done <span class="text-danger">*</span></label>
+              <label for="stepsDone">Steps done</label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="stepsDone" min="0" required 
+              <input type="number" class="form-control bg-dark text-white" name="stepsDone" min="0" 
                 v-model="task.stepsDone" @keypress="onlyNumbers($event)" @keyup="checkSteps()">
             </div>
           </div>
@@ -85,11 +85,11 @@
       id: Number, 
       icon: Array, 
       title: String, 
-      date: String,  
+      date: String, 
       status: Number, 
-      progress: String,
-      stepsDone: Number,
-      totalSteps: Number,
+      progress: String, 
+      stepsDone: {type: Number, default: 0},
+      totalSteps: {type: Number, default: 0},
       type: String
     },
     data: () => {
@@ -101,8 +101,8 @@
           date: '',  
           status: '', 
           progress: '',
-          stepsDone: '',
-          totalSteps: '',
+          stepsDone: 0,
+          totalSteps: 0,
           type: ''
         }
       }
@@ -123,6 +123,8 @@
           return
         }
 
+        if (!this.task.stepsDone) this.task.stepsDone = 0
+
         this.close()
         console.log(this.task)
 
@@ -139,8 +141,8 @@
         this.task.date = ''
         this.task.status = ''
         this.task.progress = ''
-        this.task.stepsDone = ''
-        this.task.totalSteps = ''
+        this.task.stepsDone = 0
+        this.task.totalSteps = 0
         this.task.type = this.type
       },
       iconEdit: function (icon) {

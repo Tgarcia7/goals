@@ -84,7 +84,7 @@
                   <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-8">
-                  <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required v-model="totalSteps">
+                  <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="1" required v-model="totalSteps">
                 </div>
               </div>
 
@@ -148,7 +148,7 @@
         type: '',
         title: '',
         date: '',
-        totalSteps: '',
+        totalSteps: 1,
         icon: '',
         tasksList: [""]
       }
