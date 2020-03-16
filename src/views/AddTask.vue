@@ -84,7 +84,8 @@
                   <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-8">
-                  <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="1" required v-model="totalSteps">
+                  <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="1" required v-model="totalSteps"
+                     @keypress="onlyNumbers($event)">
                 </div>
               </div>
 
@@ -231,6 +232,15 @@
             elementBody.style.height = `${fullHeight}px`
           }
         })
+      },
+      onlyNumbers: function (event) {
+        let charCode = event.keyCode
+        
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            event.preventDefault()
+        }
+
+        return true
       }
     }
   }
