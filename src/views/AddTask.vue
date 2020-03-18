@@ -17,12 +17,12 @@
             </div>
 
             <div class="form-row mt-5">
-              <button type="button" class="btn btn-primary btn-lg col-5" @click="showForm('tasks')">
-                Tasks <br>
+              <button type="button" class="btn btn-primary btn-lg col-5" @click="showForm('steps')">
+                Steps <br>
                 <font-awesome-icon icon="tasks" size="lg"/>
               </button>
-              <button type="button" class="btn btn-light btn-lg col-5 ml-auto" @click="showForm('steps')">
-                Steps <br>
+              <button type="button" class="btn btn-light btn-lg col-5 ml-auto" @click="showForm('objective')">
+                Objective <br>
                 <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10</strong>
               </button>
             </div>
@@ -79,20 +79,20 @@
                 </div>
               </div>
 
-              <div class="form-row mt-3" v-if="this.type==='steps'">
+              <div class="form-row mt-3" v-if="this.type==='objective'">
                 <div class="col-4 col-form-label">
-                  <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
+                  <label for="objectiveTotal">Objective <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-8">
-                  <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="1" required v-model="totalSteps"
+                  <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required v-model="objectiveTotal"
                      @keypress="onlyNumbers($event)">
                 </div>
               </div>
 
-              <div v-if="this.type==='tasks'">
+              <div v-if="this.type==='steps'">
                 <div class="form-row">
                   <div class="col-12 col-form-label">
-                    <label>Tasks to complete the goal <span class="text-danger">*</span></label>
+                    <label>Steps to complete the goal <span class="text-danger">*</span></label>
                   </div>
                 </div>
 
@@ -111,7 +111,7 @@
                 <div class="form-row mt-4">
                   <div class="col-4 offset-1">
                     <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addSubTask()">
-                      Add task <font-awesome-icon class="clickable" icon="plus"/>
+                      Add step <font-awesome-icon class="clickable" icon="plus"/>
                     </button>
                   </div>
                 </div>
@@ -149,9 +149,9 @@
         type: '',
         title: '',
         date: '',
-        totalSteps: 1,
+        objectiveTotal: 1,
         icon: '',
-        tasksList: [""]
+        tasksList: []
       }
     },
     components: {
@@ -170,11 +170,12 @@
           return
         }
 
-        if (this.type === 'tasks') {
+        if (this.type === 'steps') {
           let cleanedList = this.tasksList.filter(item => item)
           this.tasksList = cleanedList
 
           if (!cleanedList.length) {
+            this.tasksList = ['']
             this.$refs.swal.toast('error', 'You must add at least one task')
             return
           }
@@ -184,7 +185,7 @@
           type: this.type, 
           title: this.title, 
           date: this.date, 
-          totalSteps: this.totalSteps, 
+          objectiveTotal: this.objectiveTotal, 
           icon: this.icon, 
           tasksList: this.tasksList
         }
@@ -205,7 +206,7 @@
         this.type = ''
         this.title = ''
         this.date = ''
-        this.totalSteps = ''
+        this.objectiveTotal = ''
         this.icon = ''
         this.tasksList = ['']
       },

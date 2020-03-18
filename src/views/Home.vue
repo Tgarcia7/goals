@@ -10,8 +10,8 @@
         :date="task.date"
         :progress="task.progress"
         :status="task.status"
-        :stepsDone="task.stepsDone"
-        :totalSteps="task.totalSteps"
+        :objectiveDone="task.objectiveDone"
+        :objectiveTotal="task.objectiveTotal"
         :type="task.type"
         @editTask="editTask(task)"/>
 
@@ -28,8 +28,8 @@
       :date="this.selectedTask.date"
       :progress="this.selectedTask.progress"
       :status="this.selectedTask.status"
-      :stepsDone="this.selectedTask.stepsDone"
-      :totalSteps="this.selectedTask.totalSteps"
+      :objectiveDone="this.selectedTask.objectiveDone"
+      :objectiveTotal="this.selectedTask.objectiveTotal"
       :type="this.selectedTask.type"
       :selected="true"/>
   </main>

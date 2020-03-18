@@ -39,21 +39,21 @@
             </div>
           </div>
 
-          <div class="form-row mt-3" v-if="this.task.type==='steps'">
+          <div class="form-row mt-3" v-if="this.task.type==='objective'">
             <div class="col-4 col-form-label">
-              <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
+              <label for="objectiveTotal">Objective <span class="text-danger">*</span></label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="1" required 
-                v-model="task.totalSteps" @keypress="onlyNumbers($event)" @keyup="checkSteps()">
+              <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required 
+                v-model="task.objectiveTotal" @keypress="onlyNumbers($event)" @change="checkObjective()">
             </div>
 
             <div class="col-4 col-form-label">
-              <label for="stepsDone">Steps done</label>
+              <label for="objectiveDone">Done</label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control bg-dark text-white" name="stepsDone" min="0" 
-                v-model="task.stepsDone" @keypress="onlyNumbers($event)" @keyup="checkSteps()">
+              <input type="number" class="form-control bg-dark text-white" name="objectiveDone" min="0" 
+                v-model="task.objectiveDone" @keypress="onlyNumbers($event)" @change="checkObjective()">
             </div>
           </div>
 
@@ -88,8 +88,8 @@
       date: String, 
       status: Number, 
       progress: String, 
-      stepsDone: {type: Number, default: 0},
-      totalSteps: {type: Number, default: 0},
+      objectiveDone: {type: Number, default: 0},
+      objectiveTotal: {type: Number, default: 0},
       type: String
     },
     data: () => {
@@ -101,8 +101,8 @@
           date: '',  
           status: '', 
           progress: '',
-          stepsDone: 0,
-          totalSteps: 0,
+          objectiveDone: 0,
+          objectiveTotal: 0,
           type: ''
         }
       }
@@ -123,7 +123,7 @@
           return
         }
 
-        if (!this.task.stepsDone) this.task.stepsDone = 0
+        if (!this.task.objectiveDone) this.task.objectiveDone = 0
 
         this.close()
         console.log(this.task)
@@ -141,8 +141,8 @@
         this.task.date = ''
         this.task.status = ''
         this.task.progress = ''
-        this.task.stepsDone = 0
-        this.task.totalSteps = 0
+        this.task.objectiveDone = 0
+        this.task.objectiveTotal = 0
         this.task.type = this.type
       },
       iconEdit: function (icon) {
@@ -155,8 +155,8 @@
         this.task.date = this.formatedDate()
         this.task.status = this.status
         this.task.progress = this.progress
-        this.task.stepsDone = this.stepsDone
-        this.task.totalSteps = this.totalSteps
+        this.task.objectiveDone = this.objectiveDone
+        this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
       },
       formatedDate: function () {
@@ -202,10 +202,10 @@
 
         return true
       },
-      checkSteps: function () {
-        if (Number(this.task.stepsDone) > Number(this.task.totalSteps)) {
-          this.$refs.swal.toast('error', 'The steps done must be lower than the total steps')
-          this.task.stepsDone = this.task.totalSteps
+      checkObjective: function () {
+        if (Number(this.task.objectiveDone) > Number(this.task.objectiveTotal)) {
+          this.$refs.swal.toast('error', 'The objectives done must be lower than the total objective')
+          this.task.objectiveDone = this.task.objectiveTotal
         }
       }
     }
