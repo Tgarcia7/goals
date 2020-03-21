@@ -16,21 +16,24 @@
               </div>
             </div>
 
-            <div class="form-row mt-5">
-              <button type="button" class="btn btn-primary btn-lg col-5" @click="showForm('steps')">
-                Steps <br>
-                <font-awesome-icon icon="tasks" size="lg"/>
-              </button>
-              <button type="button" class="btn btn-light btn-lg col-5 ml-auto" @click="showForm('objective')">
-                Objective <br>
-                <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10</strong>
+            <div class="form-row mt-4">
+              <button type="button" class="btn btn-primary btn-lg col-12" @click="showForm('steps')">
+                <strong><font-awesome-icon icon="tasks" size="lg"/> Steps</strong> <br>
+                <p class="type-description mt-1">To reach the goal you must complete a list of steps that you define</p>
               </button>
             </div>
 
             <div class="form-row mt-4">
-              <button type="button" class="btn btn-secondary btn-lg col-5 mx-auto" @click="showForm('simple')">
-                Simple <br>
-                <font-awesome-icon icon="bullseye" size="lg"/>
+              <button type="button" class="btn btn-light btn-lg col-12 ml-auto" @click="showForm('objective')">
+                <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10 Objective</strong><br>
+                <p class="type-description mt-1">You set the number of repetitions you want to complete to reach the goal</p>
+              </button>
+            </div>
+
+            <div class="form-row mt-4">
+              <button type="button" class="btn btn-secondary btn-lg col-12 mx-auto" @click="showForm('simple')">
+                <strong><font-awesome-icon icon="bullseye" size="lg"/> Simple</strong> <br>
+                <p class="type-description mt-1">No repetitions, no steps, just a goal</p>
               </button>
             </div>
           </div>
@@ -176,7 +179,7 @@
 
           if (!cleanedList.length) {
             this.tasksList = ['']
-            this.$refs.swal.toast('error', 'You must add at least one task')
+            this.$refs.swal.toast('error', 'You must add at least one step')
             return
           }
         }
@@ -276,5 +279,9 @@
 
   #btn-icons {
     margin-top: 2px;
+  }
+
+  .type-description {
+    font-size: 14px;
   }
 </style>
