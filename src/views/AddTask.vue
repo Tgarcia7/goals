@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-row mt-4">
-              <button type="button" class="btn btn-secondary btn-lg col-12 mx-auto" @click="showForm('simple')">
+              <button type="button" class="btn btn-info btn-lg col-12 mx-auto" @click="showForm('simple')">
                 <strong><font-awesome-icon icon="bullseye" size="lg"/> Simple</strong> <br>
                 <p class="type-description mt-1">No repetitions, no steps, just a goal</p>
               </button>
@@ -84,7 +84,7 @@
 
               <div class="form-row mt-3" v-if="this.type==='objective'">
                 <div class="col-4 col-form-label">
-                  <label for="objectiveTotal">Objective <span class="text-danger">*</span></label>
+                  <label for="objectiveTotal">Repetitions <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-8">
                   <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required v-model="objectiveTotal"
@@ -225,6 +225,7 @@
       initListeners: function () {
         //Modal size and init
         this.$refs['modal-add'].$on('shown', () => {
+          this.cleanForm()
           let element = document.querySelector('#modal-add')
 
           if(element){
