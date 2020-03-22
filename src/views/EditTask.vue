@@ -40,18 +40,18 @@
           </div>
 
           <div class="form-row mt-3" v-if="this.task.type==='objective'">
-            <div class="col-4 col-form-label">
+            <div class="col-6 col-form-label">
               <label for="objectiveTotal">Objective <span class="text-danger">*</span></label>
             </div>
-            <div class="col-8">
+            <div class="col-6">
               <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required 
                 v-model="task.objectiveTotal" @keypress="onlyNumbers($event)" @change="checkObjective()">
             </div>
 
-            <div class="col-4 col-form-label">
-              <label for="objectiveDone">Done</label>
+            <div class="col-6 col-form-label">
+              <label for="objectiveDone">Completed</label>
             </div>
-            <div class="col-8">
+            <div class="col-6">
               <input type="number" class="form-control bg-dark text-white" name="objectiveDone" min="0" 
                 v-model="task.objectiveDone" @keypress="onlyNumbers($event)" @change="checkObjective()">
             </div>
