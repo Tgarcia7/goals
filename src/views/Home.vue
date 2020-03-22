@@ -14,6 +14,10 @@
         :objectiveTotal="task.objectiveTotal"
         :type="task.type"
         @editTask="editTask(task)"/>
+      
+      <div v-if="tasks.length" class="text-muted mt-2 text-center">
+        <p><small>End of list</small></p>
+      </div>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
         <font-awesome-icon icon="plus"/>
