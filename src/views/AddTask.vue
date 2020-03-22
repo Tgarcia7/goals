@@ -199,8 +199,11 @@
         this.$refs.swal.toast('success', 'Goal added successfully')
       },
       close: function () {
-        this.cleanForm()
         this.$refs['modal-add'].hide()
+
+        setTimeout(function () {
+          this.cleanForm()
+        }, 500)
       },
       showForm: function (type) {
         this.type = type

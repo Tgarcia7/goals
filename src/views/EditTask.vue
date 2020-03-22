@@ -131,8 +131,10 @@
         this.$refs.swal.toast('success', 'Goal updated successfully')
       },
       close: function () {
-        this.cleanForm()
         this.$refs['modal-edit'].hide()
+        setTimeout(function () {
+          this.cleanForm()
+        }, 500)
       },
       cleanForm: function () {
         this.task.id = ''
