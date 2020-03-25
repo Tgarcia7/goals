@@ -26,7 +26,7 @@
           </div>
           <div class="col-4">
             <small v-if="type === 'objective'">{{ stepsCompleted }} / {{ objectiveTotal }}</small>
-            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable">
+            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable" @click="edit()">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
           </div>
@@ -63,7 +63,8 @@
       progress: { type: String, required: true, validator: val => ['doing', 'done'].includes(val) },
       objectiveDone: Number,
       objectiveTotal: Number,
-      type: { type: String, required: true, validator: val => ['steps', 'objective', 'simple'].includes(val) }
+      type: { type: String, required: true, validator: val => ['steps', 'objective', 'simple'].includes(val) },
+      tasksList: { type: Array }
     },
     data: function () {
       return { 

@@ -57,6 +57,40 @@
             </div>
           </div>
 
+          <div v-if="task.type==='steps'">
+            <div class="form-row">
+              <div class="col-12 col-form-label">
+                <label>Steps to complete the goal <span class="text-danger">*</span></label>
+              </div>
+            </div>
+
+            <div v-for="(subTask, index) in task.tasksList" :key="index">
+              <div class="form-row">
+                <div class="col-1 pt-1">
+                  <label class="check-container">
+                    <input type="checkbox" class="form-control clickable" :name="`subtTaskCheck_${index}`" v-model="task.tasksList[index].status">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col-9">
+                  <input type="text" class="form-control bg-dark text-white tasks-checks" :name="`subtTask_${index}`" v-model="task.tasksList[index].description">
+                </div>
+
+                <div class="col-2 text-center mt-3">
+                  <font-awesome-icon class="ml-3 clickable sub-task-trash" icon="trash" @click="removeSubTask(index)"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row mt-4">
+              <div class="col-4 offset-1">
+                <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addSubTask()">
+                  Add step <font-awesome-icon class="clickable" icon="plus"/>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </form>
       </div>
 
@@ -90,7 +124,8 @@
       progress: String, 
       objectiveDone: {type: Number, default: 0},
       objectiveTotal: {type: Number, default: 0},
-      type: String
+      type: String,
+      tasksList: {type: Array}
     },
     data: () => {
       return {
@@ -103,7 +138,8 @@
           progress: '',
           objectiveDone: 0,
           objectiveTotal: 0,
-          type: ''
+          type: '',
+          tasksList: []
         }
       }
     }, 
@@ -125,16 +161,29 @@
 
         if (!this.task.objectiveDone) this.task.objectiveDone = 0
 
-        this.close()
-        console.log(this.task)
+        if (this.task.type === 'steps') {
+          let cleanedList = this.task.tasksList.filter(item => item.description)
+          this.task.tasksList = cleanedList
 
+          if(this.task.tasksList.length) {
+            this.task.objectiveTotal = cleanedList.length
+            this.task.objectiveDone = (this.task.tasksList.filter(item => item.status)).length
+          } else {
+            this.task.tasksList = [{'status': false, 'description': ''}]
+            this.$refs.swal.toast('error', 'You must add at least one step')
+            return
+          }
+        }
+
+        console.log(this.task)
+        this.close()
+
+        this.$emit('editedTask', this.task)
         this.$refs.swal.toast('success', 'Goal updated successfully')
       },
       close: function () {
         this.$refs['modal-edit'].hide()
-        setTimeout(function () {
-          this.cleanForm()
-        }, 500)
+        setTimeout(this.cleanForm(), 500)
       },
       cleanForm: function () {
         this.task.id = ''
@@ -146,6 +195,7 @@
         this.task.objectiveDone = 0
         this.task.objectiveTotal = 0
         this.task.type = this.type
+        this.task.tasksList = [{'status': false, 'description': ''}]
       },
       iconEdit: function (icon) {
         this.task.icon = icon
@@ -160,6 +210,7 @@
         this.task.objectiveDone = this.objectiveDone
         this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
+        this.task.tasksList = this.tasksList
       },
       formatedDate: function () {
         let date = this.date
@@ -209,6 +260,12 @@
           this.$refs.swal.toast('error', 'The objectives done must be lower than the total objective')
           this.task.objectiveDone = this.task.objectiveTotal
         }
+      },
+      addSubTask: function () {
+        this.task.tasksList.push({'status': false, 'description': ''})
+      },
+      removeSubTask: function (index) {
+        this.task.tasksList.splice(index, index+1)
       }
     }
   }
@@ -224,4 +281,85 @@
   #btn-icons-edit {
     margin-top: 2px;
   }
+
+  .tasks-checks {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px;
+  }
+
+  .sub-task-trash:hover {
+    color: #dc3545;
+  }
+
+  /* CHECKBOX */
+
+   /* Customize the label (the container) */
+  .check-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Hide the browser's default checkbox */
+  .check-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: #eee;
+  }
+
+  /* On mouse-over, add a grey background color */
+  .check-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .check-container input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .check-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .check-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 7px;
+    height: 13px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  } 
 </style>

@@ -5,11 +5,16 @@
       "icon": ["fab", "vuejs"],
       "title": "Aprender Vue.js",
       "date": "16/02/20",
-      "objectiveDone": 2,
-      "objectiveTotal": 10,
+      "objectiveDone": 1,
+      "objectiveTotal": 3,
       "type": "steps",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": [
+        {"status": true, "description": "Vue router"},
+        {"status": false, "description": "Vuex"},
+        {"status": false, "description": "Vue i18n"}
+      ]
     },
     {
       "id": 2,
@@ -20,7 +25,8 @@
       "objectiveTotal": 10,
       "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     },
     {
       "id": 3,
@@ -31,7 +37,8 @@
       "objectiveTotal": null,
       "type": "simple",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     },
     {
       "id": 4,
@@ -42,18 +49,25 @@
       "objectiveTotal": 10,
       "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     },
     {
       "id": 5,
       "icon": ["fas", "swimmer"],
       "title": "Natación",
       "date": "",
-      "objectiveDone": 10,
-      "objectiveTotal": 10,
+      "objectiveDone": 4,
+      "objectiveTotal": 4,
       "type": "steps",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": [
+        {"status": true, "description": "Estilo libre"},
+        {"status": true, "description": "Pecho"},
+        {"status": true, "description": "Dorso"},
+        {"status": true, "description": "Mariposa"}
+      ]
     },
     {
       "id": 6,
@@ -64,7 +78,8 @@
       "objectiveTotal": 10,
       "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     },
     {
       "id": 7,
@@ -75,7 +90,8 @@
       "objectiveTotal": 10,
       "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     },
     {
       "id": 8,
@@ -86,7 +102,8 @@
       "objectiveTotal": 10,
       "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     },
     {
       "id": 9,
@@ -97,7 +114,8 @@
       "objectiveTotal": 10,
       "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "tasksList": null
     }
   ]
 }

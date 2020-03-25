@@ -102,7 +102,7 @@
                 <div v-for="(subTask, index) in tasksList" :key="index">
                   <div class="form-row">
                     <div class="col-9 offset-1">
-                      <input type="text" class="form-control bg-dark text-white tasks-checks" :name="`subtTask_${index}`" v-model="tasksList[index]">
+                      <input type="text" class="form-control bg-dark text-white tasks-checks" :name="`subtTask_${index}`" v-model="tasksList[index].description">
                     </div>
 
                     <div class="col-2 text-center mt-3">
@@ -174,11 +174,11 @@
         }
 
         if (this.type === 'steps') {
-          let cleanedList = this.tasksList.filter(item => item)
+          let cleanedList = this.tasksList.filter(item => item.description)
           this.tasksList = cleanedList
 
           if (!cleanedList.length) {
-            this.tasksList = ['']
+            this.tasksList = [{'status': false, 'description': ''}]
             this.$refs.swal.toast('error', 'You must add at least one step')
             return
           }
@@ -201,9 +201,7 @@
       close: function () {
         this.$refs['modal-add'].hide()
 
-        setTimeout(function () {
-          this.cleanForm()
-        }, 500)
+        setTimeout(this.cleanForm, 500)
       },
       showForm: function (type) {
         this.type = type
@@ -214,10 +212,10 @@
         this.date = ''
         this.objectiveTotal = ''
         this.icon = ''
-        this.tasksList = ['']
+        this.tasksList = [{'status': false, 'description': ''}]
       },
       addSubTask: function () {
-        this.tasksList.push('')
+        this.tasksList.push({'status': false, 'description': ''})
       },
       removeSubTask: function (index) {
         this.tasksList.splice(index, index+1)
