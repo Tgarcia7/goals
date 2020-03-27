@@ -10,7 +10,7 @@
       "type": "steps",
       "status": 1,
       "progress": "doing",
-      "tasksList": [
+      "stepsList": [
         {"status": true, "description": "Vue router"},
         {"status": false, "description": "Vuex"},
         {"status": false, "description": "Vue i18n"}
@@ -26,7 +26,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     },
     {
       "id": 3,
@@ -38,7 +38,7 @@
       "type": "simple",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     },
     {
       "id": 4,
@@ -50,7 +50,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     },
     {
       "id": 5,
@@ -62,7 +62,7 @@
       "type": "steps",
       "status": 1,
       "progress": "doing",
-      "tasksList": [
+      "stepsList": [
         {"status": true, "description": "Estilo libre"},
         {"status": true, "description": "Pecho"},
         {"status": true, "description": "Dorso"},
@@ -79,7 +79,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     },
     {
       "id": 7,
@@ -91,7 +91,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     },
     {
       "id": 8,
@@ -103,7 +103,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     },
     {
       "id": 9,
@@ -115,7 +115,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "tasksList": null
+      "stepsList": null
     }
   ]
 }

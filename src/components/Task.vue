@@ -64,7 +64,7 @@
       objectiveDone: Number,
       objectiveTotal: Number,
       type: { type: String, required: true, validator: val => ['steps', 'objective', 'simple'].includes(val) },
-      tasksList: { type: Array }
+      stepsList: { type: Array }
     },
     data: function () {
       return { 

@@ -99,21 +99,21 @@
                   </div>
                 </div>
 
-                <div v-for="(subTask, index) in tasksList" :key="index">
+                <div v-for="(step, index) in stepsList" :key="index">
                   <div class="form-row">
                     <div class="col-9 offset-1">
-                      <input type="text" class="form-control bg-dark text-white tasks-checks" :name="`subtTask_${index}`" v-model="tasksList[index].description">
+                      <input type="text" class="form-control bg-dark text-white steps-inputs" :name="`steps_${index}`" v-model="stepsList[index].description">
                     </div>
 
                     <div class="col-2 text-center mt-3">
-                      <font-awesome-icon class="ml-3 clickable sub-task-trash" icon="trash" @click="removeSubTask(index)"/>
+                      <font-awesome-icon class="ml-3 clickable steps-list-trash" icon="trash" @click="removeStep(index)"/>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-row mt-4">
                   <div class="col-4 offset-1">
-                    <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addSubTask()">
+                    <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addStep()">
                       Add step <font-awesome-icon class="clickable" icon="plus"/>
                     </button>
                   </div>
@@ -154,7 +154,7 @@
         date: '',
         objectiveTotal: 1,
         icon: '',
-        tasksList: []
+        stepsList: []
       }
     },
     components: {
@@ -174,11 +174,11 @@
         }
 
         if (this.type === 'steps') {
-          let cleanedList = this.tasksList.filter(item => item.description)
-          this.tasksList = cleanedList
+          let cleanedList = this.stepsList.filter(item => item.description)
+          this.stepsList = cleanedList
 
           if (!cleanedList.length) {
-            this.tasksList = [{'status': false, 'description': ''}]
+            this.stepsList = [{'status': false, 'description': ''}]
             this.$refs.swal.toast('error', 'You must add at least one step')
             return
           }
@@ -190,7 +190,7 @@
           date: this.date, 
           objectiveTotal: this.objectiveTotal, 
           icon: this.icon, 
-          tasksList: this.tasksList
+          stepsList: this.stepsList
         }
         
         this.close()
@@ -212,13 +212,13 @@
         this.date = ''
         this.objectiveTotal = ''
         this.icon = ''
-        this.tasksList = [{'status': false, 'description': ''}]
+        this.stepsList = [{'status': false, 'description': ''}]
       },
-      addSubTask: function () {
-        this.tasksList.push({'status': false, 'description': ''})
+      addStep: function () {
+        this.stepsList.push({'status': false, 'description': ''})
       },
-      removeSubTask: function (index) {
-        this.tasksList.splice(index, index+1)
+      removeStep: function (index) {
+        this.stepsList.splice(index, index+1)
       },
       iconSelected: function (icon) {
         this.icon = icon
@@ -262,14 +262,14 @@
     transform: translateX(500px);
   }
 
-  .tasks-checks {
+  .steps-inputs {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
     border-radius: 0px;
   }
 
-  .sub-task-trash:hover {
+  .steps-list-trash:hover {
     color: #dc3545;
   }
 

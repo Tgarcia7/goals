@@ -64,27 +64,27 @@
               </div>
             </div>
 
-            <div v-for="(subTask, index) in task.tasksList" :key="index">
+            <div v-for="(step, index) in task.stepsList" :key="index">
               <div class="form-row">
-                <div class="col-1 pt-1">
+                <div class="col-1 pt-2">
                   <label class="check-container">
-                    <input type="checkbox" class="form-control clickable" :name="`subtTaskCheck_${index}`" v-model="task.tasksList[index].status">
+                    <input type="checkbox" class="form-control clickable" :name="`stepsCheck_${index}`" v-model="task.stepsList[index].status">
                     <span class="checkmark"></span>
                   </label>
                 </div>
                 <div class="col-9">
-                  <input type="text" class="form-control bg-dark text-white tasks-checks" :name="`subtTask_${index}`" v-model="task.tasksList[index].description">
+                  <input type="text" class="form-control bg-dark text-white steps-inputs" :name="`steps_${index}`" v-model="task.stepsList[index].description">
                 </div>
 
                 <div class="col-2 text-center mt-3">
-                  <font-awesome-icon class="ml-3 clickable sub-task-trash" icon="trash" @click="removeSubTask(index)"/>
+                  <font-awesome-icon class="ml-3 clickable steps-list-trash" icon="trash" @click="removeStep(index)"/>
                 </div>
               </div>
             </div>
 
             <div class="form-row mt-4">
               <div class="col-4 offset-1">
-                <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addSubTask()">
+                <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addStep()">
                   Add step <font-awesome-icon class="clickable" icon="plus"/>
                 </button>
               </div>
@@ -125,7 +125,7 @@
       objectiveDone: {type: Number, default: 0},
       objectiveTotal: {type: Number, default: 0},
       type: String,
-      tasksList: {type: Array}
+      stepsList: {type: Array}
     },
     data: () => {
       return {
@@ -139,7 +139,7 @@
           objectiveDone: 0,
           objectiveTotal: 0,
           type: '',
-          tasksList: []
+          stepsList: []
         }
       }
     }, 
@@ -162,14 +162,14 @@
         if (!this.task.objectiveDone) this.task.objectiveDone = 0
 
         if (this.task.type === 'steps') {
-          let cleanedList = this.task.tasksList.filter(item => item.description)
-          this.task.tasksList = cleanedList
+          let cleanedList = this.task.stepsList.filter(item => item.description)
+          this.task.stepsList = cleanedList
 
-          if(this.task.tasksList.length) {
-            this.task.objectiveTotal = cleanedList.length
-            this.task.objectiveDone = (this.task.tasksList.filter(item => item.status)).length
+          if(this.task.stepsList.length) {
+            this.task.objectiveTotal = this.task.stepsList.length
+            this.task.objectiveDone = (this.task.stepsList.filter(item => item.status)).length
           } else {
-            this.task.tasksList = [{'status': false, 'description': ''}]
+            this.task.stepsList = [{'status': false, 'description': ''}]
             this.$refs.swal.toast('error', 'You must add at least one step')
             return
           }
@@ -183,7 +183,7 @@
       },
       close: function () {
         this.$refs['modal-edit'].hide()
-        setTimeout(this.cleanForm(), 500)
+        setTimeout(this.cleanForm, 500)
       },
       cleanForm: function () {
         this.task.id = ''
@@ -195,7 +195,7 @@
         this.task.objectiveDone = 0
         this.task.objectiveTotal = 0
         this.task.type = this.type
-        this.task.tasksList = [{'status': false, 'description': ''}]
+        this.task.stepsList = [{'status': false, 'description': ''}]
       },
       iconEdit: function (icon) {
         this.task.icon = icon
@@ -210,7 +210,7 @@
         this.task.objectiveDone = this.objectiveDone
         this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
-        this.task.tasksList = this.tasksList
+        this.task.stepsList = this.stepsList.slice()
       },
       formatedDate: function () {
         let date = this.date
@@ -261,11 +261,11 @@
           this.task.objectiveDone = this.task.objectiveTotal
         }
       },
-      addSubTask: function () {
-        this.task.tasksList.push({'status': false, 'description': ''})
+      addStep: function () {
+        this.task.stepsList.push({'status': false, 'description': ''})
       },
-      removeSubTask: function (index) {
-        this.task.tasksList.splice(index, index+1)
+      removeStep: function (index) {
+        this.task.stepsList.splice(index, index+1)
       }
     }
   }
@@ -282,14 +282,14 @@
     margin-top: 2px;
   }
 
-  .tasks-checks {
+  .steps-inputs {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
     border-radius: 0px;
   }
 
-  .sub-task-trash:hover {
+  .steps-list-trash:hover {
     color: #dc3545;
   }
 

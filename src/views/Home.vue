@@ -13,7 +13,7 @@
         :objectiveDone="task.objectiveDone"
         :objectiveTotal="task.objectiveTotal"
         :type="task.type"
-        :tasksList="task.tasksList"
+        :stepsList="task.stepsList"
         @editTask="editTask(task)"/>
       
       <div v-if="tasks.length" class="text-muted mt-2 text-center">
@@ -36,7 +36,7 @@
       :objectiveDone="this.selectedTask.objectiveDone"
       :objectiveTotal="this.selectedTask.objectiveTotal"
       :type="this.selectedTask.type"
-      :tasksList="this.selectedTask.tasksList"
+      :stepsList="this.selectedTask.stepsList"
       :selected="true"/>
   </main>
 </template>
