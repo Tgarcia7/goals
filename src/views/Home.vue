@@ -2,18 +2,23 @@
   <main class="flex-shrink-0" role="main">
     <div class="container">
 
-      <Task v-for="task in tasks" 
-        :key="task.id" 
+      <Task v-for="(task, index) in tasks" 
+        :key="index" 
         :id="task.id" 
         :icon="task.icon"
         :title="task.title"
         :date="task.date"
         :progress="task.progress"
         :status="task.status"
-        :stepsDone="task.stepsDone"
-        :totalSteps="task.totalSteps"
+        :objectiveDone="task.objectiveDone"
+        :objectiveTotal="task.objectiveTotal"
         :type="task.type"
-        @editTask="editTask(task)"/>
+        :stepsList="task.stepsList"
+        @viewTask="viewTask(task)"/>
+      
+      <div v-if="tasks.length" class="text-muted mt-2 text-center">
+        <p><small>End of list</small></p>
+      </div>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
         <font-awesome-icon icon="plus"/>
@@ -28,10 +33,12 @@
       :date="this.selectedTask.date"
       :progress="this.selectedTask.progress"
       :status="this.selectedTask.status"
-      :stepsDone="this.selectedTask.stepsDone"
-      :totalSteps="this.selectedTask.totalSteps"
+      :objectiveDone="this.selectedTask.objectiveDone"
+      :objectiveTotal="this.selectedTask.objectiveTotal"
       :type="this.selectedTask.type"
-      :selected="true"/>
+      :stepsList="this.selectedTask.stepsList"
+      :selected="true"
+      @saveEditedTask="saveEditedTask"/>
   </main>
 </template>
 
@@ -55,9 +62,13 @@
       EditTask
     },
     methods: {
-      editTask: function (task) {
+      viewTask: function (task) {
         this.selectedTask = task
         this.$bvModal.show('modal-edit')
+      }, 
+      saveEditedTask: function (editedTask) {
+        let idxFound = (this.tasks.find( element => element.id === editedTask.id)).id - 1
+        this.$set(this.tasks, idxFound, editedTask) 
       }
     }
   }

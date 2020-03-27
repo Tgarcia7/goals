@@ -5,99 +5,117 @@
       "icon": ["fab", "vuejs"],
       "title": "Aprender Vue.js",
       "date": "16/02/20",
-      "stepsDone": 2,
-      "totalSteps": 10,
-      "type": "tasks",
+      "objectiveDone": 1,
+      "objectiveTotal": 3,
+      "type": "steps",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": [
+        {"status": true, "description": "Vue router"},
+        {"status": false, "description": "Vuex"},
+        {"status": false, "description": "Vue i18n"}
+      ]
     },
     {
       "id": 2,
       "icon": ["fas", "weight"],
       "title": "Bajar de peso",
       "date": "23/12/20",
-      "stepsDone": 7,
-      "totalSteps": 10,
-      "type": "steps",
+      "objectiveDone": 7,
+      "objectiveTotal": 10,
+      "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     },
     {
       "id": 3,
       "icon": ["fas", "language"],
       "title": "Aprender inglés",
       "date": null,
-      "stepsDone": null,
-      "totalSteps": null,
+      "objectiveDone": null,
+      "objectiveTotal": null,
       "type": "simple",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     },
     {
       "id": 4,
       "icon": ["fas", "bed"],
       "title": "Dormir temprano",
       "date": "18/02/20",
-      "stepsDone": 9,
-      "totalSteps": 10,
-      "type": "steps",
+      "objectiveDone": 9,
+      "objectiveTotal": 10,
+      "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     },
     {
       "id": 5,
       "icon": ["fas", "swimmer"],
       "title": "Natación",
       "date": "",
-      "stepsDone": 10,
-      "totalSteps": 10,
-      "type": "tasks",
+      "objectiveDone": 4,
+      "objectiveTotal": 4,
+      "type": "steps",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": [
+        {"status": true, "description": "Estilo libre"},
+        {"status": true, "description": "Pecho"},
+        {"status": true, "description": "Dorso"},
+        {"status": true, "description": "Mariposa"}
+      ]
     },
     {
       "id": 6,
       "icon": ["fas", "running"],
       "title": "Correr",
       "date": "07/03/20",
-      "stepsDone": 2,
-      "totalSteps": 10,
-      "type": "steps",
+      "objectiveDone": 2,
+      "objectiveTotal": 10,
+      "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     },
     {
       "id": 7,
       "icon": ["fab", "readme"],
       "title": "Leer",
       "date": "16/02/20",
-      "stepsDone": 2,
-      "totalSteps": 10,
-      "type": "steps",
+      "objectiveDone": 2,
+      "objectiveTotal": 10,
+      "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     },
     {
       "id": 8,
       "icon": ["fas", "plus"],
       "title": "Levantarse temprano",
       "date": "21/08/20",
-      "stepsDone": 2,
-      "totalSteps": 10,
-      "type": "steps",
+      "objectiveDone": 2,
+      "objectiveTotal": 10,
+      "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     },
     {
       "id": 9,
       "icon": ["fas", "clipboard-check"],
       "title": "Natación",
       "date": "22/12/20",
-      "stepsDone": 2,
-      "totalSteps": 10,
-      "type": "steps",
+      "objectiveDone": 2,
+      "objectiveTotal": 10,
+      "type": "objective",
       "status": 1,
-      "progress": "doing"
+      "progress": "doing",
+      "stepsList": []
     }
   ]
 }

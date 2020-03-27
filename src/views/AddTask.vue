@@ -16,21 +16,24 @@
               </div>
             </div>
 
-            <div class="form-row mt-5">
-              <button type="button" class="btn btn-primary btn-lg col-5" @click="showForm('tasks')">
-                Tasks <br>
-                <font-awesome-icon icon="tasks" size="lg"/>
-              </button>
-              <button type="button" class="btn btn-light btn-lg col-5 ml-auto" @click="showForm('steps')">
-                Steps <br>
-                <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10</strong>
+            <div class="form-row mt-4">
+              <button type="button" class="btn btn-primary btn-lg col-12" @click="showForm('steps')">
+                <strong><font-awesome-icon icon="tasks" size="lg"/> Steps</strong> <br>
+                <p class="type-description mt-1">To reach the goal you must complete a list of steps that you define</p>
               </button>
             </div>
 
             <div class="form-row mt-4">
-              <button type="button" class="btn btn-secondary btn-lg col-5 mx-auto" @click="showForm('simple')">
-                Simple <br>
-                <font-awesome-icon icon="bullseye" size="lg"/>
+              <button type="button" class="btn btn-light btn-lg col-12 ml-auto" @click="showForm('objective')">
+                <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10 Objective</strong><br>
+                <p class="type-description mt-1">You set the number of repetitions you want to complete to reach the goal</p>
+              </button>
+            </div>
+
+            <div class="form-row mt-4">
+              <button type="button" class="btn btn-info btn-lg col-12 mx-auto" @click="showForm('simple')">
+                <strong><font-awesome-icon icon="bullseye" size="lg"/> Simple</strong> <br>
+                <p class="type-description mt-1">No repetitions, no steps, just a goal</p>
               </button>
             </div>
           </div>
@@ -79,38 +82,39 @@
                 </div>
               </div>
 
-              <div class="form-row mt-3" v-if="this.type==='steps'">
+              <div class="form-row mt-3" v-if="this.type==='objective'">
                 <div class="col-4 col-form-label">
-                  <label for="totalSteps">Total steps <span class="text-danger">*</span></label>
+                  <label for="objectiveTotal">Repetitions <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-8">
-                  <input type="number" class="form-control bg-dark text-white" name="totalSteps" min="0" required v-model="totalSteps">
+                  <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required v-model="objectiveTotal"
+                     @keypress="onlyNumbers($event)">
                 </div>
               </div>
 
-              <div v-if="this.type==='tasks'">
+              <div v-if="this.type==='steps'">
                 <div class="form-row">
                   <div class="col-12 col-form-label">
-                    <label>Tasks to complete the goal <span class="text-danger">*</span></label>
+                    <label>Steps to complete the goal <span class="text-danger">*</span></label>
                   </div>
                 </div>
 
-                <div v-for="(subTask, index) in tasksList" :key="index">
+                <div v-for="(step, index) in stepsList" :key="index">
                   <div class="form-row">
                     <div class="col-9 offset-1">
-                      <input type="text" class="form-control bg-dark text-white tasks-checks" :name="`subtTask_${index}`" v-model="tasksList[index]">
+                      <input type="text" class="form-control bg-dark text-white steps-inputs" :name="`steps_${index}`" v-model="stepsList[index].description">
                     </div>
 
                     <div class="col-2 text-center mt-3">
-                      <font-awesome-icon class="ml-3 clickable sub-task-trash" icon="trash" @click="removeSubTask(index)"/>
+                      <font-awesome-icon class="ml-3 clickable steps-list-trash" icon="trash" @click="removeStep(index)"/>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-row mt-4">
                   <div class="col-4 offset-1">
-                    <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addSubTask()">
-                      Add task <font-awesome-icon class="clickable" icon="plus"/>
+                    <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addStep()">
+                      Add step <font-awesome-icon class="clickable" icon="plus"/>
                     </button>
                   </div>
                 </div>
@@ -148,9 +152,9 @@
         type: '',
         title: '',
         date: '',
-        totalSteps: '',
+        objectiveTotal: 1,
         icon: '',
-        tasksList: [""]
+        stepsList: []
       }
     },
     components: {
@@ -169,12 +173,13 @@
           return
         }
 
-        if (this.type === 'tasks') {
-          let cleanedList = this.tasksList.filter(item => item)
-          this.tasksList = cleanedList
+        if (this.type === 'steps') {
+          let cleanedList = this.stepsList.filter(item => item.description)
+          this.stepsList = cleanedList
 
           if (!cleanedList.length) {
-            this.$refs.swal.toast('error', 'You must add at least one task')
+            this.stepsList = [{'status': false, 'description': ''}]
+            this.$refs.swal.toast('error', 'You must add at least one step')
             return
           }
         }
@@ -183,9 +188,9 @@
           type: this.type, 
           title: this.title, 
           date: this.date, 
-          totalSteps: this.totalSteps, 
+          objectiveTotal: this.objectiveTotal, 
           icon: this.icon, 
-          tasksList: this.tasksList
+          stepsList: this.stepsList
         }
         
         this.close()
@@ -194,22 +199,26 @@
         this.$refs.swal.toast('success', 'Goal added successfully')
       },
       close: function () {
-        this.cleanForm()
-        this.$refs['modal-edit'].hide()
+        this.$refs['modal-add'].hide()
+
+        setTimeout(this.cleanForm, 500)
       },
       showForm: function (type) {
         this.type = type
       },
       cleanForm: function () {
         this.type = ''
-        this.tasksList = ['']
+        this.title = ''
+        this.date = ''
+        this.objectiveTotal = ''
         this.icon = ''
+        this.stepsList = [{'status': false, 'description': ''}]
       },
-      addSubTask: function () {
-        this.tasksList.push('')
+      addStep: function () {
+        this.stepsList.push({'status': false, 'description': ''})
       },
-      removeSubTask: function (index) {
-        this.tasksList.splice(index, index+1)
+      removeStep: function (index) {
+        this.stepsList.splice(index, index+1)
       },
       iconSelected: function (icon) {
         this.icon = icon
@@ -217,6 +226,7 @@
       initListeners: function () {
         //Modal size and init
         this.$refs['modal-add'].$on('shown', () => {
+          this.cleanForm()
           let element = document.querySelector('#modal-add')
 
           if(element){
@@ -228,6 +238,15 @@
             elementBody.style.height = `${fullHeight}px`
           }
         })
+      },
+      onlyNumbers: function (event) {
+        let charCode = event.keyCode
+        
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            event.preventDefault()
+        }
+
+        return true
       }
     }
   }
@@ -243,14 +262,14 @@
     transform: translateX(500px);
   }
 
-  .tasks-checks {
+  .steps-inputs {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
     border-radius: 0px;
   }
 
-  .sub-task-trash:hover {
+  .steps-list-trash:hover {
     color: #dc3545;
   }
 
@@ -262,5 +281,9 @@
 
   #btn-icons {
     margin-top: 2px;
+  }
+
+  .type-description {
+    font-size: 14px;
   }
 </style>
