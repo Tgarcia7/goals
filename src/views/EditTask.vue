@@ -178,12 +178,12 @@
         console.log(this.task)
         this.close()
 
-        this.$emit('editedTask', this.task)
+        this.$emit('saveEditedTask', this.task)
         this.$refs.swal.toast('success', 'Goal updated successfully')
       },
       close: function () {
         this.$refs['modal-edit'].hide()
-        setTimeout(this.cleanForm, 500)
+        // setTimeout(this.cleanForm, 500)
       },
       cleanForm: function () {
         this.task.id = ''

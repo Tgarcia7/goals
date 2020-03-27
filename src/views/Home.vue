@@ -2,8 +2,8 @@
   <main class="flex-shrink-0" role="main">
     <div class="container">
 
-      <Task v-for="task in tasks" 
-        :key="task.id" 
+      <Task v-for="(task, index) in tasks" 
+        :key="index" 
         :id="task.id" 
         :icon="task.icon"
         :title="task.title"
@@ -14,7 +14,7 @@
         :objectiveTotal="task.objectiveTotal"
         :type="task.type"
         :stepsList="task.stepsList"
-        @editTask="editTask(task)"/>
+        @viewTask="viewTask(task)"/>
       
       <div v-if="tasks.length" class="text-muted mt-2 text-center">
         <p><small>End of list</small></p>
@@ -37,7 +37,8 @@
       :objectiveTotal="this.selectedTask.objectiveTotal"
       :type="this.selectedTask.type"
       :stepsList="this.selectedTask.stepsList"
-      :selected="true"/>
+      :selected="true"
+      @saveEditedTask="saveEditedTask"/>
   </main>
 </template>
 
@@ -61,9 +62,13 @@
       EditTask
     },
     methods: {
-      editTask: function (task) {
+      viewTask: function (task) {
         this.selectedTask = task
         this.$bvModal.show('modal-edit')
+      }, 
+      saveEditedTask: function (editedTask) {
+        let idxFound = (this.tasks.find( element => element.id === editedTask.id)).id - 1
+        this.$set(this.tasks, idxFound, editedTask) 
       }
     }
   }

@@ -26,7 +26,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     },
     {
       "id": 3,
@@ -38,7 +38,7 @@
       "type": "simple",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     },
     {
       "id": 4,
@@ -50,7 +50,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     },
     {
       "id": 5,
@@ -79,7 +79,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     },
     {
       "id": 7,
@@ -91,7 +91,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     },
     {
       "id": 8,
@@ -103,7 +103,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     },
     {
       "id": 9,
@@ -115,7 +115,7 @@
       "type": "objective",
       "status": 1,
       "progress": "doing",
-      "stepsList": null
+      "stepsList": []
     }
   ]
 }
