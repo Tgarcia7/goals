@@ -45,7 +45,7 @@
             </div>
             <div class="col-6">
               <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required 
-                v-model="task.objectiveTotal" @keypress="onlyNumbers($event)" @change="checkObjective()">
+                v-model.number="task.objectiveTotal" @keypress="onlyNumbers($event)" @change="checkObjective()">
             </div>
 
             <div class="col-6 col-form-label">
@@ -53,7 +53,7 @@
             </div>
             <div class="col-6">
               <input type="number" class="form-control bg-dark text-white" name="objectiveDone" min="0" 
-                v-model="task.objectiveDone" @keypress="onlyNumbers($event)" @change="checkObjective()">
+                v-model.number="task.objectiveDone" @keypress="onlyNumbers($event)" @change="checkObjective()">
             </div>
           </div>
 
@@ -68,12 +68,12 @@
               <div class="form-row">
                 <div class="col-1 pt-2">
                   <label class="check-container">
-                    <input type="checkbox" class="form-control clickable" :name="`stepsCheck_${index}`" v-model="task.stepsList[index].status">
+                    <input type="checkbox" class="form-control clickable" :name="`stepsCheck_${index}`" v-model="step.status">
                     <span class="checkmark"></span>
                   </label>
                 </div>
                 <div class="col-9">
-                  <input type="text" class="form-control bg-dark text-white steps-inputs" :name="`steps_${index}`" v-model="task.stepsList[index].description">
+                  <input type="text" class="form-control bg-dark text-white steps-inputs" :name="`steps_${index}`" v-model="step.description">
                 </div>
 
                 <div class="col-2 text-center mt-3">
@@ -175,7 +175,6 @@
           }
         }
 
-        console.log(this.task)
         this.close()
 
         this.$emit('saveEditedTask', this.task)

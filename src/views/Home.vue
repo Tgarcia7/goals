@@ -14,7 +14,8 @@
         :objectiveTotal="task.objectiveTotal"
         :type="task.type"
         :stepsList="task.stepsList"
-        @viewTask="viewTask(task)"/>
+        @viewTask="viewTask(task)"
+        @upDownObjective="upDownObjective"/>
       
       <div v-if="tasks.length" class="text-muted mt-2 text-center">
         <p><small>End of list</small></p>
@@ -52,7 +53,7 @@
     name: 'Home',
     data: () => {
       return {
-        tasks: tasksData.list,
+        tasks: tasksData,
         selectedTask: {}
       }
     },
@@ -67,8 +68,17 @@
         this.$bvModal.show('modal-edit')
       }, 
       saveEditedTask: function (editedTask) {
-        let idxFound = (this.tasks.find( element => element.id === editedTask.id)).id - 1
-        this.$set(this.tasks, idxFound, editedTask) 
+        let tempEdited = this.tasks.find( element => element.id === editedTask.id)
+        let idxFound = this.tasks.indexOf( tempEdited )
+
+        this.$set(this.tasks, idxFound, editedTask)
+      },
+      upDownObjective: function (idEdited, done) {
+        let editedTask = this.tasks.find( element => element.id === idEdited)
+        let idxFound = this.tasks.indexOf( editedTask )
+        editedTask.objectiveDone = done
+        
+        this.$set(this.tasks, idxFound, editedTask)
       }
     }
   }

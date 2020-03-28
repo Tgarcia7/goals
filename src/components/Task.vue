@@ -22,10 +22,10 @@
         </div>
         <div class="row" v-if="type !== 'simple'">
           <div class="col clickable" @click="edit()">
-            <b-progress :value="barFill" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
+            <b-progress :value="barWidth" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
           <div class="col-4">
-            <small v-if="type === 'objective'">{{ stepsCompleted }} / {{ objectiveTotal }}</small>
+            <small v-if="type === 'objective'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
             <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable" @click="edit()">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
@@ -41,7 +41,7 @@
                   <font-awesome-icon icon="chevron-down" size="lg"/>
                 </span>
               </small>
-              <small v-else-if="type === 'steps'">{{ stepsCompleted }} / {{ objectiveTotal }}</small>
+              <small v-else-if="type === 'steps'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
           </div>
         </div>
       </div>
@@ -68,15 +68,19 @@
     },
     data: function () {
       return { 
-        stepsCompleted: this.objectiveDone,
-        barFill: 0
+        
       }
     },
     computed: {
-      barWidth: function () {
-        if(!this.stepsCompleted || !this.objectiveTotal) return 0
+      barWidth: {
+        set: function () {
 
-        return this.stepsCompleted / this.objectiveTotal * 100
+        },
+        get: function () {
+          if(!this.objectiveDone || !this.objectiveTotal) return 0
+
+          return this.objectiveDone / this.objectiveTotal * 100
+        }
       },
       barColor: function () {
         return this.barWidth === 100 ? 'success' : 'primary'
@@ -93,18 +97,19 @@
     },
     methods: {
       upDownObjective: function (action) {
-        if (action === 'up' && this.stepsCompleted < this.objectiveTotal) {
-          this.stepsCompleted ++
-        } else if (action === 'down' && this.stepsCompleted > 0) {
-          this.stepsCompleted --
+        let totalCompleted = this.objectiveDone
+        if (action === 'up' && this.objectiveDone < this.objectiveTotal) {
+          totalCompleted ++
+        } else if (action === 'down' && this.objectiveDone > 0) {
+          totalCompleted --
         }
-        this.barFill = this.barWidth
+        this.$emit('upDownObjective', this.id, totalCompleted)
       },
       startTimer: function () {
         let vue = this
         let timer = setInterval(function () {
-          vue.barFill += 10
-          if (vue.barFill >= vue.barWidth) clearInterval(timer)
+          vue.barWidth += 10
+          if (vue.barWidth >= vue.barWidth) clearInterval(timer)
         }, 100)
       },
       edit: function () {
