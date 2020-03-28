@@ -6,7 +6,7 @@
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
       modal-ok="modal-ok">
 
-      <div class="my-2">
+      <div class="my-2" v-if="showFormAdd">
         <form name="addTask" id="addTask" method="post" @submit="add">
           
           <div class="box-type" v-show="!type">
@@ -151,10 +151,14 @@
       return {
         type: '',
         title: '',
-        date: '',
-        objectiveTotal: 1,
+        date: null,
+        objectiveDone: null,
+        objectiveTotal: null,
         icon: '',
-        stepsList: []
+        stepsList: [],
+        status: 1,
+        progress: 'doing',
+        showFormAdd: false
       }
     },
     components: {
@@ -193,13 +197,15 @@
           stepsList: this.stepsList
         }
         
-        this.close()
         console.log(newTask)
+
+        this.close()
 
         this.$refs.swal.toast('success', 'Goal added successfully')
       },
       close: function () {
         this.$refs['modal-add'].hide()
+        this.showForm = false
       },
       showForm: function (type) {
         this.type = type
@@ -207,10 +213,13 @@
       cleanForm: function () {
         this.type = ''
         this.title = ''
-        this.date = ''
-        this.objectiveTotal = ''
+        this.date = null
+        this.objectiveDone = null
+        this.objectiveTotal = null
         this.icon = ''
-        this.stepsList = [{'status': false, 'description': ''}]
+        this.stepsList = []
+        this.status = 1
+        this.progress = 'doing'
       },
       addStep: function () {
         this.stepsList.push({'status': false, 'description': ''})
@@ -225,7 +234,8 @@
         //Modal size and init
         this.$refs['modal-add'].$on('shown', () => {
           this.cleanForm()
-          
+          this.showFormAdd = true
+
           let element = document.querySelector('#modal-add')
 
           if(element){
