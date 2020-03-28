@@ -200,8 +200,6 @@
       },
       close: function () {
         this.$refs['modal-add'].hide()
-
-        setTimeout(this.cleanForm, 500)
       },
       showForm: function (type) {
         this.type = type
@@ -227,6 +225,7 @@
         //Modal size and init
         this.$refs['modal-add'].$on('shown', () => {
           this.cleanForm()
+          
           let element = document.querySelector('#modal-add')
 
           if(element){
