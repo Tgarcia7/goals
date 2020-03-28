@@ -6,7 +6,7 @@
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
       modal-ok="modal-ok">
 
-      <div class="my-2">
+      <div class="my-2" v-if="showForm">
         <form name="editTask" id="editTask" method="post" @submit="edit">
 
           <div class="form-row mt-3">
@@ -140,7 +140,8 @@
           objectiveTotal: 0,
           type: '',
           stepsList: []
-        }
+        }, 
+        showForm: false
       }
     }, 
     components: {
@@ -182,6 +183,7 @@
       },
       close: function () {
         this.$refs['modal-edit'].hide()
+        this.showForm = false
       },
       cleanForm: function () {
         this.task.id = ''
@@ -232,6 +234,7 @@
         this.$refs['modal-edit'].$on('shown', () => {
           this.cleanForm()
           this.setSelectedTask()
+          this.showForm = true
           
           let element = document.querySelector('#modal-edit')
 

@@ -7,7 +7,7 @@
         :id="task.id" 
         :icon="task.icon"
         :title="task.title"
-        :date="task.date"
+        :date="dateDisplayFormat(task.date)"
         :progress="task.progress"
         :status="task.status"
         :objectiveDone="task.objectiveDone"
@@ -75,10 +75,18 @@
       upDownObjective: function (idElement, doneUpdated) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
-            
+
         editedTask.objectiveDone = doneUpdated
         
         this.$set(this.tasks, idxFound, editedTask)
+      },
+      dateDisplayFormat(stringDate){
+        if (!stringDate) return null
+
+        let tempDate = stringDate.split(/\D/g),
+          formatedDate = [ tempDate[2], tempDate[1], tempDate[0].slice('-2') ].join('/')
+
+        return formatedDate
       }
     }
   }
