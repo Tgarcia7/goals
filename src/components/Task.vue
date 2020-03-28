@@ -103,6 +103,7 @@
         } else if (action === 'down' && this.objectiveDone > 0) {
           totalCompleted --
         }
+        
         this.$emit('upDownObjective', this.id, totalCompleted)
       },
       startTimer: function () {

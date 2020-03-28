@@ -68,15 +68,15 @@
         this.$bvModal.show('modal-edit')
       }, 
       saveEditedTask: function (editedTask) {
-        let tempEdited = this.tasks.find( element => element.id === editedTask.id)
-        let idxFound = this.tasks.indexOf( tempEdited )
+        let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
 
         this.$set(this.tasks, idxFound, editedTask)
       },
-      upDownObjective: function (idEdited, done) {
-        let editedTask = this.tasks.find( element => element.id === idEdited)
-        let idxFound = this.tasks.indexOf( editedTask )
-        editedTask.objectiveDone = done
+      upDownObjective: function (idElement, doneUpdated) {
+        let editedTask = this.tasks.find( element => element.id === idElement ),
+            idxFound = this.tasks.indexOf( editedTask )
+            
+        editedTask.objectiveDone = doneUpdated
         
         this.$set(this.tasks, idxFound, editedTask)
       }
