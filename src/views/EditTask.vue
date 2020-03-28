@@ -182,7 +182,6 @@
       },
       close: function () {
         this.$refs['modal-edit'].hide()
-        // setTimeout(this.cleanForm, 500)
       },
       cleanForm: function () {
         this.task.id = ''
@@ -231,6 +230,7 @@
       initListeners: function () {
         //Modal size and init
         this.$refs['modal-edit'].$on('shown', () => {
+          this.cleanForm()
           this.setSelectedTask()
           
           let element = document.querySelector('#modal-edit')
