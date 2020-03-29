@@ -178,7 +178,10 @@
 
         this.close()
 
-        this.$emit('saveEditedTask', this.task)
+        // Clone object to avoid referencing objects
+        let updatedTask = Object. assign({}, this.task)
+
+        this.$emit('saveEditedTask', updatedTask)
         this.$refs.swal.toast('success', 'Goal updated successfully')
       },
       close: function () {
