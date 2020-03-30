@@ -26,7 +26,8 @@
       </button>
     </div>
     
-    <AddTask/>
+    <AddTask @saveTask="saveTask"/>
+
     <EditTask 
       :id="this.selectedTask.id" 
       :icon="this.selectedTask.icon"
@@ -66,6 +67,12 @@
       viewTask: function (task) {
         this.selectedTask = task
         this.$bvModal.show('modal-edit')
+      }, 
+      saveTask: function (newTask) {
+        // Calculates next id. Must come from db
+        newTask.id = this.tasks[this.tasks.length-1].id + 1
+
+        this.$set(this.tasks, this.tasks.length, newTask)
       }, 
       saveEditedTask: function (editedTask) {
         let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
