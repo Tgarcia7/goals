@@ -87,7 +87,7 @@
                   <label for="objectiveTotal">Repetitions <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-8">
-                  <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required v-model="objectiveTotal"
+                  <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required v-model.number="objectiveTotal"
                      @keypress="onlyNumbers($event)">
                 </div>
               </div>
@@ -177,9 +177,16 @@
           return
         }
 
+        if (this.type === 'objective') {
+          this.objectiveDone = 0
+        }
+
         if (this.type === 'steps') {
           let cleanedList = this.stepsList.filter(item => item.description)
           this.stepsList = cleanedList
+
+          this.objectiveTotal = this.stepsList.length
+          this.objectiveDone = 0
 
           if (!cleanedList.length) {
             this.stepsList = [{'status': false, 'description': ''}]
@@ -192,7 +199,7 @@
           type: this.type, 
           title: this.title, 
           date: this.date, 
-          objectiveDone: this.objectiveTotal ? 0 : this.objectiveDone, 
+          objectiveDone: this.objectiveDone, 
           objectiveTotal: this.objectiveTotal, 
           icon: this.icon, 
           stepsList: this.stepsList, 
@@ -207,7 +214,7 @@
       },
       close: function () {
         this.$refs['modal-add'].hide()
-        this.showForm = false
+        this.showFormAdd = false
       },
       showForm: function (type) {
         this.type = type
