@@ -2,23 +2,25 @@
   <main class="flex-shrink-0" role="main">
     <div class="container">
 
-      <Task v-for="(task, index) in tasks" 
-        :key="index" 
-        :id="task.id" 
-        :icon="task.icon"
-        :title="task.title"
-        :date="dateDisplayFormat(task.date)"
-        :progress="task.progress"
-        :status="task.status"
-        :objectiveDone="task.objectiveDone"
-        :objectiveTotal="task.objectiveTotal"
-        :type="task.type"
-        :stepsList="task.stepsList"
-        @viewTask="viewTask(task)"
-        @upDownObjective="upDownObjective"/>
+      <div class="tasks-container">
+        <Task v-for="(task, index) in tasks" 
+          :key="index" 
+          :id="task.id" 
+          :icon="task.icon"
+          :title="task.title"
+          :date="dateDisplayFormat(task.date)"
+          :progress="task.progress"
+          :status="task.status"
+          :objectiveDone="task.objectiveDone"
+          :objectiveTotal="task.objectiveTotal"
+          :type="task.type"
+          :stepsList="task.stepsList"
+          @viewTask="viewTask(task)"
+          @upDownObjective="upDownObjective"/>
       
-      <div v-if="tasks.length" class="text-muted mt-2 text-center">
-        <p><small>End of list</small></p>
+        <div v-if="tasks.length" class="text-muted mt-2 text-center">
+          <p><small>End of list</small></p>
+        </div>
       </div>
 
       <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
@@ -112,6 +114,10 @@
     position: fixed;
     bottom: 3.5em;
     right: 1em;
+  }
+
+  .tasks-container {
+    margin-bottom: 150px;
   }
 
   /* 

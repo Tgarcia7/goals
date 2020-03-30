@@ -160,7 +160,7 @@
           return
         }
 
-        if (!this.task.objectiveDone) this.task.objectiveDone = 0
+        if (!this.task.objectiveDone && (this.task.type === 'steps' || this.task.type === 'objective') ) this.task.objectiveDone = 0
 
         if (this.task.type === 'steps') {
           let cleanedList = this.task.stepsList.filter(item => item.description)
