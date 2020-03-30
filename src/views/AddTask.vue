@@ -192,15 +192,17 @@
           type: this.type, 
           title: this.title, 
           date: this.date, 
+          objectiveDone: this.objectiveTotal ? 0 : this.objectiveDone, 
           objectiveTotal: this.objectiveTotal, 
           icon: this.icon, 
-          stepsList: this.stepsList
+          stepsList: this.stepsList, 
+          status: this.status, 
+          progress: this.progress 
         }
-        
-        console.log(newTask)
 
         this.close()
 
+        this.$emit('saveTask', newTask)
         this.$refs.swal.toast('success', 'Goal added successfully')
       },
       close: function () {

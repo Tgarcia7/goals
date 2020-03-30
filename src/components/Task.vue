@@ -145,7 +145,7 @@
   .circle {
     width: 44px;
     height: 44px;
-    padding: 10px;
+    padding-top: 11px;
     border-radius: 50%;
     box-shadow: 0px 0px 2px #aeb0b4;
   }
