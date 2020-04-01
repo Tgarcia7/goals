@@ -83,12 +83,15 @@
               </div>
 
               <div class="form-row mt-3" v-if="this.type==='objective'">
-                <div class="col-4 col-form-label">
+                <div class="col-6 col-form-label">
                   <label for="objectiveTotal">Repetitions <span class="text-danger">*</span></label>
                 </div>
-                <div class="col-8">
-                  <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required v-model.number="objectiveTotal"
-                     @keypress="onlyNumbers($event)">
+                <div class="col-3 mx-auto">
+                  <b-form-spinbutton id="sb-inline" class="bg-dark text-white" 
+                    v-model.number="objectiveTotal" inline 
+                    @keypress="onlyNumbers($event)"
+                    min="1" max="999999" step="1">
+                  </b-form-spinbutton>   
                 </div>
               </div>
 
@@ -178,6 +181,11 @@
         }
 
         if (this.type === 'objective') {
+          if (!this.objectiveTotal) {
+            this.$refs.swal.toast('error', 'You must fill repetitions field')
+            return
+          }
+
           this.objectiveDone = 0
         }
 

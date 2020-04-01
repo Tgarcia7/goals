@@ -43,17 +43,23 @@
             <div class="col-6 col-form-label">
               <label for="objectiveTotal">Objective <span class="text-danger">*</span></label>
             </div>
-            <div class="col-6">
-              <input type="number" class="form-control bg-dark text-white" name="objectiveTotal" min="1" required 
-                v-model.number="task.objectiveTotal" @keypress="onlyNumbers($event)" @change="checkObjective()">
+            <div class="col-3 mx-auto">
+              <b-form-spinbutton id="sb-inline" class="bg-dark text-white" 
+                v-model.number="task.objectiveTotal" inline 
+                @change="checkObjective()" @keypress="onlyNumbers($event)"
+                min="1" max="999999" step="1">
+              </b-form-spinbutton>
             </div>
 
             <div class="col-6 col-form-label">
               <label for="objectiveDone">Completed</label>
             </div>
-            <div class="col-6">
-              <input type="number" class="form-control bg-dark text-white" name="objectiveDone" min="0" 
-                v-model.number="task.objectiveDone" @keypress="onlyNumbers($event)" @change="checkObjective()">
+            <div class="col-3 mx-auto text-white">
+              <b-form-spinbutton id="sb-inline" class="bg-dark text-white" 
+                v-model.number="task.objectiveDone" inline 
+                @change="checkObjective()" @keypress="onlyNumbers($event)"
+                min="0" max="999999" step="1">
+              </b-form-spinbutton>
             </div>
           </div>
 
@@ -160,7 +166,14 @@
           return
         }
 
-        if (!this.task.objectiveDone && (this.task.type === 'steps' || this.task.type === 'objective') ) this.task.objectiveDone = 0
+        if (this.type === 'objective') {
+          if (!this.objectiveTotal) {
+            this.$refs.swal.toast('error', 'You must fill repetitions field')
+            return
+          }
+          
+          if (!this.task.objectiveDone) this.task.objectiveDone = 0
+        }
 
         if (this.task.type === 'steps') {
           let cleanedList = this.task.stepsList.filter(item => item.description)
@@ -174,6 +187,8 @@
             this.$refs.swal.toast('error', 'You must add at least one step')
             return
           }
+
+          if (!this.task.objectiveDone) this.task.objectiveDone = 0
         }
 
         this.close()
