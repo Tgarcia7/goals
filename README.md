@@ -1,4 +1,4 @@
-![Deploy to GitHub Pages](https://github.com/Tgarcia7/goals/workflows/Deploy%20to%20GitHub%20Pages/badge.svg?branch=master&event=release)
+![Deploy to GitHub Pages](https://github.com/Tgarcia7/goals/workflows/Deploy%20to%20GitHub%20Pages/badge.svg)
 
 # goals
 
