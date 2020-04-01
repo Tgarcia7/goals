@@ -28,7 +28,10 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    background-color: #1e242a;
+  }
+
+  body {
+    background-color: #1e242a !important;
   }
 
   .clickable {
