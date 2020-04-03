@@ -291,7 +291,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@sweetalert2/theme-dark/dark.scss';
+
   .icon-box {
     border: 1px solid white;
     padding: 4px;
