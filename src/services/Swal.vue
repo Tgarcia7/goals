@@ -3,8 +3,6 @@
 </template>
 
 <script>
-  import '@sweetalert2/theme-dark/dark.scss';
-
   export default {
     name: 'Swal',
     data: () => {
@@ -26,7 +24,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  @import '@sweetalert2/theme-dark/dark.scss';
-</style>
