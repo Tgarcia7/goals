@@ -21,9 +21,7 @@
   }
 </script>
 
-<style lang="scss">
-  @import '@sweetalert2/theme-dark/dark.scss';
-
+<style>
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
