@@ -4,7 +4,6 @@ import App from './App.vue'
 // Swal2
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
-import '@/assets/scss/swal2-dark.scss'
 
 Vue.use(VueSweetalert2)
 
