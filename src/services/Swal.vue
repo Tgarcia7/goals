@@ -24,3 +24,7 @@
     }
   }
 </script>
+
+<style lang="scss" scope>
+@import "~@sweetalert2/themes/dark/dark.scss";
+</style>
