@@ -24,7 +24,8 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-success btn-circle btn-lg btn-add" v-b-modal.modal-add>
+      <button type="button" class="btn btn-success btn-circle btn-lg btn-add" 
+        v-b-modal.modal-add @click="cleanSelected">
         <font-awesome-icon icon="plus"/>
       </button>
     </div>
