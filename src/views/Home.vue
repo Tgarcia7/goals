@@ -16,7 +16,8 @@
           :type="task.type"
           :stepsList="task.stepsList"
           @viewTask="viewTask(task)"
-          @upDownObjective="upDownObjective"/>
+          @upDownObjective="upDownObjective"
+          :class="`main-task-row task_${task.id}`"/>
       
         <div v-if="tasks.length" class="text-muted mt-2 text-center">
           <p><small>End of list</small></p>
@@ -68,6 +69,8 @@
     methods: {
       viewTask: function (task) {
         this.selectedTask = task
+        this.markSelected(task)
+
         this.$bvModal.show('modal-edit')
       }, 
       saveTask: function (newTask) {
@@ -82,6 +85,7 @@
         this.$set(this.tasks, idxFound, editedTask)
       },
       upDownObjective: function (idElement, doneUpdated) {
+        this.cleanSelected()
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
 
@@ -89,13 +93,26 @@
         
         this.$set(this.tasks, idxFound, editedTask)
       },
-      dateDisplayFormat(stringDate){
+      dateDisplayFormat: function (stringDate){
         if (!stringDate) return null
 
         let tempDate = stringDate.split(/\D/g),
           formatedDate = [ tempDate[2], tempDate[1], tempDate[0].slice('-2') ].join('/')
 
         return formatedDate
+      },
+      markSelected: function (task) {
+        this.cleanSelected()
+
+        let element = document.querySelector(`.task_${task.id}`)
+        element.classList.add('task-selected')
+      },
+      cleanSelected: function () {
+        let elems = document.querySelectorAll(".main-task-row");
+
+        [].forEach.call(elems, el => {
+            el.classList.remove("task-selected")
+        })
       }
     }
   }
@@ -118,6 +135,10 @@
 
   .tasks-container {
     margin-bottom: 150px;
+  }
+
+  .task-selected {
+    background-color: #2a3036;
   }
 
   /* 

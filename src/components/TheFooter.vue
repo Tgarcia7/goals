@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer mt-auto py-2 bg-dark fixed-bottom">
+  <footer class="footer mt-auto py-2 bg-dark fixed-bottom" @click="cleanSelected">
     <div class="container">
       <div class="row text-white">
         <div class="col">
@@ -30,7 +30,16 @@
 
 <script>
 export default {
-  name: 'TheFooter'
+  name: 'TheFooter',
+    methods: {
+      cleanSelected: function () {
+        let elems = document.querySelectorAll(".main-task-row");
+
+        [].forEach.call(elems, el => {
+            el.classList.remove("task-selected")
+        })
+      }
+    }
 }
 </script>
 
