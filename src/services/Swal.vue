@@ -30,37 +30,37 @@
   
   $swal2-dark-theme-black: #19191a;
   $swal2-dark-theme-white: #e1e1e1;
-  $swal2-outline-color: lighten($swal2-outline-color, 10%);
+  $swal2-outline-color: lighten($swal2-outline-color, 10%) !important;
 
-  $swal2-background: $swal2-dark-theme-black;
+  $swal2-background: $swal2-dark-theme-black !important;
   $swal2-content-color: $swal2-dark-theme-white;
-  $swal2-title-color: $swal2-dark-theme-white;
-  $swal2-backdrop: rgba($swal2-dark-theme-black, .75);
+  $swal2-title-color: $swal2-dark-theme-white !important;
+  $swal2-backdrop: rgba($swal2-dark-theme-black, .75) !important;
 
   // FOOTER
-  $swal2-footer-border-color: #555;
-  $swal2-footer-color: darken($swal2-content-color, 15%);
+  $swal2-footer-border-color: #555 !important;
+  $swal2-footer-color: darken($swal2-content-color, 15%) !important;
 
   // TIMER POGRESS BAR
-  $swal2-timer-progress-bar-background: rgba($swal2-dark-theme-white, .6);
+  $swal2-timer-progress-bar-background: rgba($swal2-dark-theme-white, .6) !important;
 
   // INPUT
-  $swal2-input-color: $swal2-dark-theme-white;
-  $swal2-input-background: lighten($swal2-dark-theme-black, 10%);
+  $swal2-input-color: $swal2-dark-theme-white !important;
+  $swal2-input-background: lighten($swal2-dark-theme-black, 10%) !important;
 
   // VALIDATION MESSAGE
-  $swal2-validation-message-background: lighten($swal2-dark-theme-black, 10%);
-  $swal2-validation-message-color: $swal2-dark-theme-white;
+  $swal2-validation-message-background: lighten($swal2-dark-theme-black, 10%) !important;
+  $swal2-validation-message-color: $swal2-dark-theme-white !important;
 
   // QUEUE
-  $swal2-progress-step-background: lighten($swal2-dark-theme-black, 25%);
+  $swal2-progress-step-background: lighten($swal2-dark-theme-black, 25%) !important;
 
   // COMMON VARIABLES FOR CONFIRM AND CANCEL BUTTONS
-  $swal2-button-focus-box-shadow: 0 0 0 1px $swal2-background, 0 0 0 3px $swal2-outline-color;
+  $swal2-button-focus-box-shadow: 0 0 0 1px $swal2-background, 0 0 0 3px $swal2-outline-color !important;
 
   // TOAST
-  $swal2-toast-background: $swal2-dark-theme-black;
-  $swal2-toast-button-focus-box-shadow: 0 0 0 1px $swal2-background, 0 0 0 3px $swal2-outline-color;
+  $swal2-toast-background: $swal2-dark-theme-black !important;
+  $swal2-toast-button-focus-box-shadow: 0 0 0 1px $swal2-background, 0 0 0 3px $swal2-outline-color !important;
  
   @import '~sweetalert2/src/sweetalert2';
 </style>
