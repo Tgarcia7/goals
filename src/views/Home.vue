@@ -141,6 +141,10 @@
     background-color: #2a3036;
   }
 
+  .main-task-row {
+    padding-left: 6px;
+  }
+
   /* 
     ##Device = Desktops
     ##Screen = 1281px to higher resolution desktops
