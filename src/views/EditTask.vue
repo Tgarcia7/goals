@@ -6,36 +6,46 @@
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
       modal-ok="modal-ok">
 
+      <div class="form-row loader" v-if="!showForm">
+        <div class="col-2 mx-auto">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+
       <div class="my-2" v-if="showForm">
         <form name="editTask" id="editTask" method="post" @submit="edit">
 
-          <div class="form-row mt-3">
-            <div class="col-3 col-form-label">
-              <label for="title">Title <span class="text-danger">*</span></label>
+          <div class="main-form-info" v-show="!showTasksOnly">
+            <div class="form-row mt-3">
+              <div class="col-3 col-form-label">
+                <label for="title">Title <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-9">
+                <input type="text" class="form-control bg-dark text-white" name="title" v-model="task.title" required>
+              </div>
             </div>
-            <div class="col-9">
-              <input type="text" class="form-control bg-dark text-white" name="title" v-model="task.title" required>
-            </div>
-          </div>
 
-          <div class="form-row mt-3">
-            <div class="col-3 col-form-label">
-              <label for="title">End date</label>
+            <div class="form-row mt-3">
+              <div class="col-3 col-form-label">
+                <label for="title">End date</label>
+              </div>
+              <div class="col-9">
+                <input type="date" class="form-control bg-dark text-white" name="date" v-model="task.date">
+              </div>
             </div>
-            <div class="col-9">
-              <input type="date" class="form-control bg-dark text-white" name="date" v-model="task.date">
-            </div>
-          </div>
 
-          <div class="form-row mt-3">
-            <div class="col-2 ml-auto text-center icon-box" v-if="task.icon">
-              <font-awesome-icon :icon="task.icon" />
-            </div>
-            <div class="col-2 ml-auto" v-else></div>
-            <div class="col-5 mt-1">
-              <button type="button" id="btn-icons-edit" class="btn btn-block btn-secondary" v-b-modal.modal-icons-edit>
-                Icon
-              </button>
+            <div class="form-row mt-3">
+              <div class="col-2 ml-auto text-center icon-box" v-if="task.icon">
+                <font-awesome-icon :icon="task.icon" />
+              </div>
+              <div class="col-2 ml-auto" v-else></div>
+              <div class="col-5 mt-1">
+                <button type="button" id="btn-icons-edit" class="btn btn-block btn-secondary" v-b-modal.modal-icons-edit>
+                  Icon
+                </button>
+              </div>
             </div>
           </div>
 
@@ -131,7 +141,8 @@
       objectiveDone: {type: Number, default: 0},
       objectiveTotal: {type: Number, default: 0},
       type: String,
-      stepsList: {type: Array}
+      stepsList: {type: Array},
+      tasksOnly: {type: Boolean}
     },
     data: () => {
       return {
@@ -147,7 +158,8 @@
           type: '',
           stepsList: []
         }, 
-        showForm: false
+        showForm: false,
+        showTasksOnly: false,
       }
     }, 
     components: {
@@ -214,6 +226,7 @@
         this.task.objectiveTotal = 0
         this.task.type = this.type
         this.task.stepsList = [{'status': false, 'description': ''}]
+        this.showTasksOnly = false
       },
       iconEdit: function (icon) {
         this.task.icon = icon
@@ -229,6 +242,7 @@
         this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
         this.task.stepsList = this.stepsList.slice()
+        this.showTasksOnly = this.tasksOnly
       },
       formatedDate: function () {
         let date = this.date
@@ -252,7 +266,6 @@
         this.$refs['modal-edit'].$on('shown', () => {
           this.cleanForm()
           this.setSelectedTask()
-          this.showForm = true
           
           let element = document.querySelector('#modal-edit')
 
@@ -264,6 +277,12 @@
             const fullHeight = window.innerHeight * 0.77
             elementBody.style.height = `${fullHeight}px`
           }
+
+          setTimeout(() => { this.showForm = true }, 200)
+        })
+
+        this.$refs['modal-edit'].$on('hidden', () => {
+          this.close()
         })
       },
       onlyNumbers: function (event) {
@@ -382,4 +401,8 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   } 
+
+  .loader {
+    margin-top: 50% !important;
+  }
 </style>

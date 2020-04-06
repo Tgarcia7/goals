@@ -15,7 +15,8 @@
           :objectiveTotal="task.objectiveTotal"
           :type="task.type"
           :stepsList="task.stepsList"
-          @viewTask="viewTask(task)"
+          @viewTask="viewTask(task, false)"
+          @viewSubTask="viewTask(task, true)"
           @upDownObjective="upDownObjective"
           :class="`main-task-row task_${task.id}`"/>
       
@@ -44,6 +45,7 @@
       :type="this.selectedTask.type"
       :stepsList="this.selectedTask.stepsList"
       :selected="true"
+      :tasksOnly="this.tasksOnly"
       @saveEditedTask="saveEditedTask"/>
   </main>
 </template>
@@ -59,7 +61,8 @@
     data: () => {
       return {
         tasks: tasksData,
-        selectedTask: {}
+        selectedTask: {}, 
+        tasksOnly: false
       }
     },
     components: {
@@ -68,7 +71,8 @@
       EditTask
     },
     methods: {
-      viewTask: function (task) {
+      viewTask: function (task, subTasksOnly) {
+        this.tasksOnly = subTasksOnly
         this.selectedTask = task
         this.markSelected(task)
 

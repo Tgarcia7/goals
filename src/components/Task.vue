@@ -26,7 +26,7 @@
           </div>
           <div class="col-4">
             <small v-if="type === 'objective'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
-            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable" @click="edit()">
+            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable" @click="editSubTasks()">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
           </div>
@@ -115,6 +115,9 @@
       },
       edit: function () {
         this.$emit('viewTask')
+      },
+      editSubTasks: function () {
+        this.$emit('viewSubTask')
       }
     },
     mounted: function () {
