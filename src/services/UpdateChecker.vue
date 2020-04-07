@@ -37,13 +37,8 @@
         if (this.refreshing) return
         this.refreshing = true
         window.location.reload()
-      })
-    },
-    mounted: function () {
-      if (this.refreshing) {
         this.$refs.swal.toast('success', 'App updated succesfully')
-        this.refreshing = false
-      }
+      })
     },
     methods: {
       showRefreshUI: function(e) {
