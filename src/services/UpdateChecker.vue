@@ -1,0 +1,51 @@
+<template>
+    <b-alert v-model="updateExists" dismissible
+        class="mb-2 rounded-0" style="z-index: 2000;"
+        variant="success" @click="refreshApp">
+        
+        New version available! 
+        <b-button variant="success" pill size="sm" 
+            v-if="updateExists" @click="refreshApp">Click</b-button> 
+        to update
+    </b-alert>
+</template>
+
+<script>
+  export default {
+    name: 'UpdateChecker',
+    data: function () {
+      return {
+        refreshing: false,
+        registration: null,
+        updateExists: false
+      }
+    },
+    created: function () {
+      // Listen for swUpdated event and display refresh snackbar as required.
+      document.addEventListener('swUpdated', this.showRefreshUI, { once: true })
+      // Refresh all open app tabs when a new service worker is installed.
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (this.refreshing) return
+        this.refreshing = true
+        window.location.reload()
+      })
+    },
+    methods: {
+      showRefreshUI: function (e) {
+        // Display a button inviting the user to refresh/reload the app due
+        // to an app update being available.
+        // The new service worker is installed, but not yet active.
+        // Store the ServiceWorkerRegistration instance for later use.
+        this.registration = e.detail
+        this.updateExists = true
+      },
+      refreshApp: function () {
+        // Handle a user tap on the update app button.
+        this.updateExists = false
+        // Protect against missing registration.waiting.
+        if (!this.registration || !this.registration.waiting) return
+        this.registration.waiting.postMessage('skipWaiting')
+      }
+    }
+  }
+</script>

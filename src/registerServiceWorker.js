@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
       // Set the event payload to the service worker registration object.
       document.dispatchEvent(
         new CustomEvent('swUpdated', { detail: registration })
-      );
+      )
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
