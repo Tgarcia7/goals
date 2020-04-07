@@ -22,7 +22,7 @@
       return {
         refreshing: false,
         registration: null,
-        updateExists: true
+        updateExists: false
       }
     }, 
     components: {
