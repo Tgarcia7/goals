@@ -6,11 +6,12 @@
       class="mb-2 rounded-0"
       style="z-index: 2000;"
       variant="success"
-      @click="refreshApp"
-    >
+      @click="refreshApp">
+
       New version available!
       <b-button variant="success" pill size="sm" v-if="updateExists" @click="refreshApp">Click</b-button> 
       to update
+    
     </b-alert>
 
     <Swal ref="swal"/>
