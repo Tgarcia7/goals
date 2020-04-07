@@ -150,6 +150,10 @@
     padding-left: 6px;
   }
 
+  .b-form-spinbutton.form-control .btn {
+    color: white !important;
+  }
+
   /* 
     ##Device = Desktops
     ##Screen = 1281px to higher resolution desktops
