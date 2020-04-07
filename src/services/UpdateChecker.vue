@@ -23,7 +23,7 @@
         refreshing: false,
         registration: null,
         updateExists: false
-      }
+      };
     }, 
     components: {
       Swal
@@ -36,9 +36,15 @@
       navigator.serviceWorker.addEventListener("controllerchange", () => {
         if (this.refreshing) return
         this.refreshing = true
+        sessionStorage.setItem('appUpdated', true)
         window.location.reload()
-        this.$refs.swal.toast('success', 'App updated succesfully')
       })
+    },
+    mounted: function () {
+      if (sessionStorage.getItem('appUpdated')) {
+        this.$refs.swal.toast('success', 'App updated succesfully')
+        sessionStorage.removeItem('appUpdated')
+      }
     },
     methods: {
       showRefreshUI: function(e) {
