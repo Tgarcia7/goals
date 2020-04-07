@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-alert v-model="updateExists" dismissible variant="success" fade
-      class="mb-2 rounded-0" style="z-index: 2000;" @click="refreshApp">
+    <b-alert v-model="updateExists" variant="success" dismissible fade
+      class="mb-2 rounded-0" style="z-index: 1000;" @click="refreshApp">
 
       New version available!
       <b-button variant="success" pill size="sm" v-if="updateExists" @click="refreshApp">Click</b-button> 
@@ -22,14 +22,14 @@
       return {
         refreshing: false,
         registration: null,
-        updateExists: false
+        updateExists: true
       }
     }, 
     components: {
       Swal
     },
     created: function() {
-      // Listen for swUpdated event and display refresh snackbar as required.
+      // Listen for swUpdated event and display refresh banner.
       document.addEventListener("swUpdated", this.showRefreshUI, { once: true })
       
       // Refresh all open app tabs when a new service worker is installed.
@@ -52,8 +52,7 @@
     },
     methods: {
       showRefreshUI: function(e) {
-        // Display a button inviting the user to refresh/reload the app due
-        // to an app update being available.
+        // Display refresh/reload button due to an app update being available.
         // The new service worker is installed, but not yet active.
         // Store the ServiceWorkerRegistration instance for later use.
         this.registration = e.detail
