@@ -1,30 +1,28 @@
-/**
- * Welcome to your Workbox-powered service worker!
- *
- * You'll need to register this file in your web app and you should
- * disable HTTP caching for this file too.
- * See https://goo.gl/nhQhGp
- *
- * The rest of the code is auto-generated. Please don't update this file
- * directly; instead, make changes to your Workbox build configuration
- * and re-run your build process.
- * See https://goo.gl/2aRDsh
- */
+importScripts("/goals/precache-manifest.1f092fdb45d3b123586467c83107bc14.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+/* eslint-disable no-undef, no-underscore-dangle, no-restricted-globals */
 
-importScripts(
-  "/goals/precache-manifest.ab707c3aa2519d0b7a4d8fb9665416ec.js"
-);
-
-workbox.core.setCacheNameDetails({prefix: "goals"});
-
-workbox.core.skipWaiting();
-
-/**
- * The workboxSW.precacheAndRoute() method efficiently caches and responds to
- * requests for URLs in the manifest.
- * See https://goo.gl/S9QRab
- */
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+// This is the code piece that GenerateSW mode can't provide for us.
+// This code listens for the user's confirmation to update the app.
+self.addEventListener('message', (e) => {
+    if (!e.data) {
+      return;
+    }
+  
+    switch (e.data) {
+      case 'skipWaiting':
+        self.skipWaiting();
+        break;
+      default:
+        // NOOP
+        break;
+    }
+  });
+  
+  workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4, else
+  // workbox.clientsClaim(); // Vue CLI 3 and Workbox v3.
+  
+  // The precaching code provided by Workbox.
+  self.__precacheManifest = [].concat(self.__precacheManifest || []);
+  // workbox.precaching.suppressWarnings(); // Only used with Vue CLI 3 and Workbox v3.
+  workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
