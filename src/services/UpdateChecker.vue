@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import Swal from "../services/Swal";
+  import Swal from "../services/Swal"
 
   export default {
     name: "UpdateChecker",
