@@ -3,7 +3,7 @@
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <div class="container">
         <a class="nav mr-auto text-white" href="/">
-          <font-awesome-icon icon="chevron-left" size="lg" />
+          <!-- <font-awesome-icon icon="chevron-left" size="lg" /> -->
         </a>
 
         <b-navbar-brand href="#">
