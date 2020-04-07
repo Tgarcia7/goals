@@ -23,7 +23,7 @@
         refreshing: false,
         registration: null,
         updateExists: false
-      };
+      }
     }, 
     components: {
       Swal
