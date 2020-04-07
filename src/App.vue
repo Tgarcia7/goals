@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="d-flex flex-column">
-    <TheHeader/>
+    <!-- <TheHeader/>
     <Home/>
-    <TheFooter/>
+    <TheFooter/> -->
 
     <button v-if="updateExists" @click="refreshApp">
       New version available! Click to update
