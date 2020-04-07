@@ -56,7 +56,7 @@
       },
       refreshApp: function() {
         // Handle a user tap on the update app button.
-        this.updateExists = false;
+        this.updateExists = false
         // Protect against missing registration.waiting.
         if (!this.registration || !this.registration.waiting) return
         this.registration.waiting.postMessage("skipWaiting")
