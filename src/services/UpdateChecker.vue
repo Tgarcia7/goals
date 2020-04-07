@@ -43,10 +43,11 @@
     mounted: function () {
       if (sessionStorage.getItem('appUpdated')) {
         sessionStorage.removeItem('appUpdated')
-        
+        let vm = this
+
         setTimeout(function () {
-          this.$refs.swal.toast('success', 'App updated succesfully')
-        }, 1500)
+          vm.$refs.swal.toast('success', 'App updated succesfully')
+        }, 1700)
       }
     },
     methods: {
