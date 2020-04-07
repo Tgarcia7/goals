@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-alert v-model="updateExists" dismissible variant="success"
+    <b-alert v-model="updateExists" dismissible variant="success" fade
       class="mb-2 rounded-0" style="z-index: 2000;" @click="refreshApp">
 
       New version available!
@@ -42,8 +42,11 @@
     },
     mounted: function () {
       if (sessionStorage.getItem('appUpdated')) {
-        this.$refs.swal.toast('success', 'App updated succesfully')
         sessionStorage.removeItem('appUpdated')
+        
+        setTimeout(function () {
+          this.$refs.swal.toast('success', 'App updated succesfully')
+        }, 1500)
       }
     },
     methods: {
