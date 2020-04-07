@@ -1,12 +1,7 @@
 <template>
   <div>
-    <b-alert
-      v-model="updateExists"
-      dismissible
-      class="mb-2 rounded-0"
-      style="z-index: 2000;"
-      variant="success"
-      @click="refreshApp">
+    <b-alert v-model="updateExists" dismissible variant="success"
+      class="mb-2 rounded-0" style="z-index: 2000;" @click="refreshApp">
 
       New version available!
       <b-button variant="success" pill size="sm" v-if="updateExists" @click="refreshApp">Click</b-button> 
@@ -44,6 +39,12 @@
         window.location.reload()
       })
     },
+    mounted: function () {
+      if (this.refreshing) {
+        this.$refs.swal.toast('success', 'App updated succesfully')
+        this.refreshing = false
+      }
+    },
     methods: {
       showRefreshUI: function(e) {
         // Display a button inviting the user to refresh/reload the app due
@@ -52,7 +53,6 @@
         // Store the ServiceWorkerRegistration instance for later use.
         this.registration = e.detail
         this.updateExists = true
-        this.$refs.swal.toast('success', 'App updated succesfully')
       },
       refreshApp: function() {
         // Handle a user tap on the update app button.
