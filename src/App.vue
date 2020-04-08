@@ -10,7 +10,7 @@
 <script>
   import TheHeader from './components/TheHeader.vue'
   import TheFooter from './components/TheFooter.vue'
-  import Home from './views/Home'
+  import Home from './views/Home.vue'
   import UpdateChecker from './services/UpdateChecker.vue'
 
   export default {

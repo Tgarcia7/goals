@@ -53,8 +53,8 @@
 <script>
   import Task from '../components/Task.vue'
   import tasksData from "../assets/tasks.json"
-  import AddTask from "../views/AddTask"
-  import EditTask from "../views/EditTask"
+  import AddTask from "../views/AddTask.vue"
+  import EditTask from "../views/EditTask.vue"
 
   export default {
     name: 'Home',

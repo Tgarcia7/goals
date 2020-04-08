@@ -145,8 +145,8 @@
 </template>
 
 <script>
-  import IconsModal from '../views/Icons'
-  import Swal from "../services/Swal"
+  import IconsModal from '../views/Icons.vue'
+  import Swal from "../services/Swal.vue"
 
   export default {
     name: 'AddTask',
