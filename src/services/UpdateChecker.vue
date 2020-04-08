@@ -28,26 +28,24 @@
     components: {
       Swal
     },
-    created: function() {
+    created: function () {
       // Listen for swUpdated event and display refresh banner.
       document.addEventListener("swUpdated", this.showRefreshUI, { once: true })
       
       // Refresh all open app tabs when a new service worker is installed.
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
+      navigator.serviceWorker.addEventListener("controllerchange", async () => {
         if (this.refreshing) return
         this.refreshing = true
+        
+        await this.$refs.swal.toast('', 'Updating', true, true)
         sessionStorage.setItem('appUpdated', true)
         window.location.reload()
       })
     },
     mounted: function () {
       if (sessionStorage.getItem('appUpdated')) {
+        this.$refs.swal.toast('success', 'App updated succesfully')
         sessionStorage.removeItem('appUpdated')
-        let vm = this
-
-        setTimeout(function () {
-          vm.$refs.swal.toast('success', 'App updated succesfully')
-        }, 1700)
       }
     },
     methods: {

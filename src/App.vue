@@ -11,7 +11,7 @@
   import TheHeader from './components/TheHeader.vue'
   import TheFooter from './components/TheFooter.vue'
   import Home from './views/Home'
-  import UpdateChecker from './services/UpdateChecker'
+  import UpdateChecker from './services/UpdateChecker.vue'
 
   export default {
     name: 'app',

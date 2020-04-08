@@ -11,15 +11,24 @@
       }
     },
     methods: {
-      toast: function (type, text) {
-        this.$swal.fire({
-            icon: type,
-            title: text,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-          })
+      toast: function (type, text, progressBar = false, showLoading) {
+        let vm = this
+        return new Promise(function (resolve) {  
+          vm.$swal.fire({
+              icon: type,
+              title: text,
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: progressBar,
+              onBeforeOpen: () => {
+                if (showLoading) vm.$swal.showLoading()
+              }
+            }).then(result => {
+              resolve(result)
+            })
+        })
       }
     }
   }
