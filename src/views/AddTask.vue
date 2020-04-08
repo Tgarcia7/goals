@@ -133,7 +133,7 @@
         <b-button size="md" variant="secondary" @click="close()">
           Cancel
         </b-button>
-        <b-button form="addTask" type="submit" size="md" variant="success">
+        <b-button v-if="type" form="addTask" type="submit" size="md" variant="success">
           Add
         </b-button>
       </template>
