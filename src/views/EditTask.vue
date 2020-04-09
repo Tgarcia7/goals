@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-edit" ref="modal-edit" title="Edit goal" class="text-white"
+    <b-modal id="modal-edit" ref="modal-edit" :title="showTasksOnly ? 'Steps' : 'Edit goal'" class="text-white"
       v-b-modal.modal-xl 
       header-bg-variant="dark" body-bg-variant="dark" footer-bg-variant="dark"
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
@@ -74,7 +74,7 @@
           </div>
 
           <div v-if="task.type==='steps'">
-            <div class="form-row">
+            <div class="form-row" v-if="!showTasksOnly">
               <div class="col-12 col-form-label">
                 <label>Steps to complete the goal <span class="text-danger">*</span></label>
               </div>
