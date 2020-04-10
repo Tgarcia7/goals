@@ -33,7 +33,10 @@
         </div>
         <div class="row">
           <div class="col text-left clickable" @click="edit()">
-            <small>{{ date }}</small>
+            <small :class="date && date.includes('late') ? 'text-muted' : ''"> 
+              <font-awesome-icon :icon="['far', 'clock']" v-if="date && date.includes('late')"/>
+              {{ date }} 
+            </small>
           </div>
           <div class="col-4">
               <small v-if="type === 'objective'">

@@ -8,7 +8,7 @@
           :id="task.id" 
           :icon="task.icon"
           :title="task.title"
-          :date="dateDisplayFormat(task.date)"
+          :date="formatDate(task.date)"
           :progress="task.progress"
           :status="task.status"
           :objectiveDone="task.objectiveDone"
@@ -98,13 +98,68 @@
         
         this.$set(this.tasks, idxFound, editedTask)
       },
-      dateDisplayFormat: function (stringDate){
+      formatDate: function (stringDate){
         if (!stringDate) return null
 
-        let tempDate = stringDate.split(/\D/g),
-          formatedDate = [ tempDate[2], tempDate[1], tempDate[0].slice('-2') ].join('/')
+        let taskDate = this.$moment(stringDate).startOf('day'),
+          today = this.$moment().startOf('day'),
+          diffMonths = this.$moment(taskDate).diff(today, 'months'),
+          diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
+          diffDays = this.$moment(taskDate).diff(today, 'days'),
+          resultDate = stringDate,
+          formated = false,
+          outdated = diffDays < 0 ? true : false
 
-        return formatedDate
+          diffMonths = Math.abs(diffMonths)
+          diffWeeks = Math.abs(diffWeeks)
+          diffDays = Math.abs(diffDays)
+
+          // Months 
+          if (diffMonths <= 4 && diffMonths > 0) {
+            if (diffMonths === 1) {
+              resultDate = outdated ? '1 month' : 'Next month'
+            } else {
+              resultDate = `${diffMonths} months`
+            }
+
+            formated = true
+          }
+
+          // Weeks 
+          if (!formated && diffWeeks <= 4 && diffWeeks > 0) {
+            if (diffWeeks === 1) {
+              resultDate = outdated ? '1 week' : 'Next week'
+            } else {
+              resultDate = `${diffWeeks} weeks`
+            }
+            
+            formated = true
+          }
+
+          // Days
+          if (!formated && diffDays <= 6) {
+            resultDate = diffDays === 0 ? 'Today' : `${diffDays} days`
+            
+            if (diffDays === 1) {
+              resultDate = outdated ? '1 day' : 'Tomorrow'
+            } else {
+              resultDate = `${diffDays} days`
+            }
+
+            formated = true
+          }
+
+          // Full date (is too away)
+          if (!formated) {
+            resultDate = this.$moment(taskDate).format('DD/MM/YY')
+          }
+
+          // If the date has passed
+          if (outdated) {
+            resultDate = `${resultDate} late`
+          }
+
+        return resultDate
       },
       markSelected: function (task) {
         this.cleanSelected()

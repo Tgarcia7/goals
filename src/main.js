@@ -18,10 +18,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faClock } from '@fortawesome/free-regular-svg-icons'
 import './registerServiceWorker'
 
-library.add(fas, fab)
+library.add(fas, fab, faClock)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+// Moment
+import moment from 'vue-moment'
+
+Vue.use(moment)
 
 Vue.config.productionTip = false
 

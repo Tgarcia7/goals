@@ -247,16 +247,8 @@
       formatedDate: function () {
         let date = this.date
 
-        if (date && date.includes('/')) {
-          let splittedDate = date.split('/')
-          let tempDate = [splittedDate[1], splittedDate[0], splittedDate[2]].join('/')
-          tempDate = new Date(tempDate)
-
-          let month = tempDate.getMonth()+1
-          month = month < 10 ? `0${month}` : month
-
-          tempDate = `${tempDate.getFullYear()}-${month}-${tempDate.getDate()}`
-          date = tempDate
+        if (date && !date.includes('-')) {
+          date = this.$moment(date).format('YYYY-MM-DD')
         }
 
         return date
