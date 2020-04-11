@@ -109,11 +109,11 @@
     "icon": ["fas", "clipboard-check"],
     "title": "Natación",
     "date": "2020-12-22",
-    "objectiveDone": 2,
+    "objectiveDone": 10,
     "objectiveTotal": 10,
     "type": "objective",
     "status": 1,
-    "progress": "doing",
+    "progress": "done",
     "stepsList": []
   }
 ]

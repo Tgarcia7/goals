@@ -6,8 +6,10 @@
           <!-- <font-awesome-icon icon="chevron-left" size="lg" /> -->
         </a>
 
-        <b-navbar-brand href="#">
-          <font-awesome-icon icon="bullseye" size="lg" /> Goals
+        <b-navbar-brand>
+          <router-link class="main-logo" to="/">
+            <font-awesome-icon icon="bullseye" size="lg" /> <strong>Goals</strong>
+          </router-link>
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -61,8 +63,13 @@
   
   .navbar-brand {
     position: absolute;
-    left: 50%;
+    left: 47%;
     top: 7px;
     transform: translateX(-50%);
   } 
+
+  .main-logo {
+    color: white !important;
+    text-decoration: none !important;
+  }
 </style>

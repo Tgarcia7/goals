@@ -2,7 +2,7 @@
   <div id="app" class="d-flex flex-column">
     <TheHeader/>
     <UpdateChecker/>
-    <Home/>
+    <router-view></router-view>
     <TheFooter/>
   </div>
 </template>
@@ -10,7 +10,6 @@
 <script>
   import TheHeader from './components/TheHeader.vue'
   import TheFooter from './components/TheFooter.vue'
-  import Home from './views/Home.vue'
   import UpdateChecker from './services/UpdateChecker.vue'
 
   export default {
@@ -18,7 +17,6 @@
     components: {
       TheHeader,
       TheFooter,
-      Home,
       UpdateChecker
     }
   }

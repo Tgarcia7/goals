@@ -60,7 +60,7 @@
     name: 'Home',
     data: () => {
       return {
-        tasks: tasksData.filter( item => item.progress === 'doing' ),
+        tasks: tasksData.filter( item => item.progress === 'done' ),
         selectedTask: {}, 
         tasksOnly: false
       }

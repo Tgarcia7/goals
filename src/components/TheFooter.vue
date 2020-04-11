@@ -3,25 +3,25 @@
     <div class="container">
       <div class="row text-white">
         <div class="col">
-          <a href="#" class="text-decoration-none text-white">
+          <router-link to="/" class="text-decoration-none">
             <font-awesome-icon icon="clipboard-list" size="lg"/>
             <br>
-            <span id="itemActive">In progress</span>
-          </a>
+            <span>In progress</span>
+          </router-link>
         </div>
         <div class="col">
-          <a href="#" class="text-decoration-none text-muted">
+          <router-link to="/done" class="text-decoration-none">
             <font-awesome-icon icon="clipboard-check" size="lg"/>
             <br>
             <span>Done</span>
-          </a>
+          </router-link>
         </div>
         <div class="col">
-          <a href="#" class="text-decoration-none text-muted">
+          <router-link to="/statistics" class="text-decoration-none">
             <font-awesome-icon icon="chart-bar" size="lg"/>
             <br>
             <span>Statistics</span>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -33,10 +33,10 @@ export default {
   name: 'TheFooter',
     methods: {
       cleanSelected: function () {
-        let elems = document.querySelectorAll(".main-task-row");
+        let elems = document.querySelectorAll('.main-task-row');
 
         [].forEach.call(elems, el => {
-            el.classList.remove("task-selected")
+            el.classList.remove('task-selected')
         })
       }
     }
@@ -44,12 +44,17 @@ export default {
 </script>
 
 <style scoped>
-  #itemActive {
+  a.exact-active {
     text-shadow: 0 0 3px #e1d7d4;
+    color: white !important;
+  }
+
+  a.exact-active svg {
+    filter: drop-shadow(0 0 3px #aaa3a1)
   }
   
-  .fa-clipboard-list {
-    filter: drop-shadow(0 0 3px #aaa3a1)
+  a {
+    color: #6c757d !important;
   }
 
   footer{
