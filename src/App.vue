@@ -69,5 +69,6 @@
 
   .progress-bar {
     top: 56px !important; /* Header size */
+    z-index: 1000 !important;
   }
 </style>
