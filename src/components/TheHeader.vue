@@ -7,7 +7,7 @@
         </a>
 
         <b-navbar-brand>
-          <router-link class="main-logo" to="/">
+          <router-link class="main-logo" to="/goals/">
             <font-awesome-icon icon="bullseye" size="lg" /> <strong>Goals</strong>
           </router-link>
         </b-navbar-brand>

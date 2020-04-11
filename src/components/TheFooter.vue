@@ -3,21 +3,21 @@
     <div class="container">
       <div class="row text-white">
         <div class="col">
-          <router-link to="/" class="text-decoration-none">
+          <router-link to="/goals/" class="text-decoration-none">
             <font-awesome-icon icon="clipboard-list" size="lg"/>
             <br>
             <span>In progress</span>
           </router-link>
         </div>
         <div class="col">
-          <router-link to="/done" class="text-decoration-none">
+          <router-link to="/goals/done" class="text-decoration-none">
             <font-awesome-icon icon="clipboard-check" size="lg"/>
             <br>
             <span>Done</span>
           </router-link>
         </div>
         <div class="col">
-          <router-link to="/statistics" class="text-decoration-none">
+          <router-link to="/goals/statistics" class="text-decoration-none">
             <font-awesome-icon icon="chart-bar" size="lg"/>
             <br>
             <span>Statistics</span>
