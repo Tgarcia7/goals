@@ -138,12 +138,10 @@
 
           // Days
           if (!formated && diffDays <= 6) {
-            resultDate = diffDays === 0 ? 'Today' : `${diffDays} days`
-            
             if (diffDays === 1) {
               resultDate = outdated ? '1 day' : 'Tomorrow'
             } else {
-              resultDate = `${diffDays} days`
+              resultDate = diffDays === 0 ? 'Today' : `${diffDays} days`
             }
 
             formated = true
