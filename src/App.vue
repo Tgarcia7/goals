@@ -23,7 +23,7 @@
     mounted () {
       setTimeout(() => {
         this.$Progress.finish() // Only for App.vue
-      }, 1000)
+      }, 900)
     },
     created () {
 
@@ -39,7 +39,7 @@
       this.$router.afterEach(() => {
         setTimeout(() => {
           this.$Progress.finish()
-        }, 1000)
+        }, 900)
       })
 
     }

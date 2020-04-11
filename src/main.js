@@ -7,7 +7,7 @@ import router from '@/router'
 // Progressbar
 import VueProgressBar from 'vue-progressbar'
 
-const options = { color: '#bffaf3', failedColor: '#874b4b' }
+const options = { color: '#6b856f', failedColor: '#874b4b' }
 Vue.use(VueProgressBar, options)
 
 // Swal2
