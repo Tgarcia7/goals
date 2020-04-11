@@ -2,27 +2,21 @@
   <footer class="footer mt-auto py-2 bg-dark fixed-bottom" @click="cleanSelected">
     <div class="container">
       <div class="row text-white">
-        <div class="col">
-          <router-link to="/goals/" class="text-decoration-none">
-            <font-awesome-icon icon="clipboard-list" size="lg"/>
-            <br>
-            <span>In progress</span>
-          </router-link>
-        </div>
-        <div class="col">
-          <router-link to="/goals/done" class="text-decoration-none">
-            <font-awesome-icon icon="clipboard-check" size="lg"/>
-            <br>
-            <span>Done</span>
-          </router-link>
-        </div>
-        <div class="col">
-          <router-link to="/goals/statistics" class="text-decoration-none">
-            <font-awesome-icon icon="chart-bar" size="lg"/>
-            <br>
-            <span>Statistics</span>
-          </router-link>
-        </div>
+        <router-link to="/goals/" class="text-decoration-none col">
+          <font-awesome-icon icon="clipboard-list" size="lg"/>
+          <br>
+          <span>In progress</span>
+        </router-link>
+        <router-link to="/goals/done" class="text-decoration-none col">
+          <font-awesome-icon icon="clipboard-check" size="lg"/>
+          <br>
+          <span>Done</span>
+        </router-link>
+        <router-link to="/goals/statistics" class="text-decoration-none col">
+          <font-awesome-icon icon="chart-bar" size="lg"/>
+          <br>
+          <span>Statistics</span>
+        </router-link>
       </div>
     </div>
   </footer>
