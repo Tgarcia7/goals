@@ -1,6 +1,11 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
 import Home from '@/views/Home.vue'
 import Done from '@/views/Done.vue'
 import Statistics from '@/views/Statistics.vue'
+
+Vue.use(VueRouter)
 
 const routes = [
   { path: '/goals/', component: Home, name: 'home' },
@@ -8,4 +13,11 @@ const routes = [
   { path: '/goals/statistics', component: Statistics, name: 'statistics' }
 ]
 
-export default routes
+const router = new VueRouter({
+  routes,
+  mode: 'history',
+  linkActiveClass: "active",
+  linkExactActiveClass: "exact-active"
+})
+
+export default router

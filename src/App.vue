@@ -3,6 +3,7 @@
     <TheHeader/>
     <UpdateChecker/>
     <router-view></router-view>
+    <vue-progress-bar class="progress-bar"></vue-progress-bar>
     <TheFooter/>
   </div>
 </template>
@@ -18,6 +19,29 @@
       TheHeader,
       TheFooter,
       UpdateChecker
+    },
+    mounted () {
+      setTimeout(() => {
+        this.$Progress.finish() // Only for App.vue
+      }, 1000)
+    },
+    created () {
+
+      this.$Progress.start() // Only for App.vue
+
+      // For other components
+      this.$router.beforeEach((to, from, next) => {
+        this.$Progress.start()
+
+        next()
+      })
+      
+      this.$router.afterEach(() => {
+        setTimeout(() => {
+          this.$Progress.finish()
+        }, 1000)
+      })
+
     }
   }
 </script>
@@ -41,5 +65,9 @@
   
   .task-row-selected {
     background-color: #2a3036;
+  }
+
+  .progress-bar {
+    top: 56px !important; /* Header size */
   }
 </style>

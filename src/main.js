@@ -1,17 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueRouter from 'vue-router'
 
-// Vue Router
-import routes from '@/routes'
-Vue.use(VueRouter)
+// Router
+import router from '@/router'
 
-const router = new VueRouter({
-  routes,
-  mode: 'history',
-  linkActiveClass: "active",
-  linkExactActiveClass: "exact-active"
-})
+// Progressbar
+import VueProgressBar from 'vue-progressbar'
+
+const options = { color: '#bffaf3', failedColor: '#874b4b' }
+Vue.use(VueProgressBar, options)
 
 // Swal2
 import VueSweetalert2 from 'vue-sweetalert2'
