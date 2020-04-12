@@ -12,7 +12,7 @@
           <div class="col text-truncate text-left clickable" @click="edit()">
             {{ title }}
           </div>
-          <div class="col-4" v-if="type === 'objective'">
+          <div class="col-4" v-if="type === 'objective' && progress === 'doing'">
              <small>
                <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('up')">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
@@ -25,8 +25,8 @@
             <b-progress :value="barWidth" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
           <div class="col-4">
-            <small v-if="type === 'objective'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
-            <span v-else-if="type === 'steps'" class="badge badge-dark btn-tasks clickable" @click="editSubTasks()">
+            <small v-if="type === 'objective' || progress === 'done'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
+            <span v-else-if="type === 'steps' && progress === 'doing'" class="badge badge-dark btn-tasks clickable" @click="editSubTasks()">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
           </div>
@@ -39,12 +39,12 @@
             </small>
           </div>
           <div class="col-4">
-              <small v-if="type === 'objective'">
+              <small v-if="type === 'objective' && progress === 'doing'">
                 <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('down')">
                   <font-awesome-icon icon="chevron-down" size="lg"/>
                 </span>
               </small>
-              <small v-else-if="type === 'steps'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
+              <small v-else-if="type === 'steps' && progress === 'doing'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
           </div>
         </div>
       </div>

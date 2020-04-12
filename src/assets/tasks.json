@@ -13,7 +13,8 @@
       {"status": true, "description": "Vue router"},
       {"status": false, "description": "Vuex"},
       {"status": false, "description": "Vue i18n"}
-    ]
+    ],
+    "dateCompleted": null
   },
   {
     "id": 2,
@@ -25,7 +26,8 @@
     "type": "objective",
     "status": 1,
     "progress": "doing",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": null
   },
   {
     "id": 3,
@@ -37,7 +39,8 @@
     "type": "simple",
     "status": 1,
     "progress": "doing",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": null
   },
   {
     "id": 4,
@@ -49,7 +52,8 @@
     "type": "objective",
     "status": 1,
     "progress": "doing",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": null
   },
   {
     "id": 5,
@@ -66,7 +70,8 @@
       {"status": true, "description": "Pecho"},
       {"status": true, "description": "Dorso"},
       {"status": true, "description": "Mariposa"}
-    ]
+    ],
+    "dateCompleted": null
   },
   {
     "id": 6,
@@ -78,7 +83,8 @@
     "type": "objective",
     "status": 1,
     "progress": "doing",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": null
   },
   {
     "id": 7,
@@ -90,7 +96,8 @@
     "type": "objective",
     "status": 1,
     "progress": "doing",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": null
   },
   {
     "id": 8,
@@ -102,7 +109,8 @@
     "type": "objective",
     "status": 1,
     "progress": "doing",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": null
   },
   {
     "id": 9,
@@ -114,6 +122,37 @@
     "type": "objective",
     "status": 1,
     "progress": "done",
-    "stepsList": []
+    "stepsList": [],
+    "dateCompleted": "2020-04-11"
+  },
+  {
+    "id": 10,
+    "icon": ["fab", "vuejs"],
+    "title": "Aprender Vue.js",
+    "date": "2020-02-16",
+    "objectiveDone": 3,
+    "objectiveTotal": 3,
+    "type": "steps",
+    "status": 1,
+    "progress": "done",
+    "stepsList": [
+      {"status": true, "description": "Vue router"},
+      {"status": true, "description": "Vuex"},
+      {"status": true, "description": "Vue i18n"}
+    ],
+    "dateCompleted": "2020-04-04"
+  },
+  {
+    "id": 11,
+    "icon": ["fas", "language"],
+    "title": "Aprender inglés",
+    "date": null,
+    "objectiveDone": null,
+    "objectiveTotal": null,
+    "type": "simple",
+    "status": 1,
+    "progress": "done",
+    "stepsList": [],
+    "dateCompleted": "2020-03-11"
   }
 ]

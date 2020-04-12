@@ -159,7 +159,7 @@
           stepsList: []
         }, 
         showForm: false,
-        showTasksOnly: false,
+        showTasksOnly: false
       }
     }, 
     components: {
