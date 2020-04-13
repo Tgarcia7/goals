@@ -3,22 +3,26 @@
     <div class="container">
 
       <div class="tasks-container">
-        <Task v-for="(task, index) in tasks" 
-          :key="index" 
-          :id="task.id" 
-          :icon="task.icon"
-          :title="task.title"
-          :date="formatDate(task.date)"
-          :progress="task.progress"
-          :status="task.status"
-          :objectiveDone="task.objectiveDone"
-          :objectiveTotal="task.objectiveTotal"
-          :type="task.type"
-          :stepsList="task.stepsList"
-          @viewTask="viewTask(task, false)"
-          @viewSubTask="viewTask(task, true)"
-          @upDownObjective="upDownObjective"
-          :class="`main-task-row task_${task.id}`"/>
+        <transition-group name="list">
+          <Task v-for="(task) in tasks" 
+            :key="task.id" 
+            :id="task.id" 
+            :icon="task.icon"
+            :title="task.title"
+            :date="formatDate(task.date)"
+            :progress="task.progress"
+            :status="task.status"
+            :objectiveDone="task.objectiveDone"
+            :objectiveTotal="task.objectiveTotal"
+            :type="task.type"
+            :stepsList="task.stepsList"
+            @viewTask="viewTask(task, false)"
+            @viewSubTask="viewTask(task, true)"
+            @upDownObjective="upDownObjective"
+            @moveTo="moveTo"
+            @archive="archive"
+            :class="`main-task-row task_${task.id} list-task`"/>
+      </transition-group>
       
         <div v-if="tasks.length && tasks.length > 6" class="text-muted mt-2 text-center">
           <p><small>End of list</small></p>
@@ -47,6 +51,9 @@
       :selected="true"
       :tasksOnly="this.tasksOnly"
       @saveEditedTask="saveEditedTask"/>
+
+    <Swal ref="swal"/>
+
   </main>
 </template>
 
@@ -55,12 +62,13 @@
   import tasksData from "../assets/tasks.json"
   import AddTask from "../views/AddTask.vue"
   import EditTask from "../views/EditTask.vue"
+  import Swal from "../services/Swal.vue"
 
   export default {
     name: 'Home',
     data: () => {
       return {
-        tasks: tasksData.filter( item => item.progress === 'doing' ),
+        tasks: tasksData.filter( item => item.progress === 'doing' && item.status === 1 ),
         selectedTask: {}, 
         tasksOnly: false
       }
@@ -68,7 +76,8 @@
     components: {
       Task,
       AddTask,
-      EditTask
+      EditTask,
+      Swal
     },
     methods: {
       viewTask: function (task, subTasksOnly) {
@@ -171,6 +180,36 @@
         [].forEach.call(elems, el => {
             el.classList.remove("task-selected")
         })
+      },
+      moveTo: async function (idElement, location) {
+        let editedTask = this.tasks.find( element => element.id === idElement ),
+            idxFound = this.tasks.indexOf( editedTask )
+
+        if (editedTask.objectiveDone < editedTask.objectiveTotal) {
+          let response = await this.$refs.swal.regular('question', 
+            'You have not complete the goal', 'Would you like to move it anyway?')
+
+          if(!response.value) return
+        } 
+
+        editedTask.progress = location
+        editedTask.dateCompleted = this.$moment(Date()).format('YYYY-MM-DD')
+        
+        this.$set(this.tasks, idxFound, editedTask)
+        this.tasks.splice(idxFound, 1)
+
+        this.$refs.swal.toast('success', `Moved to ${location}`)
+      },
+      archive: function (idElement) {
+        let editedTask = this.tasks.find( element => element.id === idElement ),
+            idxFound = this.tasks.indexOf( editedTask )
+
+        editedTask.status = 0
+        
+        this.$set(this.tasks, idxFound, editedTask)
+        this.tasks.splice(idxFound, 1)
+
+        this.$refs.swal.toast('success', 'Goal archived')
       }
     }
   }
@@ -217,5 +256,18 @@
       bottom: 3.5em;
       right: 20.5em;
     }
+  }
+
+  .list-enter-active, .list-leave-active {
+    transition: all 1s;
+  }
+
+  .list-enter, .list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .flip-list-move {
+    transition: transform 1s;
   }
 </style>

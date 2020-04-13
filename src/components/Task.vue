@@ -1,7 +1,23 @@
 <template>
-  <div :class="`task-row disable-selection ${editableArea ? 'clickable' : ''}`" 
-    @click="editableArea ? edit() : ''">
-    <div :class="taskClasses">
+  <div class="task-row disable-selection" 
+    @click="clearSwipe('active-right'); clearSwipe('active-left');" 
+    v-touch:swipe.right="swipeRight" v-touch:swipe.left="swipeLeft">
+
+    <div :class="`${actionClasses} actions bg-danger action-right text-white text-center clickable`"
+      @click="archive()">
+      <font-awesome-icon :icon="['fas', 'archive']"/>
+      <p><small>Archive</small></p>
+    </div>
+
+    <div :class="`${this.progress === 'done' ? 'bg-info' : 'bg-success'} 
+      ${actionClasses} actions action-left text-white text-center clickable`"
+      @click="moveTo()">
+      <font-awesome-icon :icon="this.progress === 'done' ? ['fas', 'tasks'] : ['fas', 'check']"/>
+      <p><small>{{ this.progress === 'done' ? 'Undone' : 'Done' }}</small></p>
+    </div>
+
+    <div :class="`${taskClasses} task-main-content ${editableArea ? 'clickable' : ''}`"
+      @click="editableArea ? edit() : ''">
       <div class="col-2 clickable" @click="edit()">
         <div class="circle">
           <font-awesome-icon :icon="icon" size="lg"/>
@@ -13,11 +29,11 @@
             {{ title }}
           </div>
           <div class="col-4" v-if="type === 'objective' && progress === 'doing'">
-             <small>
-               <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('up')">
+            <small>
+              <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('up')">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
                 </span>
-             </small>
+            </small>
           </div>
         </div>
         <div class="row" v-if="type !== 'simple'">
@@ -94,6 +110,12 @@
         
         return classes
       },
+      actionClasses: function () {
+        let classes = ''
+        classes += this.type === 'simple' ? ' task-row-min' : ' task-row-complete'
+        
+        return classes
+      },
       editableArea: function () {
         return this.type === 'simple'
       }
@@ -121,10 +143,55 @@
       },
       editSubTasks: function () {
         this.$emit('viewSubTask')
+      },
+      swipeRight: function (direction, event) {
+        let task = event.target.closest('.task-row')
+
+        if( task && task.classList.contains('active-left')) {
+          task.classList.remove('active-left')
+        } else {
+          task.classList.add('active-right')
+        }
+      },
+      swipeLeft: function (direction, event) {
+        let task = event.target.closest('.task-row')
+        if( task && task.classList.contains('active-right')) {
+          task.classList.remove('active-right')
+        } else {
+          task.classList.add('active-left')
+        }
+      },
+      initListeners: function () {
+        this.scrollListener()
+      },
+      clearSwipe: function (selector) {
+        let elems = document.querySelectorAll(`.${selector}`);
+
+        [].forEach.call(elems, el => {
+            el.classList.remove(selector)
+        })
+      },
+      scrollListener: function () {
+        let vm = this
+        window.onscroll = function () {  
+          let elementRight = document.querySelector('.active-right')
+          let elementLeft = document.querySelector('.active-left')
+
+          if (elementRight) vm.clearSwipe('active-right')
+          if (elementLeft) vm.clearSwipe('active-left')
+        }
+      },
+      moveTo: function () {
+        let to = this.progress === 'done' ? 'doing' : 'done'
+        this.$emit('moveTo', this.id, to)
+      },
+      archive: function () {
+        this.$emit('archive', this.id)
       }
     },
     mounted: function () {
       this.startTimer()
+      this.initListeners()
     }
   }
 </script>
@@ -191,5 +258,49 @@
     -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
     -webkit-user-select: none; /* Chrome, Safari, and Opera */
     -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+  }
+
+  .task-row {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+  }
+
+  .task-row-complete.actions {
+    padding-top: 20px;
+  }
+
+  .action-right {
+    position: absolute; 
+    width: 70px;
+    transition: all 0.3s ease 0s;
+    left: -85px;
+  }
+
+  .active-right div.action-right {
+    transition: all 0.3s ease 0s;
+    left: 0px;
+  }
+
+  .active-right div.task-main-content {
+    left: 85px;
+    position: relative;
+  }
+
+  .action-left {
+    position: absolute; 
+    width: 70px;
+    transition: all 0.3s ease 0s;
+    right: -85px;
+  }
+
+  .active-left div.action-left {
+    transition: all 0.3s ease 0s;
+    right: 0px;
+  }
+
+  .active-left div.task-main-content {
+    right: 85px;
+    position: relative;
   }
 </style>
