@@ -38,6 +38,10 @@ import moment from 'vue-moment'
 
 Vue.use(moment)
 
+// Swipe
+import VueTouchEvents from 'vue2-touch-events'
+Vue.use(VueTouchEvents)
+
 Vue.config.productionTip = false
 
 new Vue({

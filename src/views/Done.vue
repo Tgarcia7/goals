@@ -3,8 +3,8 @@
     <div class="container">
 
       <div class="tasks-container">
-        <Task v-for="(task, index) in tasks" 
-          :key="index" 
+        <Task v-for="(task) in tasks" 
+          :key="task.id" 
           :id="task.id" 
           :icon="task.icon"
           :title="task.title"
@@ -17,6 +17,8 @@
           :stepsList="task.stepsList"
           :dateCompleted="task.dateCompleted"
           @viewTask="viewTask(task)"
+          @moveTo="moveTo"
+          @archive="archive"
           :class="`main-task-row task_${task.id}`"/>
       
         <div v-if="tasks.length && tasks.length > 6" class="text-muted mt-2 text-center">
@@ -39,6 +41,9 @@
       :stepsList="this.selectedTask.stepsList"
       :dateCompleted="this.selectedTask.dateCompleted"
       :selected="true"/>
+
+    <Swal ref="swal"/>
+
   </main>
 </template>
 
@@ -46,18 +51,20 @@
   import Task from '../components/Task.vue'
   import tasksData from "../assets/tasks.json"
   import ViewTask from "../views/ViewTask.vue"
+  import Swal from "../services/Swal.vue"
 
   export default {
     name: 'Home',
     data: () => {
       return {
-        tasks: tasksData.filter( item => item.progress === 'done' ),
+        tasks: tasksData.filter( item => item.progress === 'done' && item.status === 1 ),
         selectedTask: {}
       }
     },
     components: {
       Task,
-      ViewTask
+      ViewTask,
+      Swal
     },
     methods: {
       viewTask: function (task) {
@@ -107,7 +114,7 @@
             resultDate = diffDays > 1 ? `${resultDate} ago` : resultDate
           } else {
             // Full date (is too away)
-            resultDate = this.$moment(taskDate).format('DD/MM/YY')  
+            resultDate = diffDays === 0 ? 'Today' : this.$moment(taskDate).format('DD/MM/YY')  
           }
 
         return resultDate
@@ -124,6 +131,29 @@
         [].forEach.call(elems, el => {
             el.classList.remove("task-selected")
         })
+      },
+      moveTo: function (idElement, location) {
+        let editedTask = this.tasks.find( element => element.id === idElement ),
+            idxFound = this.tasks.indexOf( editedTask )
+
+        editedTask.progress = location
+        editedTask.dateCompleted = null
+        
+        this.$set(this.tasks, idxFound, editedTask)
+        this.tasks.splice(idxFound, 1)
+
+        this.$refs.swal.toast('success', `Moved to ${location}`)
+      },
+      archive: function (idElement) {
+        let editedTask = this.tasks.find( element => element.id === idElement ),
+            idxFound = this.tasks.indexOf( editedTask )
+
+        editedTask.status = 0
+        
+        this.$set(this.tasks, idxFound, editedTask)
+        this.tasks.splice(idxFound, 1)
+
+        this.$refs.swal.toast('success', 'Goal archived')
       }
     }
   }
