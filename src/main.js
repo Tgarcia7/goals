@@ -39,9 +39,8 @@ import moment from 'vue-moment'
 Vue.use(moment)
 
 // Swipe
-import VueTouchEvents from 'vue2-touch-events'
-let touchOptions = { swipeTolerance: 10 }
-Vue.use(VueTouchEvents, touchOptions)
+import { VueHammer } from 'vue2-hammer'
+Vue.use(VueHammer)
 
 Vue.config.productionTip = false
 

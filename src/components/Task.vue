@@ -1,7 +1,7 @@
 <template>
   <div class="task-row disable-selection" 
     @click="clearSwipe('active-right'); clearSwipe('active-left');" 
-    v-touch:swipe.right="swipeRight" v-touch:swipe.left="swipeLeft">
+    v-hammer:swipe.horizontal="onSwipe">
 
     <div :class="`${actionClasses} actions bg-danger action-right text-white text-center clickable`"
       @click="archive()">
@@ -144,7 +144,7 @@
       editSubTasks: function () {
         this.$emit('viewSubTask')
       },
-      swipeRight: function (direction, event) {
+      swipeRight: function (event) {
         let task = event.target.closest('.task-row')
 
         if( task && task.classList.contains('active-left')) {
@@ -153,12 +153,19 @@
           task.classList.add('active-right')
         }
       },
-      swipeLeft: function (direction, event) {
+      swipeLeft: function (event) {
         let task = event.target.closest('.task-row')
         if( task && task.classList.contains('active-right')) {
           task.classList.remove('active-right')
         } else {
           task.classList.add('active-left')
+        }
+      },
+      onSwipe: function (event) {
+        if (event.type == 'swiperight') {
+          this.swipeRight(event)
+        } else if (event.type == 'swipeleft') {
+          this.swipeLeft(event)
         }
       },
       initListeners: function () {
@@ -302,5 +309,10 @@
   .active-left div.task-main-content {
     right: 85px;
     position: relative;
+  }
+
+  /* Allow vertical scrolling (for hammer.js)*/
+  .task-row {
+    touch-action: pan-y !important;
   }
 </style>
