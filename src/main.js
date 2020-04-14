@@ -40,7 +40,7 @@ Vue.use(moment)
 
 // Swipe
 import VueTouchEvents from 'vue2-touch-events'
-let touchOptions = { swipeTolerance: 300 }
+let touchOptions = { swipeTolerance: 10 }
 Vue.use(VueTouchEvents, touchOptions)
 
 Vue.config.productionTip = false
