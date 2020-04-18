@@ -103,9 +103,9 @@
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
 
-        editedTask.objectiveDone = doneUpdated
-
         let updatedTask = Object. assign({}, editedTask)
+
+        updatedTask.objectiveDone = doneUpdated
         
         this.$set(this.tasks, idxFound, updatedTask)
       },
