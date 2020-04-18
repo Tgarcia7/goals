@@ -1,5 +1,5 @@
 <template>
-  <div class="task-row disable-selection" 
+  <div :class="`${this.doneClass} task-row disable-selection`" 
     @click="clearSwipe('active-right'); clearSwipe('active-left');" 
     v-hammer:swipe.horizontal="onSwipe">
 
@@ -74,9 +74,9 @@
   export default {
     name: 'Task',
     props: {
-      id: {type: Number, required: true}, 
-      icon: {type: Array, required: true}, 
-      title: {type: String, required: true}, 
+      id: { type: Number, required: true }, 
+      icon: { type: Array, required: true }, 
+      title: { type: String, required: true }, 
       date: String,  
       status: { type: Number, default: 1, validator: val => [1, 0].includes(val) }, 
       progress: { type: String, required: true, validator: val => ['doing', 'done'].includes(val) },
@@ -87,7 +87,7 @@
     },
     data: function () {
       return { 
-        
+        doneClass: ''
       }
     },
     computed: {
@@ -123,10 +123,13 @@
     methods: {
       upDownObjective: function (action) {
         let totalCompleted = this.objectiveDone
+        
         if (action === 'up' && this.objectiveDone < this.objectiveTotal) {
           totalCompleted ++
         } else if (action === 'down' && this.objectiveDone > 0) {
           totalCompleted --
+        } else {
+          return
         }
 
         this.$emit('upDownObjective', this.id, totalCompleted)
@@ -199,6 +202,10 @@
     mounted: function () {
       this.startTimer()
       this.initListeners()
+    }, 
+    updated: function () {
+      // activate done btn
+      this.doneClass = this.objectiveDone === this.objectiveTotal ? 'active-left' : ''
     }
   }
 </script>
