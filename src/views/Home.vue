@@ -104,8 +104,10 @@
             idxFound = this.tasks.indexOf( editedTask )
 
         editedTask.objectiveDone = doneUpdated
+
+        let updatedTask = Object. assign({}, editedTask)
         
-        this.$set(this.tasks, idxFound, editedTask)
+        this.$set(this.tasks, idxFound, updatedTask)
       },
       formatDate: function (stringDate){
         if (!stringDate) return null
