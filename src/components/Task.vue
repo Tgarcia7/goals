@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${this.doneClass} task-row disable-selection`" 
+  <div :class="`task_${this.id} task-row disable-selection`" 
     @click="clearSwipe('active-right'); clearSwipe('active-left');" 
     v-hammer:swipe.horizontal="onSwipe">
 
@@ -87,7 +87,7 @@
     },
     data: function () {
       return { 
-        doneClass: ''
+        
       }
     },
     computed: {
@@ -205,7 +205,10 @@
     }, 
     updated: function () {
       // activate done btn
-      this.doneClass = this.objectiveDone === this.objectiveTotal ? 'active-left' : ''
+      if (this.objectiveDone === this.objectiveTotal) {
+        let task = document.querySelector(`.task_${this.id}`)
+        setTimeout(() => { task.classList.add('active-left') }, 500)
+      }
     }
   }
 </script>

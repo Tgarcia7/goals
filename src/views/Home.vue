@@ -103,11 +103,9 @@
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
 
-        let updatedTask = Object. assign({}, editedTask)
-
-        updatedTask.objectiveDone = doneUpdated
+        editedTask.objectiveDone = doneUpdated
         
-        this.$set(this.tasks, idxFound, updatedTask)
+        this.$set(this.tasks, idxFound, editedTask)
       },
       formatDate: function (stringDate){
         if (!stringDate) return null
