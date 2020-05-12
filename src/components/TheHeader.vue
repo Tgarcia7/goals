@@ -8,7 +8,7 @@
 
         <b-navbar-brand>
           <router-link class="main-logo" to="/goals/">
-            <font-awesome-icon icon="bullseye" size="lg" /> Goals
+            <img src="../assets/logo.png" class="navbar-brand"/>
           </router-link>
         </b-navbar-brand>
 
@@ -63,9 +63,10 @@
   
   .navbar-brand {
     position: absolute;
-    left: 47%;
-    top: 7px;
+    left: 46%;
+    top: 0px;
     transform: translateX(-50%);
+    height: 57px;
   } 
 
   .main-logo {
