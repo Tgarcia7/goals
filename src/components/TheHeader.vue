@@ -64,9 +64,9 @@
   .navbar-brand {
     position: absolute;
     left: 46%;
-    top: 0px;
+    top: 3px;
     transform: translateX(-50%);
-    height: 57px;
+    height: 45px;
   } 
 
   .main-logo {
