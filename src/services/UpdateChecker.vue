@@ -5,8 +5,7 @@
 
       ¡Nueva versión disponible!
       <b-button variant="success" pill size="sm" 
-        v-if="updateExists" @click="refreshApp">Click</b-button> 
-      para actualizar
+        v-if="updateExists" @click="refreshApp">Actualizar</b-button>
     
     </b-alert>
 
