@@ -25,7 +25,7 @@
       </transition-group>
       
         <div v-if="tasks.length && tasks.length > 6" class="text-muted mt-2 text-center">
-          <p><small>End of list</small></p>
+          <p><small>Fin de la lista</small></p>
         </div>
       </div>
 
@@ -126,9 +126,9 @@
           // Months 
           if (diffMonths <= 4 && diffMonths > 0) {
             if (diffMonths === 1) {
-              resultDate = outdated ? '1 month' : 'Next month'
+              resultDate = outdated ? '1 mes' : 'Próximo mes'
             } else {
-              resultDate = `${diffMonths} months`
+              resultDate = `${diffMonths} meses`
             }
 
             formated = true
@@ -137,9 +137,9 @@
           // Weeks 
           if (!formated && diffWeeks <= 4 && diffWeeks > 0) {
             if (diffWeeks === 1) {
-              resultDate = outdated ? '1 week' : 'Next week'
+              resultDate = outdated ? '1 semana' : 'Próxima semana'
             } else {
-              resultDate = `${diffWeeks} weeks`
+              resultDate = `${diffWeeks} semanas`
             }
             
             formated = true
@@ -148,9 +148,9 @@
           // Days
           if (!formated && diffDays <= 6) {
             if (diffDays === 1) {
-              resultDate = outdated ? '1 day' : 'Tomorrow'
+              resultDate = outdated ? '1 día' : 'Mañana'
             } else {
-              resultDate = diffDays === 0 ? 'Today' : `${diffDays} days`
+              resultDate = diffDays === 0 ? 'Hoy' : `${diffDays} días`
             }
 
             formated = true
@@ -163,7 +163,7 @@
 
           // If the date has passed
           if (outdated) {
-            resultDate = `${resultDate} late`
+            resultDate = `${resultDate} tarde`
           }
 
         return resultDate
@@ -187,7 +187,7 @@
 
         if (editedTask.objectiveDone < editedTask.objectiveTotal) {
           let response = await this.$refs.swal.regular('question', 
-            'You have not complete the goal', 'Would you like to move it anyway?')
+            'La meta no ha sido completada', '¿Desea moverla de todas formas?')
 
           if(!response.value) return
         } 
@@ -198,7 +198,8 @@
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 
-        this.$refs.swal.toast('success', `Moved to ${location}`)
+        let locationText = location === 'done' ? 'hecho' : 'en proceso'
+        this.$refs.swal.toast('success', `Movido a ${locationText}`)
       },
       archive: function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
@@ -209,7 +210,7 @@
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 
-        this.$refs.swal.toast('success', 'Goal archived')
+        this.$refs.swal.toast('success', 'Meta archivada')
       }
     }
   }

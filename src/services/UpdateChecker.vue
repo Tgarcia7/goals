@@ -3,10 +3,10 @@
     <b-alert v-model="updateExists" variant="success" dismissible fade
       class="mb-2 rounded-0" style="z-index: 1000;" @click="refreshApp">
 
-      New version available!
+      ¡Nueva versión disponible!
       <b-button variant="success" pill size="sm" 
         v-if="updateExists" @click="refreshApp">Click</b-button> 
-      to update
+      para actualizar
     
     </b-alert>
 
@@ -45,7 +45,7 @@
     },
     mounted: function () {
       if (sessionStorage.getItem('appUpdated')) {
-        this.$refs.swal.toast('success', 'App updated succesfully')
+        this.$refs.swal.toast('success', 'Aplicación actualizada')
         sessionStorage.removeItem('appUpdated')
       }
     },

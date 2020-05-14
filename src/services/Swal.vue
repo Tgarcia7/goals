@@ -19,8 +19,8 @@
               title: title,
               text: text,
               position: 'top-end',
-              confirmButtonText: 'Accept',
-              cancelButtonText: 'Cancel',
+              confirmButtonText: 'Aceptar',
+              cancelButtonText: 'Cancelar',
               showCancelButton: true,
               backdrop: 'rgba(66, 66, 64,0.4)'
             }).then(result => {

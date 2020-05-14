@@ -5,17 +5,17 @@
         <router-link to="/goals/" class="text-decoration-none col">
           <font-awesome-icon icon="clipboard-list" size="lg"/>
           <br>
-          <span>In progress</span>
+          <span>En proceso</span>
         </router-link>
         <router-link to="/goals/done" class="text-decoration-none col">
           <font-awesome-icon icon="clipboard-check" size="lg"/>
           <br>
-          <span>Done</span>
+          <span>Hecho</span>
         </router-link>
         <router-link to="/goals/statistics" class="text-decoration-none col">
           <font-awesome-icon icon="chart-bar" size="lg"/>
           <br>
-          <span>Statistics</span>
+          <span>Estadísticas</span>
         </router-link>
       </div>
     </div>

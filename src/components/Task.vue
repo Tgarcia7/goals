@@ -6,14 +6,14 @@
     <div :class="`${actionClasses} actions bg-danger action-right text-white text-center clickable`"
       @click="archive()">
       <font-awesome-icon :icon="['fas', 'archive']"/>
-      <p><small>Archive</small></p>
+      <p><small>Archivar</small></p>
     </div>
 
     <div :class="`${this.progress === 'done' ? 'bg-info' : 'bg-success'} 
       ${actionClasses} actions action-left text-white text-center clickable`"
       @click="moveTo()">
       <font-awesome-icon :icon="this.progress === 'done' ? ['fas', 'tasks'] : ['fas', 'check']"/>
-      <p><small>{{ this.progress === 'done' ? 'Undone' : 'Done' }}</small></p>
+      <p><small>{{ this.progress === 'done' ? 'En proceso' : 'Hecho' }}</small></p>
     </div>
 
     <div :class="`${taskClasses} task-main-content ${editableArea ? 'clickable' : ''}`"
@@ -49,8 +49,8 @@
         </div>
         <div class="row">
           <div class="col text-left clickable" @click="edit()">
-            <small :class="date && date.includes('late') ? 'text-muted' : ''"> 
-              <font-awesome-icon :icon="['far', 'clock']" v-if="date && date.includes('late')"/>
+            <small :class="date && date.includes('tarde') ? 'text-muted' : ''"> 
+              <font-awesome-icon :icon="['far', 'clock']" v-if="date && date.includes('tarde')"/>
               {{ date }} 
             </small>
           </div>

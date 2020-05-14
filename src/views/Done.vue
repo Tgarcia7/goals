@@ -8,7 +8,7 @@
           :id="task.id" 
           :icon="task.icon"
           :title="task.title"
-          :date="'Completed ' + formatDate(task.dateCompleted)"
+          :date="'Hecho ' + formatDate(task.dateCompleted)"
           :progress="task.progress"
           :status="task.status"
           :objectiveDone="task.objectiveDone"
@@ -22,7 +22,7 @@
           :class="`main-task-row task_${task.id}`"/>
       
         <div v-if="tasks.length && tasks.length > 6" class="text-muted mt-2 text-center">
-          <p><small>End of list</small></p>
+          <p><small>Fin de la lista</small></p>
         </div>
       </div>
 
@@ -92,29 +92,29 @@
 
             // Months 
             if (diffMonths <= 4 && diffMonths > 0) {
-              resultDate = diffMonths === 1 ? '1 month' : `${diffMonths} months`
+              resultDate = diffMonths === 1 ? '1 mes' : `${diffMonths} meses`
 
               formated = true
             }
 
             // Weeks 
             if (!formated && diffWeeks <= 4 && diffWeeks > 0) {
-              resultDate = diffWeeks === 1 ? '1 week' : `${diffWeeks} weeks`
+              resultDate = diffWeeks === 1 ? '1 semana' : `${diffWeeks} semanas`
               
               formated = true
             }
 
             // Days
             if (!formated && diffDays <= 6) {
-              resultDate = diffDays === 1 ? 'Yesterday' : `${diffDays} days`
+              resultDate = diffDays === 1 ? 'ayer' : `${diffDays} días`
 
               formated = true
             }
 
-            resultDate = diffDays > 1 ? `${resultDate} ago` : resultDate
+            resultDate = diffDays > 1 ? `hace ${resultDate}` : resultDate
           } else {
             // Full date (is too away)
-            resultDate = diffDays === 0 ? 'Today' : this.$moment(taskDate).format('DD/MM/YY')  
+            resultDate = diffDays === 0 ? 'hoy' : this.$moment(taskDate).format('DD/MM/YY')  
           }
 
         return resultDate
@@ -142,7 +142,8 @@
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 
-        this.$refs.swal.toast('success', `Moved to ${location}`)
+        let locationText = location === 'done' ? 'hecho' : 'en proceso'
+        this.$refs.swal.toast('success', `Movido a ${locationText}`)
       },
       archive: function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
@@ -153,7 +154,7 @@
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 
-        this.$refs.swal.toast('success', 'Goal archived')
+        this.$refs.swal.toast('success', 'Meta archivada')
       }
     }
   }

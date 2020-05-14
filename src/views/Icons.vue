@@ -6,7 +6,7 @@
     <div class="form-row mt-3">
       <div class="col">
         <b-form-input autofocus type="search" class="form-control bg-dark text-white"
-          placeholder="Type something to search an icon" @keyup="applyFilter" v-model="search"/>
+          placeholder="Escriba algo para buscar un ícono" @keyup="applyFilter" v-model="search"/>
           <p class="text-right searchResult"><small>{{ searchResult }}</small></p>
       </div>
     </div>
@@ -14,7 +14,7 @@
     <div class="form-row my-5" v-if="showLoader">
       <div class="col-2 mx-auto">
         <div class="spinner-border text-primary" role="status">
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only">Cargando...</span>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
           let searchStr = this.search.toLowerCase()
           resultList = this.originalIconList.filter(item => item[1].toLowerCase().includes(searchStr))
   
-          resultString = `${resultList.length || 'No'} results`
+          resultString = `${resultList.length || 'Sin'} resultados`
         } else {
           resultList = this.originalIconList
           resultString = ''

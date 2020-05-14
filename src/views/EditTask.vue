@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-edit" ref="modal-edit" :title="showTasksOnly ? 'Steps' : 'Edit goal'" class="text-white"
+    <b-modal id="modal-edit" ref="modal-edit" :title="showTasksOnly ? 'Pasos' : 'Editar meta'" class="text-white"
       v-b-modal.modal-xl 
       header-bg-variant="dark" body-bg-variant="dark" footer-bg-variant="dark"
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
@@ -9,7 +9,7 @@
       <div class="form-row loader" v-if="!showForm">
         <div class="col-2 mx-auto">
           <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">Cargando...</span>
           </div>
         </div>
       </div>
@@ -19,19 +19,19 @@
 
           <div class="main-form-info" v-show="!showTasksOnly">
             <div class="form-row mt-3">
-              <div class="col-3 col-form-label">
-                <label for="title">Title <span class="text-danger">*</span></label>
+              <div class="col-4 col-form-label">
+                <label for="title">Título <span class="text-danger">*</span></label>
               </div>
-              <div class="col-9">
+              <div class="col-8">
                 <input type="text" class="form-control bg-dark text-white" name="title" v-model="task.title" required>
               </div>
             </div>
 
             <div class="form-row mt-3">
-              <div class="col-3 col-form-label">
-                <label for="title">End date</label>
+              <div class="col-4 col-form-label">
+                <label for="title">Fecha límite</label>
               </div>
-              <div class="col-9">
+              <div class="col-8">
                 <input type="date" class="form-control bg-dark text-white" name="date" v-model="task.date">
               </div>
             </div>
@@ -43,7 +43,7 @@
               <div class="col-2 ml-auto" v-else></div>
               <div class="col-5 mt-1">
                 <button type="button" id="btn-icons-edit" class="btn btn-block btn-secondary" v-b-modal.modal-icons-edit>
-                  Icon
+                  Ícono
                 </button>
               </div>
             </div>
@@ -51,7 +51,7 @@
 
           <div class="form-row mt-3" v-if="this.task.type==='objective'">
             <div class="col-6 col-form-label">
-              <label for="objectiveTotal">Objective <span class="text-danger">*</span></label>
+              <label for="objectiveTotal">Objetivo <span class="text-danger">*</span></label>
             </div>
             <div class="col-3 mx-auto">
               <b-form-spinbutton id="sb-inline" class="bg-dark text-white" 
@@ -62,7 +62,7 @@
             </div>
 
             <div class="col-6 col-form-label">
-              <label for="objectiveDone">Completed</label>
+              <label for="objectiveDone">Completado</label>
             </div>
             <div class="col-3 mx-auto text-white">
               <b-form-spinbutton id="sb-inline" class="bg-dark text-white" 
@@ -76,7 +76,7 @@
           <div v-if="task.type==='steps'">
             <div class="form-row" v-if="!showTasksOnly">
               <div class="col-12 col-form-label">
-                <label>Steps to complete the goal <span class="text-danger">*</span></label>
+                <label>Pasos para completar la meta <span class="text-danger">*</span></label>
               </div>
             </div>
 
@@ -99,9 +99,9 @@
             </div>
 
             <div class="form-row mt-4">
-              <div class="col-4 offset-1">
+              <div class="col-5 offset-1">
                 <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addStep()">
-                  Add step <font-awesome-icon class="clickable" icon="plus"/>
+                  Agregar paso <font-awesome-icon class="clickable" icon="plus"/>
                 </button>
               </div>
             </div>
@@ -112,10 +112,10 @@
 
       <template v-slot:modal-footer>
         <b-button size="md" variant="secondary" @click="close()">
-          Cancel
+          Cancelar
         </b-button>
         <b-button form="editTask" type="submit" size="md" variant="success">
-          Save
+          Guardar
         </b-button>
       </template>
     </b-modal>
@@ -174,13 +174,13 @@
         e.preventDefault()
 
         if (!this.task.icon) {
-          this.$refs.swal.toast('error', 'You must select an icon')
+          this.$refs.swal.toast('error', 'Debe seleccionar un ícono')
           return
         }
 
         if (this.type === 'objective') {
           if (!this.objectiveTotal) {
-            this.$refs.swal.toast('error', 'You must fill repetitions field')
+            this.$refs.swal.toast('error', 'Debe llenar el campo repeticiones')
             return
           }
           
@@ -196,7 +196,7 @@
             this.task.objectiveDone = (this.task.stepsList.filter(item => item.status)).length
           } else {
             this.task.stepsList = [{'status': false, 'description': ''}]
-            this.$refs.swal.toast('error', 'You must add at least one step')
+            this.$refs.swal.toast('error', 'Debe agregar al menos un paso')
             return
           }
 
@@ -209,7 +209,7 @@
         let updatedTask = Object. assign({}, this.task)
 
         this.$emit('saveEditedTask', updatedTask)
-        this.$refs.swal.toast('success', 'Goal updated successfully')
+        this.$refs.swal.toast('success', 'Meta actualizada')
       },
       close: function () {
         this.$refs['modal-edit'].hide()
@@ -288,7 +288,7 @@
       },
       checkObjective: function () {
         if (Number(this.task.objectiveDone) > Number(this.task.objectiveTotal)) {
-          this.$refs.swal.toast('error', 'The objectives done must be lower than the total objective')
+          this.$refs.swal.toast('error', 'El campo completado debe ser menor que el objetivo')
           this.task.objectiveDone = this.task.objectiveTotal
         }
       },

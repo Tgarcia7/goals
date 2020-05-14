@@ -9,7 +9,7 @@
       <div class="form-row loader" v-if="!showContent">
         <div class="col-2 mx-auto">
           <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">Cargando...</span>
           </div>
         </div>
       </div>
@@ -32,10 +32,10 @@
         <div class="row mt-3">
           <div class="col-12">
             <p>
-              <span class="text-secondary">Goal type </span> 
-              <span class="badge badge-light" v-if="task.type === 'objective'">{{ task.type }}</span>
-              <span class="badge badge-primary" v-if="task.type === 'steps'">{{ task.type }}</span>
-              <span class="badge badge-info" v-if="task.type === 'simple'">{{ task.type }}</span>
+              <span class="text-secondary">Tipo de meta </span> 
+              <span class="badge badge-light" v-if="task.type === 'objective'">Objetivo</span>
+              <span class="badge badge-primary" v-if="task.type === 'steps'">Pasos</span>
+              <span class="badge badge-info" v-if="task.type === 'simple'">Simple</span>
             </p>
           </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="row mt-2" v-if="task.type !== 'simple' && task.type === 'objective'">
           <div class="col-12">
             <p>
-              <span class="text-secondary">Repetitions completed </span> 
+              <span class="text-secondary">Repeticiones completadas </span> 
               {{ task.objectiveDone }} 
             </p>
           </div>
@@ -51,19 +51,19 @@
 
         <div class="row mt-2" v-if="task.date">
           <div class="col-12">
-            <p><span class="text-secondary">End date stablished</span> {{ task.date }}</p>
+            <p><span class="text-secondary">Fecha límite establecida</span> {{ task.date }}</p>
           </div>
         </div>
 
         <div class="row mt-2" v-if="task.dateCompleted">
           <div class="col-12">
-            <p><span class="text-secondary">Date completed</span> {{ task.dateCompleted }}</p>
+            <p><span class="text-secondary">Fecha de completado</span> {{ task.dateCompleted }}</p>
           </div>
         </div>
 
         <div class="row mt-2" v-if="task.stepsList && task.stepsList.length">
           <div class="col-12">
-            <p class="text-secondary">{{ task.objectiveDone }} Steps completed: </p>
+            <p class="text-secondary">{{ task.objectiveDone }} Pasos completados: </p>
           </div>
         </div>
 
@@ -82,7 +82,7 @@
 
       <template v-slot:modal-footer>
         <b-button size="md" variant="secondary" @click="close()">
-          Close
+          Cerrar
         </b-button>
       </template>
     </b-modal>

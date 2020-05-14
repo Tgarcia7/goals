@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-add" ref="modal-add" title="Add goal" class="text-white"
+    <b-modal id="modal-add" ref="modal-add" title="Agregar meta" class="text-white"
       v-b-modal.modal-xl 
       header-bg-variant="dark" body-bg-variant="dark" footer-bg-variant="dark"
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
@@ -12,28 +12,34 @@
           <div class="box-type" v-show="!type">
             <div class="form-row">
               <div class="col">
-                <h5>What kind of goal would you like to create?</h5>
+                <h5>¿Qué tipo de meta le gustaría crear?</h5>
               </div>
             </div>
 
             <div class="form-row mt-4">
               <button type="button" class="btn btn-primary btn-lg col-12" @click="showForm('steps')">
-                <strong><font-awesome-icon icon="tasks" size="lg"/> Steps</strong> <br>
-                <p class="type-description mt-1">To reach the goal you must complete a list of steps that you define</p>
+                <strong><font-awesome-icon icon="tasks" size="lg"/> Pasos</strong> <br>
+                <p class="type-description mt-1">
+                  Defina la lista de pasos que desea completar para lograr la meta
+                </p>
               </button>
             </div>
 
             <div class="form-row mt-4">
               <button type="button" class="btn btn-light btn-lg col-12 ml-auto" @click="showForm('objective')">
-                <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10 Objective</strong><br>
-                <p class="type-description mt-1">You set the number of repetitions you want to complete to reach the goal</p>
+                <strong>1<font-awesome-icon icon="arrow-right" size="xs"/>10 Objetivo</strong><br>
+                <p class="type-description mt-1">
+                  Establezca el número de repeticiones que desea completar para alcanzar la meta
+                </p>
               </button>
             </div>
 
             <div class="form-row mt-4">
               <button type="button" class="btn btn-info btn-lg col-12 mx-auto" @click="showForm('simple')">
                 <strong><font-awesome-icon icon="bullseye" size="lg"/> Simple</strong> <br>
-                <p class="type-description mt-1">No repetitions, no steps, just a goal</p>
+                <p class="type-description mt-1">
+                  Sin repeticiones, sin pasos, solo una meta
+                </p>
               </button>
             </div>
           </div>
@@ -43,29 +49,29 @@
 
               <div class="form-row">
                 <div class="col">
-                  <h5>
+                  <h6>
                     <span class="clickable" @click="cleanForm()">
                       <font-awesome-icon icon="chevron-left"/>
+                      Atrás
                     </span>
-                    Fill the form to add a new goal
-                  </h5>
+                  </h6>
                 </div>
               </div>
 
               <div class="form-row mt-3">
-                <div class="col-3 col-form-label">
-                  <label for="title">Title <span class="text-danger">*</span></label>
+                <div class="col-4 col-form-label">
+                  <label for="title">Título <span class="text-danger">*</span></label>
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                   <input type="text" class="form-control bg-dark text-white" name="title" v-model="title" required>
                 </div>
               </div>
 
               <div class="form-row mt-3">
-                <div class="col-3 col-form-label">
-                  <label for="title">End date</label>
+                <div class="col-4 col-form-label">
+                  <label for="title">Fecha límite</label>
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                   <input type="date" class="form-control bg-dark text-white" name="date" v-model="date">
                 </div>
               </div>
@@ -77,14 +83,14 @@
                 <div class="col-2 ml-auto" v-else></div>
                 <div class="col-5 mt-1">
                   <button type="button" id="btn-icons" class="btn btn-block btn-secondary" v-b-modal.modal-icons-add>
-                    Icon
+                    Ícono
                   </button>
                 </div>
               </div>
 
               <div class="form-row mt-3" v-if="this.type==='objective'">
                 <div class="col-6 col-form-label">
-                  <label for="objectiveTotal">Repetitions <span class="text-danger">*</span></label>
+                  <label for="objectiveTotal">Repeticiones <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-3 mx-auto">
                   <b-form-spinbutton id="sb-inline" class="bg-dark text-white" 
@@ -98,7 +104,7 @@
               <div v-if="this.type==='steps'">
                 <div class="form-row">
                   <div class="col-12 col-form-label">
-                    <label>Steps to complete the goal <span class="text-danger">*</span></label>
+                    <label>Pasos para completar la meta <span class="text-danger">*</span></label>
                   </div>
                 </div>
 
@@ -115,9 +121,9 @@
                 </div>
 
                 <div class="form-row mt-4">
-                  <div class="col-4 offset-1">
+                  <div class="col-5 offset-1">
                     <button type="button" class="btn btn-block btn-sm btn-secondary" @click="addStep()">
-                      Add step <font-awesome-icon class="clickable" icon="plus"/>
+                      Agregar paso <font-awesome-icon class="clickable" icon="plus"/>
                     </button>
                   </div>
                 </div>
@@ -131,10 +137,10 @@
 
       <template v-slot:modal-footer>
         <b-button size="md" variant="secondary" @click="close()">
-          Cancel
+          Cancelar
         </b-button>
         <b-button v-if="type" form="addTask" type="submit" size="md" variant="success">
-          Add
+          Agregar
         </b-button>
       </template>
     </b-modal>
@@ -176,13 +182,13 @@
         e.preventDefault()
 
         if (!this.icon) {
-          this.$refs.swal.toast('error', 'You must select an icon')
+          this.$refs.swal.toast('error', 'Debe seleccionar un ícono')
           return
         }
 
         if (this.type === 'objective') {
           if (!this.objectiveTotal) {
-            this.$refs.swal.toast('error', 'You must fill repetitions field')
+            this.$refs.swal.toast('error', 'Debe llenar el campo de repeticiones')
             return
           }
 
@@ -198,7 +204,7 @@
 
           if (!cleanedList.length) {
             this.stepsList = [{'status': false, 'description': ''}]
-            this.$refs.swal.toast('error', 'You must add at least one step')
+            this.$refs.swal.toast('error', 'Debe agregar al menos un paso')
             return
           }
         }
@@ -218,7 +224,7 @@
         this.close()
 
         this.$emit('saveTask', newTask)
-        this.$refs.swal.toast('success', 'Goal added successfully')
+        this.$refs.swal.toast('success', 'Meta agregada correctamente')
       },
       close: function () {
         this.$refs['modal-add'].hide()
