@@ -38,7 +38,7 @@
         if (this.refreshing) return
         this.refreshing = true
         
-        await this.$refs.swal.toast('', 'Updating', true, true)
+        await this.$refs.swal.toast('', 'Actualizando', true, true)
         sessionStorage.setItem('appUpdated', true)
         window.location.reload()
       })
