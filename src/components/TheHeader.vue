@@ -8,7 +8,7 @@
 
         <b-navbar-brand>
           <router-link class="main-logo" to="/goals/">
-            <img src="../assets/logo.png" class="navbar-brand"/>
+            <img src="../assets/img/logo.png" class="navbar-brand"/>
           </router-link>
         </b-navbar-brand>
 

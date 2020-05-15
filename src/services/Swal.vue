@@ -53,4 +53,8 @@
 
 <style lang="scss">
   @import '@/assets/sass/swal2-dark.scss';
+
+  .swal2-html-container{ 
+    color: #e1e1e1 !important;
+  }
 </style>

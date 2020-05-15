@@ -47,28 +47,5 @@
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
-
-  body {
-    background-color: #1e242a !important;
-  }
-
-  .clickable {
-    cursor: pointer;
-  }
-  
-  .task-row-selected {
-    background-color: #2a3036;
-  }
-
-  .progress-bar {
-    top: 56px !important; /* Header size */
-    z-index: 1000 !important;
-  }
+  @import './assets/css/main.css';
 </style>

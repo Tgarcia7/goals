@@ -1,0 +1,53 @@
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+body {
+  background-color: #1e242a !important;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.task-row-selected {
+  background-color: #2a3036;
+}
+
+.progress-bar {
+  top: 56px !important; /* Header size */
+  z-index: 1000 !important;
+}
+
+.tasks-container {
+  margin-bottom: 150px;
+}
+
+.task-selected {
+  background-color: #2a3036;
+}
+
+.main-task-row {
+  padding-left: 6px;
+}
+
+.taskslist-enter-active, .taskslist-leave-active {
+  transition: all 1s;
+}
+
+.taskslist-enter, .taskslist-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.flip-taskslist-move {
+  transition: transform 1s;
+}
+
+.b-form-spinbutton.form-control .btn {
+  color: white !important;
+}

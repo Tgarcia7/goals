@@ -3,23 +3,25 @@
     <div class="container">
 
       <div class="tasks-container">
-        <Task v-for="(task) in tasks" 
-          :key="task.id" 
-          :id="task.id" 
-          :icon="task.icon"
-          :title="task.title"
-          :date="'Hecho ' + formatDate(task.dateCompleted)"
-          :progress="task.progress"
-          :status="task.status"
-          :objectiveDone="task.objectiveDone"
-          :objectiveTotal="task.objectiveTotal"
-          :type="task.type"
-          :stepsList="task.stepsList"
-          :dateCompleted="task.dateCompleted"
-          @viewTask="viewTask(task)"
-          @moveTo="moveTo"
-          @archive="archive"
-          :class="`main-task-row task_${task.id}`"/>
+        <transition-group name="taskslist">
+          <Task v-for="(task) in tasks" 
+            :key="task.id" 
+            :id="task.id" 
+            :icon="task.icon"
+            :title="task.title"
+            :date="'Hecho ' + formatDate(task.dateCompleted)"
+            :progress="task.progress"
+            :status="task.status"
+            :objectiveDone="task.objectiveDone"
+            :objectiveTotal="task.objectiveTotal"
+            :type="task.type"
+            :stepsList="task.stepsList"
+            :dateCompleted="task.dateCompleted"
+            @viewTask="viewTask(task)"
+            @moveTo="moveTo"
+            @archive="archive"
+            :class="`main-task-row task_${task.id}`"/>
+        </transition-group>
       
         <div v-if="tasks.length && tasks.length > 6" class="text-muted mt-2 text-center">
           <p><small>Fin de la lista</small></p>
@@ -159,17 +161,3 @@
     }
   }
 </script>
-
-<style>
-  .tasks-container {
-    margin-bottom: 150px;
-  }
-
-  .task-selected {
-    background-color: #2a3036;
-  }
-
-  .main-task-row {
-    padding-left: 6px;
-  }
-</style>

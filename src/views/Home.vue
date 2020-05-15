@@ -3,7 +3,7 @@
     <div class="container">
 
       <div class="tasks-container">
-        <transition-group name="list">
+        <transition-group name="taskslist">
           <Task v-for="(task) in tasks" 
             :key="task.id" 
             :id="task.id" 
@@ -21,7 +21,7 @@
             @upDownObjective="upDownObjective"
             @moveTo="moveTo"
             @archive="archive"
-            :class="`main-task-row task_${task.id} list-task`"/>
+            :class="`main-task-row task_${task.id}`"/>
       </transition-group>
       
         <div v-if="tasks.length && tasks.length > 6" class="text-muted mt-2 text-center">
@@ -216,7 +216,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .btn-circle.btn-lg {
     width: 45px;
     height: 45px;
@@ -231,22 +231,6 @@
     right: 1em;
   }
 
-  .tasks-container {
-    margin-bottom: 150px;
-  }
-
-  .task-selected {
-    background-color: #2a3036;
-  }
-
-  .main-task-row {
-    padding-left: 6px;
-  }
-
-  .b-form-spinbutton.form-control .btn {
-    color: white !important;
-  }
-
   /* 
     ##Device = Desktops
     ##Screen = 1281px to higher resolution desktops
@@ -257,18 +241,5 @@
       bottom: 3.5em;
       right: 20.5em;
     }
-  }
-
-  .list-enter-active, .list-leave-active {
-    transition: all 1s;
-  }
-
-  .list-enter, .list-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .flip-list-move {
-    transition: transform 1s;
   }
 </style>
