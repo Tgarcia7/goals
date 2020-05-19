@@ -128,9 +128,11 @@
 <script>
   import IconsModal from '../views/Icons.vue'
   import Swal from "../services/Swal.vue"
+  import Utils from '../mixins/Utils'
 
   export default {
     name: 'EditTask',
+    mixins: [Utils],
     props: {
       id: Number, 
       icon: Array, 
@@ -276,15 +278,6 @@
         this.$refs['modal-edit'].$on('hidden', () => {
           this.close()
         })
-      },
-      onlyNumbers: function (event) {
-        let charCode = event.keyCode
-        
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            event.preventDefault()
-        }
-
-        return true
       },
       checkObjective: function () {
         if (Number(this.task.objectiveDone) > Number(this.task.objectiveTotal)) {

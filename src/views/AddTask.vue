@@ -153,9 +153,11 @@
 <script>
   import IconsModal from '../views/Icons.vue'
   import Swal from "../services/Swal.vue"
+  import Utils from '../mixins/Utils'
 
   export default {
     name: 'AddTask',
+    mixins: [Utils],
     data: () => {
       return {
         type: '',
@@ -270,15 +272,6 @@
             elementBody.style.height = `${fullHeight}px`
           }
         })
-      },
-      onlyNumbers: function (event) {
-        let charCode = event.keyCode
-        
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            event.preventDefault()
-        }
-
-        return true
       }
     }
   }

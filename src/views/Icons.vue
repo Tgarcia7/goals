@@ -31,9 +31,11 @@
 
 <script>
   import faIcons from "../assets/fontAwesome.json"
+  import Utils from '../mixins/Utils'
 
   export default {
     name: 'Icons',
+    mixins: [Utils],
     props: {
       id: {type: String, validator: val => ['add', 'edit'].includes(val)}, 
     },
@@ -55,15 +57,6 @@
       select: function (element) {
         this.$emit('iconSelected', element)
         this.$refs[`modal-icons-${this.id}`].hide()
-      },
-      isApp: function () {
-        let w = window,
-            d = document,
-            e = d.documentElement,
-            g = d.getElementsByTagName('body')[0],
-            window_width = w.innerWidth||e.clientWidth||g.clientWidth
-            
-        return window_width < 992
       },
       applyFilter: function () {
         this.showLoader = true

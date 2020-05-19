@@ -5,11 +5,6 @@
 <script>
   export default {
     name: 'Swal',
-    data: () => {
-      return {
-
-      }
-    },
     methods: {
       regular: function (type, title, text) {
         let vm = this

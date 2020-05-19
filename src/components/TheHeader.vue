@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container" @click="cleanSelected">
+  <div class="navbar-container">
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <div class="container">
         <a class="nav mr-auto text-white" href="/">
@@ -39,16 +39,7 @@
 
 <script>
   export default {
-    name: "TheHeader",
-    methods: {
-      cleanSelected: function () {
-        let elems = document.querySelectorAll(".main-task-row");
-
-        [].forEach.call(elems, el => {
-            el.classList.remove("task-selected")
-        })
-      }
-    }
+    name: 'TheHeader'
   }
 </script>
 

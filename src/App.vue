@@ -26,7 +26,6 @@
       }, 900)
     },
     created () {
-
       this.$Progress.start() // Only for App.vue
 
       // For other components

@@ -90,8 +90,11 @@
 </template>
 
 <script>
+  import Utils from '../mixins/Utils'
+
   export default {
     name: 'EditTask',
+    mixins: [Utils],
     props: {
       id: Number, 
       icon: Array, 
@@ -138,14 +141,14 @@
         this.task.id = this.id
         this.task.icon = this.icon
         this.task.title = this.title
-        this.task.date = this.formatedDate(this.date)
+        this.task.date = this.dateDisplayFormat(this.date)
         this.task.status = this.status
         this.task.progress = this.progress
         this.task.objectiveDone = this.objectiveDone
         this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
         this.task.stepsList = this.stepsList.slice()
-        this.task.dateCompleted = this.formatedDate(this.dateCompleted)
+        this.task.dateCompleted = this.dateDisplayFormat(this.dateCompleted)
       },
       cleanForm: function () {
         this.task.id = ''
@@ -159,13 +162,6 @@
         this.task.type = ''
         this.task.stepsList = []
         this.task.dateCompleted = ''
-      },
-      formatedDate: function (date) {
-        if (date) {
-          date = this.$moment(date).format('DD/MM/YYYY')
-        }
-
-        return date
       },
       initListeners: function () {
         //Modal size and init
