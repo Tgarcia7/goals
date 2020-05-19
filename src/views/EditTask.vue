@@ -208,7 +208,7 @@
         this.close()
 
         // Clone object to avoid referencing objects
-        let updatedTask = Object. assign({}, this.task)
+        let updatedTask = Object.assign({}, this.task)
 
         this.$emit('saveEditedTask', updatedTask)
         this.$refs.swal.toast('success', 'Meta actualizada')
@@ -243,7 +243,8 @@
         this.task.objectiveDone = this.objectiveDone
         this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
-        this.task.stepsList = this.stepsList.slice()
+        // Clone array avoiding object reference
+        this.task.stepsList = JSON.parse(JSON.stringify(this.stepsList))
         this.showTasksOnly = this.tasksOnly
       },
       formatedDate: function () {
