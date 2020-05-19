@@ -347,9 +347,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 23px;
-    width: 23px;
+    height: 26px;
+    width: 26px;
     background-color: #eee;
+    border-radius: 3px;
   }
 
   /* On mouse-over, add a grey background color */
@@ -376,7 +377,7 @@
 
   /* Style the checkmark/indicator */
   .check-container .checkmark:after {
-    left: 9px;
+    left: 10px;
     top: 5px;
     width: 7px;
     height: 13px;
