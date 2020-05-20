@@ -4,7 +4,7 @@ module.exports = {
   pwa: {
     name: 'Goals',
     themeColor: '#343a40',
-    msTileColor: '#343a40',
+    msTileColor: '#ffffff',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
     assetsVersion: '0.0.6',
