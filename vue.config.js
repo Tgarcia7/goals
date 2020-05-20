@@ -7,7 +7,7 @@ module.exports = {
     msTileColor: '#343a40',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
-    assetsVersion: '0.0.5',
+    assetsVersion: '0.0.6',
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       swSrc: './src/sw.js',
