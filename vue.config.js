@@ -3,11 +3,11 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/goals/' : '/',
   pwa: {
     name: 'Goals',
-    themeColor: '#343a40',
+    themeColor: '#ffffff',
     msTileColor: '#ffffff',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
-    assetsVersion: '0.0.6',
+    assetsVersion: '0.0.7',
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       swSrc: './src/sw.js',
