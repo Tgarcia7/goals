@@ -127,7 +127,7 @@
 
 <script>
   import IconsModal from '../views/Icons.vue'
-  import Swal from "../services/Swal.vue"
+  import Swal from '../services/Swal.vue'
   import Utils from '../mixins/Utils'
 
   export default {

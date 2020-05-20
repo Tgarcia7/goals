@@ -165,9 +165,9 @@
         }
       },
       onSwipe: function (event) {
-        if (event.type == 'swiperight') {
+        if (event.type === 'swiperight') {
           this.swipeRight(event)
-        } else if (event.type == 'swipeleft') {
+        } else if (event.type === 'swipeleft') {
           this.swipeLeft(event)
         }
       },
@@ -178,7 +178,7 @@
         let elems = document.querySelectorAll(`.${selector}`);
 
         [].forEach.call(elems, el => {
-            el.classList.remove(selector)
+          el.classList.remove(selector)
         })
       },
       scrollListener: function () {

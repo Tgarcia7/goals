@@ -14,10 +14,10 @@
 </template>
 
 <script>
-  import Swal from "../services/Swal.vue"
+  import Swal from '../services/Swal.vue'
 
   export default {
-    name: "UpdateChecker",
+    name: 'UpdateChecker',
     data: function() {
       return {
         refreshing: false,
@@ -30,10 +30,10 @@
     },
     created: function () {
       // Listen for swUpdated event and display refresh banner.
-      document.addEventListener("swUpdated", this.showRefreshUI, { once: true })
+      document.addEventListener('swUpdated', this.showRefreshUI, { once: true })
       
       // Refresh all open app tabs when a new service worker is installed.
-      navigator.serviceWorker.addEventListener("controllerchange", async () => {
+      navigator.serviceWorker.addEventListener('controllerchange', async () => {
         if (this.refreshing) return
         this.refreshing = true
         
@@ -61,7 +61,7 @@
         this.updateExists = false
         // Protect against missing registration.waiting.
         if (!this.registration || !this.registration.waiting) return
-        this.registration.waiting.postMessage("skipWaiting")
+        this.registration.waiting.postMessage('skipWaiting')
       }
     }
   }

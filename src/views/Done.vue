@@ -51,9 +51,9 @@
 
 <script>
   import Task from '../components/Task.vue'
-  import tasksData from "../assets/tasks.json"
-  import ViewTask from "../views/ViewTask.vue"
-  import Swal from "../services/Swal.vue"
+  import tasksData from '../assets/tasks.json'
+  import ViewTask from '../views/ViewTask.vue'
+  import Swal from '../services/Swal.vue'
   import TaskMixin from '../mixins/TaskMixin'
 
   export default {

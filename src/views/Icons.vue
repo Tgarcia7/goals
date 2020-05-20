@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import faIcons from "../assets/fontAwesome.json"
+  import faIcons from '../assets/fontAwesome.json'
   import Utils from '../mixins/Utils'
 
   export default {
@@ -62,7 +62,7 @@
         this.showLoader = true
         this.searchResult = ''
         let resultList,
-          resultString
+            resultString
         
         if(this.search) {
           let searchStr = this.search.toLowerCase()

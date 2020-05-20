@@ -2,109 +2,109 @@
   export default {
     methods: {
       formatDoingDate: function(stringDate) {
-        if (!stringDate) return null;
+        if (!stringDate) return null
 
-        let taskDate = this.$moment(stringDate).startOf("day"),
-          today = this.$moment().startOf("day"),
-          diffMonths = this.$moment(taskDate).diff(today, "months"),
-          diffWeeks = this.$moment(taskDate).diff(today, "weeks"),
-          diffDays = this.$moment(taskDate).diff(today, "days"),
-          resultDate = stringDate,
-          formated = false,
-          outdated = diffDays < 0 ? true : false;
+        let taskDate = this.$moment(stringDate).startOf('day'),
+            today = this.$moment().startOf('day'),
+            diffMonths = this.$moment(taskDate).diff(today, 'months'),
+            diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
+            diffDays = this.$moment(taskDate).diff(today, 'days'),
+            resultDate = stringDate,
+            formated = false,
+            outdated = diffDays < 0 ? true : false
 
-        diffMonths = Math.abs(diffMonths);
-        diffWeeks = Math.abs(diffWeeks);
-        diffDays = Math.abs(diffDays);
+        diffMonths = Math.abs(diffMonths)
+        diffWeeks = Math.abs(diffWeeks)
+        diffDays = Math.abs(diffDays)
 
         // Months
         if (diffMonths <= 4 && diffMonths > 0) {
           if (diffMonths === 1) {
-            resultDate = outdated ? "1 mes" : "Próximo mes";
+            resultDate = outdated ? '1 mes' : 'Próximo mes'
           } else {
-            resultDate = `${diffMonths} meses`;
+            resultDate = `${diffMonths} meses`
           }
 
-          formated = true;
+          formated = true
         }
 
         // Weeks
         if (!formated && diffWeeks <= 4 && diffWeeks > 0) {
           if (diffWeeks === 1) {
-            resultDate = outdated ? "1 semana" : "Próxima semana";
+            resultDate = outdated ? '1 semana' : 'Próxima semana'
           } else {
-            resultDate = `${diffWeeks} semanas`;
+            resultDate = `${diffWeeks} semanas`
           }
 
-          formated = true;
+          formated = true
         }
 
         // Days
         if (!formated && diffDays <= 6) {
           if (diffDays === 1) {
-            resultDate = outdated ? "1 día" : "Mañana";
+            resultDate = outdated ? '1 día' : 'Mañana'
           } else {
-            resultDate = diffDays === 0 ? "Hoy" : `${diffDays} días`;
+            resultDate = diffDays === 0 ? 'Hoy' : `${diffDays} días`
           }
 
-          formated = true;
+          formated = true
         }
 
         // Full date (is too away)
         if (!formated) {
-          resultDate = this.$moment(taskDate).format("DD/MM/YY");
+          resultDate = this.$moment(taskDate).format('DD/MM/YY')
         }
 
         // If the date has passed
         if (outdated) {
-          resultDate = `${resultDate} tarde`;
+          resultDate = `${resultDate} tarde`
         }
 
-        return resultDate;
+        return resultDate
       },
       formatCompletedDate: function (stringDate){
         if (!stringDate) return null
 
         let taskDate = this.$moment(stringDate).startOf('day'),
-          today = this.$moment().startOf('day'),
-          diffMonths = this.$moment(taskDate).diff(today, 'months'),
-          diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
-          diffDays = this.$moment(taskDate).diff(today, 'days'),
-          resultDate = stringDate,
-          formated = false,
-          outdated = diffDays < 0 ? true : false
+            today = this.$moment().startOf('day'),
+            diffMonths = this.$moment(taskDate).diff(today, 'months'),
+            diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
+            diffDays = this.$moment(taskDate).diff(today, 'days'),
+            resultDate = stringDate,
+            formated = false,
+            outdated = diffDays < 0 ? true : false
 
-          if (outdated) {
-            diffMonths = Math.abs(diffMonths)
-            diffWeeks = Math.abs(diffWeeks)
-            diffDays = Math.abs(diffDays)
+        if (outdated) {
+          diffMonths = Math.abs(diffMonths)
+          diffWeeks = Math.abs(diffWeeks)
+          diffDays = Math.abs(diffDays)
 
-            // Months 
-            if (diffMonths <= 4 && diffMonths > 0) {
-              resultDate = diffMonths === 1 ? '1 mes' : `${diffMonths} meses`
+          // Months 
+          if (diffMonths <= 4 && diffMonths > 0) {
+            resultDate = diffMonths === 1 ? '1 mes' : `${diffMonths} meses`
 
-              formated = true
-            }
-
-            // Weeks 
-            if (!formated && diffWeeks <= 4 && diffWeeks > 0) {
-              resultDate = diffWeeks === 1 ? '1 semana' : `${diffWeeks} semanas`
-              
-              formated = true
-            }
-
-            // Days
-            if (!formated && diffDays <= 6) {
-              resultDate = diffDays === 1 ? 'ayer' : `${diffDays} días`
-
-              formated = true
-            }
-
-            resultDate = diffDays > 1 ? `hace ${resultDate}` : resultDate
-          } else {
-            // Full date (is too away)
-            resultDate = diffDays === 0 ? 'hoy' : this.$moment(taskDate).format('DD/MM/YY')  
+            formated = true
           }
+
+          // Weeks 
+          if (!formated && diffWeeks <= 4 && diffWeeks > 0) {
+            resultDate = diffWeeks === 1 ? '1 semana' : `${diffWeeks} semanas`
+                
+            formated = true
+          }
+
+          // Days
+          if (!formated && diffDays <= 6) {
+            resultDate = diffDays === 1 ? 'ayer' : `${diffDays} días`
+
+            formated = true
+          }
+
+          resultDate = diffDays > 1 ? `hace ${resultDate}` : resultDate
+        } else {
+          // Full date (is too away)
+          resultDate = diffDays === 0 ? 'hoy' : this.$moment(taskDate).format('DD/MM/YY')  
+        }
 
         return resultDate
       },
@@ -115,10 +115,10 @@
         element.classList.add('task-selected')
       },
       cleanSelected: function () {
-        let elems = document.querySelectorAll(".main-task-row");
+        let elems = document.querySelectorAll('.main-task-row');
 
         [].forEach.call(elems, el => {
-            el.classList.remove("task-selected")
+          el.classList.remove('task-selected')
         })
       },
       moveTo: async function (idElement, location) {
@@ -128,17 +128,17 @@
         if(editedTask.progress === 'doing') {
           if (editedTask.objectiveDone < editedTask.objectiveTotal) {
             let response = await this.$refs.swal.regular('question', 
-              'La meta no ha sido completada', '¿Desea moverla de todas formas?')
+                                                         'La meta no ha sido completada', '¿Desea moverla de todas formas?')
 
             if(!response.value) return
           } 
 
-          editedTask.dateCompleted = this.$moment(Date()).format('YYYY-MM-DD')
+          editedTask.dateCompleted = this.$moment(this.$moment()).format('YYYY-MM-DD')
         } else {
           editedTask.dateCompleted = null
         }
         editedTask.progress = location
-      
+        
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 
@@ -150,7 +150,7 @@
             idxFound = this.tasks.indexOf( editedTask )
 
         editedTask.status = 0
-        
+          
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 

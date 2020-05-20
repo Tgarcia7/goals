@@ -59,10 +59,10 @@
 
 <script>
   import Task from '../components/Task.vue'
-  import tasksData from "../assets/tasks.json"
-  import AddTask from "../views/AddTask.vue"
-  import EditTask from "../views/EditTask.vue"
-  import Swal from "../services/Swal.vue"
+  import tasksData from '../assets/tasks.json'
+  import AddTask from '../views/AddTask.vue'
+  import EditTask from '../views/EditTask.vue'
+  import Swal from '../services/Swal.vue'
   import TaskMixin from '../mixins/TaskMixin'
 
   export default {
