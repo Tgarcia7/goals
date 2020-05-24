@@ -4,8 +4,7 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/essential',
-    'eslint:recommended'
+    'plugin:vue/essential'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -28,7 +27,8 @@ module.exports = {
     ],
     'no-multiple-empty-lines': [
       'warn', { 'max': 1 }
-    ]
+    ],
+    'no-unused-vars': [2, {'vars': 'all', 'args': 'after-used'}]
   },
   overrides: [
     {

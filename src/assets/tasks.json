@@ -14,7 +14,8 @@
       {"status": false, "description": "Vuex"},
       {"status": false, "description": "Vue i18n"}
     ],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 2,
@@ -27,7 +28,8 @@
     "status": 1,
     "progress": "doing",
     "stepsList": [],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 3,
@@ -40,7 +42,8 @@
     "status": 1,
     "progress": "doing",
     "stepsList": [],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 4,
@@ -53,7 +56,8 @@
     "status": 1,
     "progress": "doing",
     "stepsList": [],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 5,
@@ -71,7 +75,8 @@
       {"status": true, "description": "Dorso"},
       {"status": true, "description": "Mariposa"}
     ],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 6,
@@ -84,7 +89,8 @@
     "status": 1,
     "progress": "doing",
     "stepsList": [],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 7,
@@ -97,7 +103,8 @@
     "status": 1,
     "progress": "doing",
     "stepsList": [],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 8,
@@ -110,7 +117,8 @@
     "status": 1,
     "progress": "doing",
     "stepsList": [],
-    "dateCompleted": null
+    "dateCompleted": null,
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 9,
@@ -123,7 +131,8 @@
     "status": 1,
     "progress": "done",
     "stepsList": [],
-    "dateCompleted": "2020-04-12"
+    "dateCompleted": "2020-04-12",
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 10,
@@ -140,7 +149,8 @@
       {"status": true, "description": "Vuex"},
       {"status": true, "description": "Vue i18n"}
     ],
-    "dateCompleted": "2020-04-04"
+    "dateCompleted": "2020-04-04",
+    "dateCreated": "2020-01-01"
   },
   {
     "id": 11,
@@ -153,6 +163,7 @@
     "status": 1,
     "progress": "done",
     "stepsList": [],
-    "dateCompleted": "2020-03-11"
+    "dateCompleted": "2020-03-11",
+    "dateCreated": "2020-01-01"
   }
 ]
