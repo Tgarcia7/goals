@@ -1,6 +1,6 @@
 module.exports = {
   lintOnSave: false,
-  publicPath: process.env.NODE_ENV === 'production' ? '/goals/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/goals/' : '/goals/',
   pwa: {
     name: 'Goals',
     themeColor: '#343a40',
