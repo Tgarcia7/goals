@@ -4,7 +4,7 @@
       <div class="col-11 mx-auto">
         <div class="row">
           <div class="col bg-dark mb-3 chart-container">
-            .
+            <bar-chart :height="'250px'"></bar-chart>
           </div>
         </div>
         <div class="row">
@@ -28,29 +28,18 @@
 </template>
 
 <script>
-  import { Bar } from 'vue-chartjs'
+  import BarChart from '../components/charts/Bar.vue'
 
   export default {
-    extends: Bar,
-    mounted () {
-      // Overwriting base render method with actual data.
-      this.renderChart({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        datasets: [
-          {
-            label: 'GitHub Commits',
-            backgroundColor: '#f87979',
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-          }
-        ]
-      })
+    components: {
+      BarChart
     }
   }
 </script>
 
 <style scoped>
   .chart-container {
-    height: 125px;
+    /*height: 200px;*/
   }
 
   .container {
