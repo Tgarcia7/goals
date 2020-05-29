@@ -1,0 +1,85 @@
+[
+  {
+    "type": "Bar",
+    "height": null,
+    "yearBtns": false,
+    "chartdata": {
+        "labels": ["A tiempo", "Vencidas"],
+        "datasets": [
+          {
+            "data": [17,13,0],
+            "backgroundColor": ["rgba(6,160,6,0.2)", "rgba(215,219,216,0.2)"],
+            "borderColor": ["rgba(6,160,6,1)", "rgba(215,219,216,1)"],
+            "borderWidth": [2, 2]
+          }
+        ]
+      },
+      "options": {
+        "legend": { "display": false },
+        "responsive": true,
+        "offset": true,
+        "title": {
+          "display": true,
+          "text": "Metas en proceso"
+        }
+      }    
+  },
+  {
+    "type": "Line",
+    "height": "350px",
+    "yearBtns": true,
+    "chartdata": {
+      "labels": [
+        "Ene","Feb","Mar",
+        "Abr","May",
+        "Jun","Jul","Ago",
+        "Sep","Oct",
+        "Nov","Dic"],
+      "datasets": [
+        {
+          "data": [1,3,0,6,6,8,10,4,7,8,7,8,0],
+          "label": "Completadas",
+          "fill": true,
+          "backgroundColor": "rgba(6,160,6,0.2)",
+          "borderColor": "rgba(6,160,6,1)",
+          "pointBorderColor": "#fff",
+          "pointBackgroundColor": "rgba(6,160,6,1)"
+        }
+      ]
+    },
+    "options": {
+      "legend": { "display": false },
+      "responsive": true,
+      "offset": true,
+      "title": {
+        "display": true,
+        "text": "Metas completadas"
+      }
+    }   
+  },
+  {
+    "type": "Doughnut",
+    "height": null,
+    "yearBtns": false,
+    "chartdata": {
+      "labels": ["Pasos", "Simple", "Objetivo"],
+      "datasets": [
+        {
+          "data": [17,13,5],
+          "backgroundColor": ["rgba(0,123,255,0.2)", "rgba(23,162,184,0.2)", "rgba(248,249,250,0.4)"],
+          "borderColor": ["rgba(0,123,255,1)", "rgba(23,162,184,1)", "rgba(248,249,250,1)"],
+          "borderWidth": [2, 2, 2]
+        }
+      ]
+    },
+    "options": {
+      "legend": { "position": "left" },
+      "responsive": true,
+      "offset": true,
+      "title": {
+        "display": true,
+        "text": "Metas por tipo"
+      }
+    }
+  }
+]

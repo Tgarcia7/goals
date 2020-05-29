@@ -1,8 +1,8 @@
 <script>
-  import { HorizontalBar } from 'vue-chartjs'
+  import { Line } from 'vue-chartjs'
 
   export default {
-    extends: HorizontalBar,
+    extends: Line,
     props: {
       height: { type: String, default: '250px', required: false },
       chartdata: { type: Object, required: true },
