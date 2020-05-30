@@ -11,6 +11,8 @@
     mounted () {
       this.renderChart(this.chartdata, this.options)
       Chart.defaults.global.defaultFontColor = '#ffffff'
+      Chart.defaults.global.defaultFontSize = 13
+      Chart.defaults.global.defaultFontFamily = '"Quicksand", sans-serif'
     }
   }
 </script>

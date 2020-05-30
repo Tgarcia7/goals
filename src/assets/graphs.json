@@ -1,7 +1,7 @@
 [
   {
     "type": "Bar",
-    "height": null,
+    "height": "350px",
     "yearBtns": false,
     "chartdata": {
         "labels": ["A tiempo", "Vencidas"],
@@ -59,7 +59,7 @@
   },
   {
     "type": "Doughnut",
-    "height": null,
+    "height": "300px",
     "yearBtns": false,
     "chartdata": {
       "labels": ["Pasos", "Simple", "Objetivo"],
