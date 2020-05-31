@@ -18,32 +18,36 @@
         <div v-for="(graph, index) in graphs" :key="index" class="row">
           <div class="col bg-dark mb-3 chart-container pb-3 pt-3">
 
-            <div class="row text-white" v-if="graph.yearBtns">
-              <div class="col-4 clickable">
+            <div class="row text-white" v-if="graph.year">
+              <div class="col-4 clickable" @click="graph.year --">
                 <font-awesome-icon icon="chevron-left"/>
               </div>
               <div class="col-4">
-                <strong>2020</strong>
+                <strong>{{ graph.year }}</strong>
               </div>
-              <div class="col-4 clickable">
-                <font-awesome-icon icon="chevron-right"/>
+              <div class="col-4 clickable" v-if="graph.year < currentYear"  
+                @click="graph.year ++">
+                <font-awesome-icon icon="chevron-right"/> 
               </div>
             </div>
 
             <bar-chart v-if="graph.type === 'Bar'" 
               :chartdata="graph.chartdata" 
               :options="graph.options"
-              :heigth="graph.height">
+              :heigth="graph.height"
+              :year="graph.year">
             </bar-chart>
             <line-chart v-else-if="graph.type === 'Line'" 
               :chartdata="graph.chartdata" 
               :options="graph.options"
-              :height="graph.height">
+              :height="graph.height"
+              :year="graph.year">
             </line-chart>
             <doughnut-chart v-else-if="graph.type === 'Doughnut'" 
               :chartdata="graph.chartdata" 
               :options="graph.options"
-              :height="graph.height">
+              :height="graph.height"
+              :year="graph.year">
             </doughnut-chart>
             
           </div>
@@ -71,7 +75,8 @@
     data: function () {
       return {
         graphs: GraphsData,
-        stats: StatsData
+        stats: StatsData,
+        currentYear: this.$moment(this.$moment()).year()
       }
     }
   }
