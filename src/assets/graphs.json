@@ -2,7 +2,7 @@
   {
     "type": "Bar",
     "height": null,
-    "yearBtns": false,
+    "year": null,
     "chartdata": {
         "labels": ["A tiempo", "Vencidas"],
         "datasets": [
@@ -27,7 +27,7 @@
   {
     "type": "Line",
     "height": "350px",
-    "yearBtns": true,
+    "year": 2020,
     "chartdata": {
       "labels": [
         "Ene","Feb","Mar",
@@ -37,7 +37,11 @@
         "Nov","Dic"],
       "datasets": [
         {
-          "data": [1,3,0,6,6,8,10,4,7,8,7,8,0],
+          "data": null,
+          "dataYears": {
+            "2019": [1,3,0,6,6,8,10,4,7,8,7,8,0],
+            "2020": [1,3,0,6,6,25,10,4,7,8,7,8,0]
+          },
           "label": "Completadas",
           "fill": true,
           "backgroundColor": "rgba(6,160,6,0.2)",
@@ -60,7 +64,7 @@
   {
     "type": "Doughnut",
     "height": null,
-    "yearBtns": false,
+    "year": null,
     "chartdata": {
       "labels": ["Pasos", "Simple", "Objetivo"],
       "datasets": [
