@@ -40,24 +40,31 @@
           </div>
         </div>
 
+        <div class="row mt-2" v-if="task.dateCompleted">
+          <div class="col-12">
+            <p><span class="text-secondary">
+              Completado el</span> {{ task.dateCompleted }} 
+              <br>
+              <small class="text-secondary">
+                <span v-if="task.dateCompleted > task.date">
+                  <font-awesome-icon :icon="['far', 'clock']"/> Tarde
+                </span>
+                <span v-else-if="task.dateCompleted <= task.date">
+                  <font-awesome-icon :icon="['fas', 'check']" class="text-success"/> A tiempo
+                </span>
+                <br>
+                Fecha objetivo {{ task.date }}
+              </small>
+            </p>
+          </div>
+        </div>
+        
         <div class="row mt-2" v-if="task.type !== 'simple' && task.type === 'objective'">
           <div class="col-12">
             <p>
               <span class="text-secondary">Repeticiones completadas </span> 
               {{ task.objectiveDone }} 
             </p>
-          </div>
-        </div>
-
-        <div class="row mt-2" v-if="task.date">
-          <div class="col-12">
-            <p><span class="text-secondary">Fecha límite establecida</span> {{ task.date }}</p>
-          </div>
-        </div>
-
-        <div class="row mt-2" v-if="task.dateCompleted">
-          <div class="col-12">
-            <p><span class="text-secondary">Fecha de completado</span> {{ task.dateCompleted }}</p>
           </div>
         </div>
 

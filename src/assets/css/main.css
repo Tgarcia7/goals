@@ -60,3 +60,7 @@ body {
 .b-form-spinbutton.form-control .btn {
   color: white !important;
 }
+
+.navbar-dark .navbar-toggler {
+  border: none;
+}
