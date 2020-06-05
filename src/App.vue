@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="d-flex flex-column">
-    <TheHeader/>
-    <UpdateChecker/>
+    <TheHeader v-if="!this.$route.meta.isPublic"/>
+    <UpdateChecker v-if="!this.$route.meta.isPublic"/>
     <router-view></router-view>
-    <vue-progress-bar class="progress-bar"></vue-progress-bar>
-    <TheFooter/>
+    <vue-progress-bar class="progress-bar" v-if="!this.$route.meta.isPublic"></vue-progress-bar>
+    <TheFooter v-if="!this.$route.meta.isPublic"/>
   </div>
 </template>
 
@@ -41,6 +41,11 @@
         }, 900)
       })
 
+    },
+    methods: {
+      logout () {
+        this.$router.push({ name: 'login' })
+      }
     }
   }
 </script>

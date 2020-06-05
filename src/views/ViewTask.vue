@@ -47,10 +47,10 @@
               <br>
               <small class="text-secondary">
                 <span v-if="task.dateCompleted > task.date">
-                  <font-awesome-icon :icon="['far', 'clock']"/> Tarde
+                  Tarde <font-awesome-icon :icon="['far', 'clock']"/>
                 </span>
                 <span v-else-if="task.dateCompleted <= task.date">
-                  <font-awesome-icon :icon="['fas', 'check']" class="text-success"/> A tiempo
+                  A tiempo <font-awesome-icon :icon="['fas', 'check']"/> 
                 </span>
                 <br>
                 Fecha objetivo {{ task.date }}
