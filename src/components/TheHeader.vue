@@ -28,7 +28,7 @@
                 <span>Usuario</span>
               </template>
               <b-dropdown-item href="#">Perfil</b-dropdown-item>
-              <b-dropdown-item href="#">Cerrar sesión</b-dropdown-item>
+              <b-dropdown-item @click="logout()">Cerrar sesión</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
@@ -39,7 +39,13 @@
 
 <script>
   export default {
-    name: 'TheHeader'
+    name: 'TheHeader',
+    methods: {
+      logout () {
+        localStorage.clear()
+        this.$router.push({ name: 'login' })
+      }
+    }
   }
 </script>
 
