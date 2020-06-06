@@ -47,7 +47,7 @@ import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 
-let baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'https://tgarcia7.github.io/goals/'
+let baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'https://tgarcia7.github.io'
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
