@@ -79,9 +79,10 @@
 
           <div class="row text-white mt-2">
             <div class="col">
-              <font-awesome-icon :icon="['fab', 'facebook']" class="mr-3 clickable" size="lg"/>
-              <font-awesome-icon :icon="['fab', 'google']" class="mr-3 clickable" size="lg"/>
-              <font-awesome-icon :icon="['fab', 'linkedin']" class="clickable" size="lg"/>
+              <font-awesome-icon :icon="['fab', 'facebook']" class="mr-4 clickable" size="lg"
+                 @click="socialAuthenticate('facebook')"/>
+              <font-awesome-icon :icon="['fab', 'google']" class="mr-4 clickable" size="lg"/>
+              <font-awesome-icon :icon="['fab', 'github']" class="clickable" size="lg"/>
             </div>
           </div>
 
@@ -92,7 +93,7 @@
 </template>
 
 <script>
-  //import api from '../services/api'
+  import api from '../services/api'
 
   export default {
     name: 'login',
@@ -104,16 +105,16 @@
       }
     },
     methods: {
-      login () {
-        window.localStorage.token = `${this.email}, ${this.password}`
+      login: async function () {
+        await api.authenticate({ email: this.email, password: this.password })
         this.$router.push({ name: 'home' })
-        // api.authenticate(this.email, this.password)
-        //   .then(res => {
-        //     window.localStorage.token = res.token
-        //     window.localStorage.user = window.atob(res.token.split('.')[1])
-        //     this.$router.push('/')
-        //   })
-        //   .catch(err => ( this.error = err ))
+      },
+      socialAuthenticate: function (provider) {
+        let vm = this
+        this.$auth.authenticate(provider).then(async function (result) {
+          await api.socialAuth(result.access_token)
+          vm.$router.push({ name: 'home' })
+        })
       }
     }
   }
