@@ -28,7 +28,6 @@ api.socialAuth = function (token) {
     fetch(url)    
       .then(async function (response) {
         let user = await response.json()
-        console.log(user)
         localStorage.setItem('token', JSON.stringify(user))
         resolve()
       })    
