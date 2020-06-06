@@ -42,6 +42,26 @@ Vue.use(moment)
 import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
 
+// Axios and Authenticate
+import VueAxios from 'vue-axios'
+import VueAuthenticate from 'vue-authenticate'
+import axios from 'axios'
+
+let baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'https://tgarcia7.github.io/goals/'
+
+Vue.use(VueAxios, axios)
+Vue.use(VueAuthenticate, {
+  baseUrl: baseUrl, 
+  providers: {
+    facebook: {
+      clientId: '254801129292665',
+      redirectUri: baseUrl,
+      responseType: 'token',
+      authorizationEndpoint: 'https://www.facebook.com/v3.0/dialog/oauth'
+    }
+  }
+})
+
 Vue.config.productionTip = false
 
 new Vue({

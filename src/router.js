@@ -24,7 +24,7 @@ const router = new VueRouter({
 })
 
 const isAuthenticated = function () {
-  return window.localStorage.token
+  return localStorage.getItem('token')
 }
 
 router.beforeEach((to, from, next) => {

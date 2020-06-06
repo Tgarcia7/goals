@@ -38,11 +38,13 @@
 </template>
 
 <script>
+  import api from '../services/api'
+
   export default {
     name: 'TheHeader',
     methods: {
       logout () {
-        localStorage.clear()
+        api.logout()
         this.$router.push({ name: 'login' })
       }
     }
