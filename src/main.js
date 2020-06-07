@@ -57,7 +57,7 @@ Vue.use(VueAuthenticate, {
       clientId: '254801129292665',
       redirectUri: baseUrl,
       responseType: 'token',
-      authorizationEndpoint: 'https://www.facebook.com/v3.0/dialog/oauth'
+      authorizationEndpoint: 'https://www.facebook.com/v7.0/dialog/oauth'
     }
   }
 })
