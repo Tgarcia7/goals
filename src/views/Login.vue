@@ -94,9 +94,11 @@
 
 <script>
   import api from '../services/api'
+  import facebookSDK from '../mixins/FB'
 
   export default {
     name: 'login',
+    mixins: [facebookSDK],
     data () {
       return {
         email: '',
@@ -109,12 +111,21 @@
         await api.authenticate({ email: this.email, password: this.password })
         this.$router.push({ name: 'home' })
       },
-      socialAuthenticate: function (provider) {
+      socialAuthenticate: async function (provider) {
         let vm = this
-        this.$auth.authenticate(provider).then(async function (result) {
-          await api.socialAuth(result.access_token)
-          vm.$router.push({ name: 'home' })
-        })
+        if (provider === 'facebook') {
+          this.FB.login( async function (result) {
+            if (result && result.authResponse) {
+              await api.socialAuth(result.authResponse.accessToken)
+              vm.$router.push({ name: 'home' })
+            }
+          })
+        } else {
+          this.$auth.authenticate(provider).then(async function (result) {
+            await api.socialAuth(result.access_token)
+            vm.$router.push({ name: 'home' })
+          })
+        }
       }
     }
   }
