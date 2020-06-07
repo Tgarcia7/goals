@@ -47,11 +47,11 @@ import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 
-let baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'https://tgarcia7.github.io'
+let baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080/goals/' : 'https://tgarcia7.github.io/goals/'
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
-  baseUrl: baseUrl, 
+  baseUrl: 'http://localhost:8080', 
   providers: {
     facebook: {
       clientId: '254801129292665',
