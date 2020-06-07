@@ -81,8 +81,10 @@
             <div class="col">
               <font-awesome-icon :icon="['fab', 'facebook']" class="mr-4 clickable" size="lg"
                  @click="socialAuthenticate('facebook')"/>
-              <font-awesome-icon :icon="['fab', 'google']" class="mr-4 clickable" size="lg"/>
-              <font-awesome-icon :icon="['fab', 'github']" class="clickable" size="lg"/>
+              <font-awesome-icon :icon="['fab', 'google']" class="mr-4 clickable" size="lg"
+                 @click="socialAuthenticate('google')"/>
+              <font-awesome-icon :icon="['fab', 'github']" class="clickable" size="lg"
+                 @click="socialAuthenticate('github')"/>
             </div>
           </div>
 
@@ -94,11 +96,9 @@
 
 <script>
   import api from '../services/api'
-  import facebookSDK from '../mixins/FB'
 
   export default {
     name: 'login',
-    mixins: [facebookSDK],
     data () {
       return {
         email: '',
@@ -113,19 +113,10 @@
       },
       socialAuthenticate: async function (provider) {
         let vm = this
-        if (provider === 'facebook') {
-          this.FB.login( async function (result) {
-            if (result && result.authResponse) {
-              await api.socialAuth(result.authResponse.accessToken)
-              vm.$router.push({ name: 'home' })
-            }
-          })
-        } else {
-          this.$auth.authenticate(provider).then(async function (result) {
-            await api.socialAuth(result.access_token)
-            vm.$router.push({ name: 'home' })
-          })
-        }
+        this.$auth.authenticate(provider).then(async function (result) {
+          await api.socialAuth(result.code, provider)
+          vm.$router.push({ name: 'home' })
+        })
       }
     }
   }

@@ -1,3 +1,5 @@
+import user from '../assets/user.json'
+
 const api = {}
 
 api.baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'api.goals.com'
@@ -22,18 +24,11 @@ api.authenticate = function (email, password) {
 }
 
 api.socialAuth = function (token) {
-  return new Promise((resolve) => {
-    const url = `https://graph.facebook.com/v7.0/me?fields=id,name,picture,email&access_token=${token}`
-
-    fetch(url)    
-      .then(async function (response) {
-        let user = await response.json()
-        localStorage.setItem('token', JSON.stringify(user))
-        resolve()
-      })    
-      .catch(function(err) {
-        console.error(err)
-      })
+  return new Promise(async (resolve) => {
+    // request to database with token
+    localStorage.setItem('token', JSON.stringify(user))
+    resolve()
+      
   })
 }
 
