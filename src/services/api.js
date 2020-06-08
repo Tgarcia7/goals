@@ -1,15 +1,18 @@
-import user from '../assets/user.json'
+import userData from '../assets/user.json'
 
 const api = {}
 
 api.baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'api.goals.com'
 
-api.authenticate = function (email, password) {
-  return new Promise((resolve) => {
-    localStorage.setItem('token', JSON.stringify({email, password}))
-    resolve()
-    // config.headers['Authorization'] = token // needed for all requests
-    // maybe: axios.defaults.headers.common['Authorization'] = token
+api.authenticate = function (user) {
+  return new Promise((resolve, reject) => {
+    if (user.email !== 'tgarciamiranda@gmail.com') {
+      reject('Usuario y/o contraseña incorrecta')
+    } else {
+      user.name = userData.name
+      localStorage.setItem('token', JSON.stringify(user))
+      resolve()
+    }
     //  axios({ url: `${baseUrl}/auth`, { email, password }, method: 'POST' })
     //   .then(res => {
     //     localStorage.setItem('token', res.data.token)
@@ -23,10 +26,18 @@ api.authenticate = function (email, password) {
   })
 }
 
+api.register = function (user) {
+  return new Promise((resolve) => {
+    localStorage.setItem('token', JSON.stringify(user))
+    resolve()
+  })
+}
+
 api.socialAuth = function (token) {
   return new Promise(async (resolve) => {
+    console.log(token)
     // request to database with token
-    localStorage.setItem('token', JSON.stringify(user))
+    localStorage.setItem('token', JSON.stringify(userData))
     resolve()
       
   })
