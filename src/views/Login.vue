@@ -281,14 +281,14 @@
     border-radius: 30px;
     height: 3em;
     font-weight: 600;
-    box-shadow: 0px 8px 6px -6px #444a46;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
   }
 
   #login-form .input-login {
     border-radius: 30px;
     height: 3em;
     font-weight: 600;
-    box-shadow: 0px 8px 6px -6px #444a46;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
     color: black;
     padding: 0.375rem 3.75rem;
   }
