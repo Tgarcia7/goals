@@ -5,7 +5,8 @@
         <div class="col col-sm-4 mx-auto">
           <div class="row">
             <figure class="col">
-              <img src="../assets/img/logo-login.png" alt="Logo" :class="registerForm ? 'logo active' : 'logo'">
+              <img src="../assets/img/logo-login.png" alt="Logo" 
+                :class="`${registerForm ? 'logo active' : 'logo'} ${loading ? 'full-logo' : ''}`">
             </figure>
           </div>
 
@@ -174,7 +175,7 @@
               </div>
             </div>
 
-            <div class="row text-white mt-4">
+            <div class="row text-white mt-5">
               <div class="col">
                 <small>O iniciar con</small>
               </div>
@@ -315,11 +316,17 @@
 
   .logo {
     transition: all 0.5s ease;
-    width: 85%;
+    width: 70%;
   }
 
   .logo.active {
     transition: all 0.5s ease;
     width: 45%;
+  }
+
+  .logo.full-logo {
+    transition: all 0.5s ease;
+    width: 100%;
+    margin-top: 70px;
   }
 </style>
