@@ -49,6 +49,17 @@ api.logout = function () {
   //delete axios.defaults.headers.common['Authorization']
 }
 
+api.forgetPassword = function (email) {
+  return new Promise(async (resolve, reject) => {
+    if (email !== 'tgarciamiranda@gmail.com') {
+      reject('El correo ingresado no está asociado con ninguna cuenta')
+    } else {
+      resolve('Las instrucciones para reestablecer la contraseña fueron enviadas a la cuenta ingresada')
+      resolve()
+    }
+  })
+}
+
 // api.getStatus = function () {
 //   return trae.get('${baseUrl}/')
 //     .then(res => res.data)

@@ -15,78 +15,73 @@
               <div class="spinner-border text-primary" role="status">
                 <span class="sr-only">Cargando...</span>
               </div>
-              <p class="text-muted mt-3"><small>Iniciando sesión...</small></p>
+              <p class="text-muted mt-3"><small>{{ loadingMessage }}</small></p>
             </div>
           </div>
 
           <div v-if="!loading">
-            <form @submit.prevent="login" id="login-form" v-if="loginForm">
-              <div class="form-group row mt-3">
-                <div class="col">
-                  <div class="input-group">
-                    <div class="input-group-prepend input-icon">
-                      <span class="input-group-text">
-                        <font-awesome-icon icon="user"/>
-                      </span>
+            
+            <transition-group name="fade">
+              <form @submit.prevent="login" id="login-form" v-if="loginForm" :key="1">
+                <div class="form-group row mt-3">
+                  <div class="col">
+                    <div class="input-group">
+                      <div class="input-group-prepend input-icon">
+                        <span class="input-group-text">
+                          <font-awesome-icon icon="envelope"/>
+                        </span>
+                      </div>
+                      <input 
+                        v-model="email"
+                        class="form-control input-login"
+                        type="email"
+                        placeholder="Correo electrónico"
+                        required>
                     </div>
-                    <input 
-                      v-model="email"
-                      class="form-control input-login"
-                      type="email"
-                      placeholder="Correo electrónico"
-                      required>
                   </div>
                 </div>
-              </div>
 
-              <div class="form-group row">
-                <div class="col">
-                  <div class="input-group">
-                    <div class="input-group-prepend input-icon">
-                      <span class="input-group-text">
-                        <font-awesome-icon icon="key"/>
-                      </span>
-                    </div>
-                    <input 
-                      v-model="password"
-                      class="form-control input-login"
-                      type="password"
-                      placeholder="Contraseña"
-                      required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group row mt-4">
-                <div class="col mx-auto">
-                  <button type="submit" class="btn btn-success btn-block main-btn">
-                    <strong>Iniciar sesión</strong>
-                  </button>
-                </div>
-              </div>
-
-              <div class="row mb-2" v-if="error">
-                <div class="col text-danger">
-                  {{ error }}
-                </div>
-              </div>
-            </form>
-
-            <transition name="fade">
-              <form @submit.prevent="register" id="login-form" v-if="registerForm">
                 <div class="form-group row">
                   <div class="col">
                     <div class="input-group">
                       <div class="input-group-prepend input-icon">
                         <span class="input-group-text">
-                          <font-awesome-icon icon="address-card"/>
+                          <font-awesome-icon icon="key"/>
+                        </span>
+                      </div>
+                      <input 
+                        v-model="password"
+                        class="form-control input-login"
+                        type="password"
+                        placeholder="Contraseña"
+                        required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-4">
+                  <div class="col mx-auto">
+                    <button type="submit" class="btn btn-success btn-block main-btn">
+                      <strong>Iniciar sesión</strong>
+                    </button>
+                  </div>
+                </div>
+              </form>
+              
+              <form @submit.prevent="register" id="register-form" v-if="registerForm" :key="2">
+                <div class="form-group row">
+                  <div class="col">
+                    <div class="input-group">
+                      <div class="input-group-prepend input-icon">
+                        <span class="input-group-text">
+                          <font-awesome-icon icon="user"/>
                         </span>
                       </div>
                       <input 
                         v-model="usernameRegister"
                         class="form-control input-login"
                         type="text"
-                        placeholder="Nombre"
+                        placeholder="Nombre completo"
                         required>
                     </div>
                   </div>
@@ -97,7 +92,7 @@
                     <div class="input-group">
                       <div class="input-group-prepend input-icon">
                         <span class="input-group-text">
-                          <font-awesome-icon icon="user"/>
+                          <font-awesome-icon icon="envelope"/>
                         </span>
                       </div>
                       <input 
@@ -146,13 +141,15 @@
                   </div>
                 </div>
 
-                <div class="row" v-if="errorPasswords">
-                  <div class="col text-danger">
-                    <p class="text-right mr-3">
-                      <small>{{ errorPasswords }}</small>
-                    </p>
+                <transition name="fadeMsgs">
+                  <div class="row" v-if="errorPasswords">
+                    <div class="col text-danger">
+                      <p class="text-right mr-3">
+                        <small>{{ errorPasswords }}</small>
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </transition>
 
                 <div class="form-group row">
                   <div class="col mx-auto">
@@ -163,25 +160,78 @@
                   </div>
                 </div>
               </form>
-            </transition>
+
+              <form @submit.prevent="forget" id="forget-form" v-if="forgetForm" :key="3">
+                <div class="form-group row mt-5">
+                  <div class="col">
+                    <div class="input-group">
+                      <div class="input-group-prepend input-icon">
+                        <span class="input-group-text">
+                          <font-awesome-icon icon="envelope"/>
+                        </span>
+                      </div>
+                      <input 
+                        v-model="emailForget"
+                        class="form-control input-login"
+                        type="email"
+                        placeholder="Correo electrónico"
+                        required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-4">
+                  <div class="col mx-auto">
+                    <button type="submit" class="btn btn-success btn-block main-btn">
+                      <strong>Reestablecer contraseña</strong>
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+            </transition-group>
 
             <div class="row text-white">
               <div class="col-6">
-                <small class="clickable">¿Olvidó su contraseña?</small>
+                <small class="clickable" v-if="loginForm" @click="showForm('forget')">¿Olvidó su contraseña?</small>
               </div>
               <div class="col-4 ml-auto mb-3">
                 <small class="clickable text-right" @click="showForm('register')" v-if="loginForm">Registrarse</small>
-                <small class="clickable text-right" @click="showForm('login')" v-if="registerForm">Iniciar sesión</small>
+                <small class="clickable text-right" @click="showForm('login')" v-if="forgetForm || registerForm">Iniciar sesión</small>
               </div>
             </div>
 
-            <div class="row text-white mt-5">
+            <transition name="fadeMsgs">
+              <div class="row mb-2" v-if="error">
+                <div class="col text-danger">
+                  {{ error }}
+                </div>
+              </div>
+            </transition>
+
+            <transition name="fadeMsgs">
+              <div class="row mb-2" v-show="messageSuccess">
+                <div class="col text-success">
+                  {{ messageSuccess }}
+                </div>
+              </div>
+            </transition>
+
+            <div class="form-group row mt-4" v-show="forgetCompletedBtn">
+              <div class="col-6 mx-auto">
+                <button type="button" class="btn btn-secondary btn-block main-btn" @click="clearForm()">
+                  <strong>Volver</strong>
+                </button>
+              </div>
+            </div>
+
+            <div class="row text-white mt-5" v-if="loginForm || registerForm">
               <div class="col">
                 <small>O iniciar con</small>
               </div>
             </div>
 
-            <div class="row text-white mt-1">
+            <div class="row text-white mt-1" v-if="loginForm || registerForm">
               <div class="col">
                 <font-awesome-icon :icon="['fab', 'facebook']" class="mr-4 clickable" size="lg"
                   @click="socialAuthenticate('facebook')"/>
@@ -212,10 +262,15 @@
         loading: false,
         loginForm: true,
         registerForm: false,
+        forgetForm: false,
         emailRegister: '',
         passwordRegister: '',
         confirmPasswordRegister: '',
-        usernameRegister: ''
+        usernameRegister: '',
+        emailForget: '',
+        messageSuccess: '',
+        forgetCompletedBtn: false,
+        loadingMessage: 'Iniciando sesión...'
       }
     },
     methods: {
@@ -223,7 +278,7 @@
         try {
           await api.authenticate({ email: this.email, password: this.password })
           this.loading = true
-          setTimeout(() => { this.$router.push({ name: 'home' }) }, 2000)
+          setTimeout(() => { this.$router.push({ name: 'home' }) }, 3000)
         } catch (error) {
           this.error = error
         }
@@ -237,9 +292,30 @@
             username: this.usernameRegister
           })
           
+          this.loadingMessage = 'Creando cuenta...'
           this.loading = true
           setTimeout(() => { this.$router.push({ name: 'home' }) }, 2000)
         } catch (error) {
+          this.error = error
+        }
+      },
+      forget: async function () {
+        try {
+          this.error = ''
+          this.forgetForm = false
+          this.loadingMessage = 'Por favor espere...'
+          this.loading = true
+          this.messageSuccess = await api.forgetPassword(this.emailForget)
+          setTimeout(() => { 
+            this.loading = false
+            this.forgetCompletedBtn = true
+          }, 3000)
+        } catch (error) {
+          setTimeout(() => { 
+            this.loading = false
+            this.forgetCompletedBtn = true
+          }, 3000)
+          this.messageSuccess = ''
           this.error = error
         }
       },
@@ -252,13 +328,39 @@
         })
       },
       showForm: function (form) {
+        this.error = ''
+        this.messageSuccess = ''
+        
         if (form === 'login') {
           this.loginForm = true
           this.registerForm = false
+          this.forgetForm = false
         } else if (form === 'register') {
           this.loginForm = false 
           this.registerForm = true
+          this.forgetForm = false
+        } else if (form === 'forget') {
+          this.loginForm = false 
+          this.registerForm = false
+          this.forgetForm = true
         }
+      },
+      clearForm: function () {
+        this.error = ''
+        this.messageSuccess = ''
+        this.forgetCompletedBtn = false
+        this.email = ''
+        this.password = ''
+        this.loading = false
+        this.loginForm = true
+        this.registerForm = false
+        this.forgetForm = false
+        this.emailRegister = ''
+        this.passwordRegister = ''
+        this.confirmPasswordRegister = ''
+        this.usernameRegister = ''
+        this.emailForget = ''
+        this.loadingMessage = 'Iniciando sesión...'
       }
     },
     computed: {
@@ -277,14 +379,18 @@
 </script>
 
 <style scoped>
-  #login-form .main-btn {
+  #login-form .main-btn, 
+  #register-form .main-btn, 
+  #forget-form .main-btn {
     border-radius: 30px;
     height: 3em;
     font-weight: 600;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
   }
 
-  #login-form .input-login {
+  #login-form .input-login,
+  #register-form .input-login,
+  #forget-form .input-login {
     border-radius: 30px;
     height: 3em;
     font-weight: 600;
@@ -293,7 +399,9 @@
     padding: 0.375rem 3.75rem;
   }
 
-  #login-form .input-group-text {
+  #login-form .input-group-text, 
+  #register-form .input-group-text, 
+  #forget-form .input-group-text {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     background-color: white;
@@ -301,32 +409,48 @@
     z-index: 10;
   }
 
-  #login-form .input-icon {
+  #login-form .input-icon,
+  #register-form .input-icon,
+  #forget-form .input-icon {
     margin-right: -40px;
   }
 
   .fade-enter-active {
-    transition: all .5s ease;
+    transition: opacity .5s ease;
+    transition-delay: .5s;
   }
   
-  .fade-enter, .fade-leave {
+  .fade-leave-active {
+    transition: opacity .5s ease;
+  }
+  
+  .fade-enter, .fade-leave-to {
     opacity: 0;
-    transform: translateX(500px);
   }
 
   .logo {
-    transition: all 0.5s ease;
+    transition: width 0.5s ease;
     width: 70%;
   }
 
   .logo.active {
-    transition: all 0.5s ease;
+    transition: width 0.5s ease;
     width: 45%;
   }
 
   .logo.full-logo {
-    transition: all 0.5s ease;
+    transition: all .5s ease;
     width: 100%;
     margin-top: 70px;
+    -webkit-filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 1));
+    filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 1)); 
+  }
+
+  .fadeMsgs-enter-active {
+    transition: opacity .5s ease;
+  }
+  
+  .fadeMsgs-enter, .fadeMsgs-leave-to {
+    opacity: 0;
   }
 </style>
