@@ -1,38 +1,52 @@
 <template>
   <div class="navbar-container">
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
-      <div class="container">
-        <a class="nav mr-auto text-white" href="/">
-          <!-- <font-awesome-icon icon="chevron-left" size="lg" /> -->
-        </a>
+      <!-- <a class="nav mr-auto text-white" href="/">
+        <font-awesome-icon icon="chevron-left" size="lg" />
+      </a> -->
 
-        <b-navbar-brand>
-          <router-link class="main-logo" to="/goals/">
-            <img src="../assets/img/logo.png" class="navbar-brand"/>
-          </router-link>
-        </b-navbar-brand>
+      <b-navbar-brand>
+        <router-link class="main-logo" to="/goals/">
+          <img src="../assets/img/logo.png" class="navbar-brand"/>
+        </router-link>
+      </b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle class="ml-auto" target="nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav class="ml-auto">
+      <b-collapse id="nav-collapse" is-nav class="my-3">
+        <b-navbar-nav class="ml-auto col-6">
 
-            <b-nav-item-dropdown text="Idioma" right>
-              <b-dropdown-item href="#">EN</b-dropdown-item>
-              <b-dropdown-item href="#">ES</b-dropdown-item>
-            </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Idioma" class="text-right">
+            <template slot="button-content">
+                <span class="menu-item">
+                  <font-awesome-icon icon="globe-americas" />
+                  <span class="mr-2">Idioma</span>
+                </span>
+            </template>
+            <b-dropdown-item href="#" class="text-right" left>English</b-dropdown-item>
+            <b-dropdown-item href="#" class="text-right">Español</b-dropdown-item>
+          </b-nav-item-dropdown>
 
-            <b-nav-item-dropdown right>
-              <!-- Using 'button-content' slot -->
-              <template v-slot:button-content>
-                <span>Usuario</span>
-              </template>
-              <b-dropdown-item href="#">Perfil</b-dropdown-item>
-              <b-dropdown-item @click="logout()">Cerrar sesión</b-dropdown-item>
-            </b-nav-item-dropdown>
-          </b-navbar-nav>
-        </b-collapse>
-      </div>
+          <b-nav-item-dropdown text="Usuario" class="text-right">
+            <template slot="button-content">
+                <span class="menu-item">
+                  <font-awesome-icon icon="user" />
+                  <span class="mr-2">Usuario</span>
+                </span>
+            </template>
+            <b-dropdown-item href="#" class="text-right">Perfil</b-dropdown-item>
+            <b-dropdown-item @click="logout()" class="text-right">Cerrar sesión</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item href="#" class="text-right">
+            <span class="menu-item text-right">
+              <font-awesome-icon icon="question-circle"/>
+              <span class="mr-2">Ayuda</span>
+            </span>
+          </b-nav-item>
+
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
   </div>
 </template>
@@ -62,14 +76,30 @@
   
   .navbar-brand {
     position: absolute;
-    left: 46%;
+    left: 48%;
     top: 3px;
     transform: translateX(-50%);
     height: 45px;
   } 
 
-  .main-logo {
-    color: white !important;
-    text-decoration: none !important;
+</style>
+
+<style>
+  .navbar-container ul {
+    background-color: #343a40;
+    border: 0;
+  }
+
+  .navbar-container ul li a {
+    color: white;
+  }
+
+  .navbar-container .menu-item span {
+    padding-left: 10px;
+  }
+
+  .navbar-container ul li a:hover {
+    background-color: #414950;
+    color: white;
   }
 </style>

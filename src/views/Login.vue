@@ -462,8 +462,4 @@
   .fadeMsgs-enter, .fadeMsgs-leave-to {
     opacity: 0;
   }
-
-  .login-container {
-    margin-bottom: 0 !important;
-  }
 </style>
