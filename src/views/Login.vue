@@ -1,8 +1,9 @@
 <template>
-  <main class="flex-shrink-0" role="main">
+  <main class="jumbotron vertical-center login-container" role="main">
     <div class="container">
       <div class="row">
-        <div class="col col-sm-4 mx-auto">
+        <div class="col col-sm-6 col-lg-4 mx-auto">
+
           <div class="row">
             <figure class="col">
               <img src="../assets/img/logo-login.png" alt="Logo" 
@@ -192,55 +193,60 @@
             </transition-group>
 
             <div class="row text-white">
-              <div class="col-6">
+              <div class="col-7">
                 <small class="clickable" v-if="loginForm" @click="showForm('forget')">¿Olvidó su contraseña?</small>
               </div>
-              <div class="col-4 ml-auto mb-3">
+              <div class="col-5 ml-auto">
                 <small class="clickable text-right" @click="showForm('register')" v-if="loginForm">Registrarse</small>
                 <small class="clickable text-right" @click="showForm('login')" v-if="forgetForm || registerForm">Iniciar sesión</small>
               </div>
             </div>
 
             <transition name="fadeMsgs">
-              <div class="row mb-2" v-if="error">
-                <div class="col text-danger">
+              <div class="row mb-2 mt-4" v-if="error">
+                <div class="col text-white text-danger">
                   {{ error }}
                 </div>
               </div>
             </transition>
 
             <transition name="fadeMsgs">
-              <div class="row mb-2" v-show="messageSuccess">
-                <div class="col text-success">
-                  {{ messageSuccess }}
+              <div class="row mb-2 mt-4" v-show="message">
+                <div class="col text-white">
+                  {{ message }}
                 </div>
               </div>
             </transition>
 
-            <div class="form-group row mt-4" v-show="forgetCompletedBtn">
+            <div class="form-group row mt-5" v-show="forgetCompletedBtn">
               <div class="col-6 mx-auto">
-                <button type="button" class="btn btn-secondary btn-block main-btn" @click="clearForm()">
+                <button type="button" class="btn btn-dark btn-block main-btn" @click="clearForm()">
                   <strong>Volver</strong>
                 </button>
               </div>
             </div>
 
-            <div class="row text-white mt-5" v-if="loginForm || registerForm">
-              <div class="col">
-                <small>O iniciar con</small>
-              </div>
-            </div>
+            <transition name="fade">
+              <div class="fixed-bottom social-auth py-3" v-if="loginForm || registerForm">
+                <div class="row text-white">
+                  <div class="col">
+                    <small>O iniciar con</small>
+                  </div>
+                </div>
 
-            <div class="row text-white mt-1" v-if="loginForm || registerForm">
-              <div class="col">
-                <font-awesome-icon :icon="['fab', 'facebook']" class="mr-4 clickable" size="lg"
-                  @click="socialAuthenticate('facebook')"/>
-                <font-awesome-icon :icon="['fab', 'google']" class="mr-4 clickable" size="lg"
-                  @click="socialAuthenticate('google')"/>
-                <font-awesome-icon :icon="['fab', 'github']" class="clickable" size="lg"
-                  @click="socialAuthenticate('github')"/>
+                <div class="row text-white mt-1">
+                  <div class="col">
+                    <font-awesome-icon :icon="['fab', 'facebook']" class="mr-4 clickable" size="lg"
+                      @click="socialAuthenticate('facebook')"/>
+                    <font-awesome-icon :icon="['fab', 'google']" class="mr-4 clickable" size="lg"
+                      @click="socialAuthenticate('google')"/>
+                    <font-awesome-icon :icon="['fab', 'github']" class="clickable" size="lg"
+                      @click="socialAuthenticate('github')"/>
+                  </div>
+                </div>
               </div>
-            </div>
+            </transition>
+          
           </div>
 
         </div>
@@ -268,7 +274,7 @@
         confirmPasswordRegister: '',
         usernameRegister: '',
         emailForget: '',
-        messageSuccess: '',
+        message: '',
         forgetCompletedBtn: false,
         loadingMessage: 'Iniciando sesión...'
       }
@@ -302,10 +308,11 @@
       forget: async function () {
         try {
           this.error = ''
+          this.message = ''
           this.forgetForm = false
           this.loadingMessage = 'Por favor espere...'
           this.loading = true
-          this.messageSuccess = await api.forgetPassword(this.emailForget)
+          this.message = await api.forgetPassword(this.emailForget)
           setTimeout(() => { 
             this.loading = false
             this.forgetCompletedBtn = true
@@ -315,8 +322,7 @@
             this.loading = false
             this.forgetCompletedBtn = true
           }, 3000)
-          this.messageSuccess = ''
-          this.error = error
+          this.message = error
         }
       },
       socialAuthenticate: async function (provider) {
@@ -329,7 +335,7 @@
       },
       showForm: function (form) {
         this.error = ''
-        this.messageSuccess = ''
+        this.message = ''
         
         if (form === 'login') {
           this.loginForm = true
@@ -347,7 +353,7 @@
       },
       clearForm: function () {
         this.error = ''
-        this.messageSuccess = ''
+        this.message = ''
         this.forgetCompletedBtn = false
         this.email = ''
         this.password = ''
@@ -392,11 +398,15 @@
   #register-form .input-login,
   #forget-form .input-login {
     border-radius: 30px;
-    height: 3em;
+    height: 3.1em;
     font-weight: 600;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
     color: black;
     padding: 0.375rem 3.75rem;
+  }
+
+  #register-form .input-login{
+    height: 2.7em; /* Overwrites height only in register */
   }
 
   #login-form .input-group-text, 
@@ -441,7 +451,6 @@
   .logo.full-logo {
     transition: all .5s ease;
     width: 100%;
-    margin-top: 70px;
     -webkit-filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 1));
     filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 1)); 
   }
@@ -452,5 +461,9 @@
   
   .fadeMsgs-enter, .fadeMsgs-leave-to {
     opacity: 0;
+  }
+
+  .login-container {
+    margin-bottom: 0 !important;
   }
 </style>

@@ -54,7 +54,7 @@ api.forgetPassword = function (email) {
     if (email !== 'tgarciamiranda@gmail.com') {
       reject('El correo ingresado no está asociado con ninguna cuenta')
     } else {
-      resolve('Las instrucciones para reestablecer la contraseña fueron enviadas a la cuenta ingresada')
+      resolve('¡Listo! Las instrucciones para reestablecer la contraseña fueron enviadas a la cuenta ingresada')
       resolve()
     }
   })
