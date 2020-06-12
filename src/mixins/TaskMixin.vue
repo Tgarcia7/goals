@@ -127,8 +127,8 @@
 
         if(editedTask.progress === 'doing') {
           if (editedTask.objectiveDone < editedTask.objectiveTotal) {
-            let response = await this.$refs.swal.regular('question', 
-                                                         'La meta no ha sido completada', '¿Desea moverla de todas formas?')
+            let response = await 
+              this.$refs.swal.regular('question', 'La meta no ha sido completada', '¿Desea moverla de todas formas?')
 
             if(!response.value) return
           } 

@@ -36,32 +36,42 @@
                   </span>
               </template>
               <b-dropdown-item href="#" class="text-right">Perfil</b-dropdown-item>
+              <b-dropdown-item href="#" class="text-right">Archivadas</b-dropdown-item>
               <b-dropdown-item @click="logout()" class="text-right">Cerrar sesión</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item href="#" class="text-right">
+            <!-- <b-nav-item href="#" class="text-right">
               <span class="menu-item text-right">
                 <font-awesome-icon icon="question-circle"/>
                 <span class="mr-2">Ayuda</span>
               </span>
-            </b-nav-item>
+            </b-nav-item> -->
 
           </b-navbar-nav>
         </b-collapse>
       </div>
     </b-navbar>
+
+    <Swal ref="swal"/>
+    
   </div>
 </template>
 
 <script>
   import api from '../services/api'
+  import Swal from '../services/Swal.vue'
 
   export default {
     name: 'TheHeader',
+    components: {
+      Swal
+    },
     methods: {
-      logout () {
+      logout: async function () {
         api.logout()
-        this.$router.push({ name: 'login' })
+        let userResponse = await 
+          this.$refs.swal.regular('question', 'Cerrar sesión', '¿Está seguro que desea salir de su cuenta?')
+        if (userResponse.value) this.$router.push({ name: 'login' })
       }
     }
   }

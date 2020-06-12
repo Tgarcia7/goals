@@ -13,27 +13,51 @@
             icon: type,
             title: title,
             text: text,
-            position: 'top-end',
+            position: 'center',
             confirmButtonText: 'Aceptar',
             cancelButtonText: 'Cancelar',
             showCancelButton: true,
-            backdrop: 'rgba(66, 66, 64,0.4)'
+            backdrop: 'rgba(66, 66, 64,0.4)',
+            allowOutsideClick: false
           }).then(result => {
             resolve(result)
           })
         })
       }, 
-      toast: function (type, text, progressBar = false, showLoading) {
+      regularLoading: function (type, title, text, showLoading = true, progressBar = true) {
+        let vm = this
+        return new Promise(function (resolve) {  
+          vm.$swal.fire({
+            icon: type,
+            title: title,
+            text: text,
+            position: 'center',
+            showCancelButton: false,
+            showConfirmButton: false,
+            backdrop: 'rgba(66, 66, 64,0.4)',
+            allowOutsideClick: false,
+            timer: 3000,
+            timerProgressBar: progressBar,
+            onBeforeOpen: () => {
+              if (showLoading) vm.$swal.showLoading()
+            },
+          }).then(result => {
+            resolve(result)
+          })
+        })
+      },
+      toast: function (type, text, progressBar = false, showLoading, position = 'top-end') {
         let vm = this
         return new Promise(function (resolve) {  
           vm.$swal.fire({
             icon: type,
             title: text,
             toast: true,
-            position: 'top-end',
+            position: position,
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: progressBar,
+            backdrop: true,
             onBeforeOpen: () => {
               if (showLoading) vm.$swal.showLoading()
             }

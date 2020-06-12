@@ -1,5 +1,5 @@
 <template>
-  <div :class="`task_${this.id} task-row disable-selection`" 
+  <div :class="`task_${this.id} task-row disable-selection mx-auto`"
     @click="clearSwipe('active-right'); clearSwipe('active-left');" 
     v-hammer:swipe.horizontal="onSwipe">
 
@@ -71,8 +71,11 @@
 </template>
 
 <script>
+  import Utils from '../mixins/Utils'
+
   export default {
     name: 'Task',
+    mixins: [Utils],
     props: {
       id: { type: Number, required: true }, 
       icon: { type: Array, required: true }, 
@@ -165,10 +168,12 @@
         }
       },
       onSwipe: function (event) {
-        if (event.type === 'swiperight') {
-          this.swipeRight(event)
-        } else if (event.type === 'swipeleft') {
-          this.swipeLeft(event)
+        if (this.isApp()) {
+          if (event.type === 'swiperight') {
+            this.swipeRight(event)
+          } else if (event.type === 'swipeleft') {
+            this.swipeLeft(event)
+          }
         }
       },
       initListeners: function () {
@@ -277,43 +282,13 @@
     -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
   }
 
-  .task-row {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    position: relative;
-  }
-
   .task-row-complete.actions {
     padding-top: 20px;
-  }
-
-  .action-right {
-    position: absolute; 
-    width: 70px;
-    transition: all 0.3s ease 0s;
-    left: -85px;
-  }
-
-  .active-right div.action-right {
-    transition: all 0.3s ease 0s;
-    left: 0px;
   }
 
   .active-right div.task-main-content {
     left: 85px;
     position: relative;
-  }
-
-  .action-left {
-    position: absolute; 
-    width: 70px;
-    transition: all 0.3s ease 0s;
-    right: -85px;
-  }
-
-  .active-left div.action-left {
-    transition: all 0.3s ease 0s;
-    right: 0px;
   }
 
   .active-left div.task-main-content {
@@ -324,5 +299,71 @@
   /* Allow vertical scrolling (for hammer.js)*/
   .task-row {
     touch-action: pan-y !important;
+  }
+
+  /* 
+    Large devices (desktops, 992px and up)
+  */
+
+  @media (min-width: 992px) {
+    .action-right {
+      position: absolute; 
+      width: 70px;
+      right: 218px;
+      z-index: 10;
+      display: none;
+    }
+
+    .action-left {
+      position: absolute; 
+      width: 70px;
+      right: 290px;
+      z-index: 10;
+      display: none;
+    }
+
+    .task-row:hover .action-left,.task-row:hover .action-right  {
+      display: block;
+    }
+
+    .task-row {
+      width: 80%;
+    }
+  }
+
+  /* 
+    Small devices (cellphones and tablets, 992px and down)
+  */
+
+  @media (max-width: 991px) {
+    .task-row {
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position: relative;
+    }
+
+    .action-right {
+      position: absolute; 
+      width: 70px;
+      transition: all 0.3s ease 0s;
+      left: -85px;
+    }
+
+    .action-left {
+      position: absolute; 
+      width: 70px;
+      transition: all 0.3s ease 0s;
+      right: -85px;
+    }
+
+    .active-left div.action-left {
+      transition: all 0.3s ease 0s;
+      right: 0px;
+    }
+
+    .active-right div.action-right {
+      transition: all 0.3s ease 0s;
+      left: 0px;
+    }
   }
 </style>

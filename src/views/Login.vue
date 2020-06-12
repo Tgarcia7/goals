@@ -11,7 +11,7 @@
             </figure>
           </div>
 
-          <div class="form-row mt-5" v-if="loading">
+          <div class="form-row mt-5" v-if="loading && loadingMessage">
             <div class="col mx-auto">
               <div class="spinner-border text-primary" role="status">
                 <span class="sr-only">Cargando...</span>
@@ -265,7 +265,7 @@
         email: '',
         password: '',
         error: '',
-        loading: false,
+        loading: true,
         loginForm: true,
         registerForm: false,
         forgetForm: false,
@@ -276,7 +276,7 @@
         emailForget: '',
         message: '',
         forgetCompletedBtn: false,
-        loadingMessage: 'Iniciando sesión...'
+        loadingMessage: ''
       }
     },
     methods: {
@@ -284,6 +284,7 @@
         try {
           await api.authenticate({ email: this.email, password: this.password })
           this.loading = true
+          this.loadingMessage = 'Iniciando sesión...'
           setTimeout(() => { this.$router.push({ name: 'home' }) }, 3000)
         } catch (error) {
           this.error = error
@@ -380,6 +381,10 @@
 
         return result
       }
+    },
+    mounted: function () {
+      let vm = this
+      setTimeout(function () { vm.loading = false }, 1000)
     }
   }
 </script>

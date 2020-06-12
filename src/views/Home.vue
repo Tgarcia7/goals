@@ -129,7 +129,7 @@
     .btn-add {
       position: fixed;
       bottom: 3.5em;
-      right: 20.5em;
+      right: 8.5em;
     }
   }
 </style>
