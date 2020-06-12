@@ -11,7 +11,7 @@
             </figure>
           </div>
 
-          <div class="form-row mt-5" v-if="loading && loadingMessage">
+          <div class="form-row mt-5" v-if="loading">
             <div class="col mx-auto">
               <div class="spinner-border text-primary" role="status">
                 <span class="sr-only">Cargando...</span>
