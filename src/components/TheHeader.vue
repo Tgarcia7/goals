@@ -32,7 +32,7 @@
               <template slot="button-content">
                   <span class="menu-item">
                     <font-awesome-icon icon="user" />
-                    <span class="mr-2">Usuario</span>
+                    <span class="mr-2">Cuenta</span>
                   </span>
               </template>
               <b-dropdown-item href="#" class="text-right">Perfil</b-dropdown-item>
