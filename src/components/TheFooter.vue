@@ -50,4 +50,9 @@
   .container {
     margin-top: 0.2em;
   }
+
+  .footer a:active,
+  .footer a:focus {
+    outline: 0;
+  }
 </style>
