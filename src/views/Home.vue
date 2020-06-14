@@ -3,6 +3,14 @@
     <div class="container">
 
       <div class="tasks-container">
+        <transition name="fade-empty">
+          <div v-if="!tasks.length" class="empty">
+            <font-awesome-icon icon="check" size="8x"/>
+            <h3 class="mt-3">¡Todo listo!</h3>
+            <h5>No tienes metas pendientes por realizar</h5>
+          </div>
+        </transition>
+
         <transition-group name="taskslist">
           <Task v-for="(task) in tasks" 
             :key="task.id" 
@@ -84,7 +92,7 @@
     methods: { 
       saveTask: function (newTask) {
         // Calculates next id. Must come from db
-        newTask.id = this.tasks[this.tasks.length-1].id + 1
+        newTask.id = this.tasks.length ? this.tasks[this.tasks.length-1].id + 1 : 0
 
         this.$set(this.tasks, this.tasks.length, newTask)
       }, 
@@ -131,5 +139,14 @@
       bottom: 3.5em;
       right: 8.5em;
     }
+  }
+
+  .fade-empty-enter-active {
+    transition: opacity 1s ease;
+    transition-delay: .5s;
+  }
+
+  .fade-empty-enter, .fade-empty-leave-to {
+    opacity: 0;
   }
 </style>

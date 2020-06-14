@@ -1,7 +1,13 @@
 <template>
   <main class="flex-shrink-0" role="main">
     <div class="container">
-      <div class="col-11 mx-auto">
+      <div v-if="!stats.length && !graphs.length" class="empty">
+        <font-awesome-icon icon="chart-bar" size="8x"/>
+        <h3 class="mt-3">Completa algunas metas </h3>
+        <h5>para alimentar tus estadísticas</h5>
+      </div>
+
+      <div class="col-11 mx-auto" v-else>
         <div class="row">
           <div v-for="(stat, index) in stats" :key="index" 
             class="col-6 bg-dark mb-3 text-white pt-3 info-container">

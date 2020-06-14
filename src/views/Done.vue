@@ -3,7 +3,13 @@
     <div class="container">
 
       <div class="tasks-container">
-        <transition-group name="taskslist">
+
+        <div v-if="!tasks.length" class="empty">
+          <font-awesome-icon icon="tasks" size="8x"/>
+          <h5 class="mt-3">Aquí se desplegarán tus metas completadas</h5>
+        </div>
+
+        <transition-group name="taskslist" v-else>
           <Task v-for="(task) in tasks" 
             :key="task.id" 
             :id="task.id" 

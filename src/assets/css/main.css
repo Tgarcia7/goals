@@ -45,7 +45,7 @@ body, .login-container {
 }
 
 .taskslist-enter-active, .taskslist-leave-active {
-  transition: all 1s;
+  transition: all .5s;
 }
 
 .taskslist-enter, .taskslist-leave-to {
@@ -54,7 +54,7 @@ body, .login-container {
 }
 
 .flip-taskslist-move {
-  transition: transform 1s;
+  transition: transform .5s;
 }
 
 .b-form-spinbutton.form-control .btn {
@@ -63,4 +63,8 @@ body, .login-container {
 
 .navbar-dark .navbar-toggler {
   border: none;
+}
+
+.empty {
+  margin-top: 100px;
 }
