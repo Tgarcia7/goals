@@ -142,8 +142,11 @@
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
 
-        let locationText = location === 'done' ? 'hecho' : 'en proceso'
-        this.$refs.swal.toast('success', `Movido a ${locationText}`)
+        if (location === 'done') {
+          this.$refs.swal.toast('success', 'Meta completada')
+        } else {
+          this.$refs.swal.toast('success', 'Movida a en proceso')
+        }
       },
       archive: function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),

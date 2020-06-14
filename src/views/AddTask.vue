@@ -12,7 +12,7 @@
           <div class="box-type" v-show="!type">
             <div class="form-row">
               <div class="col">
-                <h5>¿Qué tipo de meta le gustaría crear?</h5>
+                <h5>¿Qué tipo de meta desea crear?</h5>
               </div>
             </div>
 
