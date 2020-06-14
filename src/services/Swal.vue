@@ -57,7 +57,6 @@
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: progressBar,
-            backdrop: true,
             onBeforeOpen: () => {
               if (showLoading) vm.$swal.showLoading()
             }

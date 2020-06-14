@@ -43,17 +43,12 @@
         <div class="row mt-2" v-if="task.dateCompleted">
           <div class="col-12">
             <p><span class="text-secondary">
-              Completado el</span> {{ task.dateCompleted }} 
+              Completado el</span> {{ task.dateCompletedFormated }} 
               <br>
               <small class="text-secondary">
-                <span v-if="task.dateCompleted > task.date">
-                  Tarde <font-awesome-icon :icon="['far', 'clock']"/>
-                </span>
-                <span v-else-if="task.dateCompleted <= task.date">
-                  A tiempo <font-awesome-icon :icon="['fas', 'check']"/> 
-                </span>
-                <br>
-                Fecha objetivo {{ task.date }}
+                <span v-if="task.dateCompleted > task.date">Tarde</span>
+                <span v-else-if="task.dateCompleted <= task.date">A tiempo</span>
+                <span v-if="task.date">, fecha objetivo {{ task.dateFormated }}</span> 
               </small>
             </p>
           </div>
@@ -122,13 +117,15 @@
           icon: '', 
           title: '', 
           date: '',  
+          dateFormated: '',  
           status: '', 
           progress: '',
           objectiveDone: 0,
           objectiveTotal: 0,
           type: '',
           stepsList: [], 
-          dateCompleted: ''
+          dateCompleted: '',
+          dateCompletedFormated: ''
         },
         showContent: false
       }
@@ -148,20 +145,23 @@
         this.task.id = this.id
         this.task.icon = this.icon
         this.task.title = this.title
-        this.task.date = this.dateDisplayFormat(this.date)
+        this.task.date = this.date
+        this.task.dateFormated = this.dateDisplayFormat(this.date)
         this.task.status = this.status
         this.task.progress = this.progress
         this.task.objectiveDone = this.objectiveDone
         this.task.objectiveTotal = this.objectiveTotal
         this.task.type = this.type
         this.task.stepsList = this.stepsList.slice()
-        this.task.dateCompleted = this.dateDisplayFormat(this.dateCompleted)
+        this.task.dateCompleted = this.dateCompleted
+        this.task.dateCompletedFormated = this.dateDisplayFormat(this.dateCompleted)
       },
       cleanForm: function () {
         this.task.id = ''
         this.task.icon = ''
         this.task.title = ''
         this.task.date = ''
+        this.task.dateFormated = ''
         this.task.status = ''
         this.task.progress = ''
         this.task.objectiveDone = 0
@@ -169,6 +169,7 @@
         this.task.type = ''
         this.task.stepsList = []
         this.task.dateCompleted = ''
+        this.task.dateCompletedFormated = ''
       },
       initListeners: function () {
         //Modal size and init
