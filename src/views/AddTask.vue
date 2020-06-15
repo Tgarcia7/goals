@@ -1,10 +1,17 @@
 <template>
   <div>
-    <b-modal id="modal-add" ref="modal-add" title="Agregar meta" class="text-white"
+    <b-modal id="modal-add" ref="modal-add"  class="text-white"
       v-b-modal.modal-xl 
       header-bg-variant="dark" body-bg-variant="dark" footer-bg-variant="dark"
       header-text-variant="light" body-text-variant="light" footer-text-variant="light"
       modal-ok="modal-ok">
+
+      <template v-slot:modal-title>
+        <span class="clickable" @click="cleanForm()">
+          <font-awesome-icon icon="chevron-left" size="sm" v-if="type"/>
+          Agregar meta
+        </span>
+      </template>
 
       <div class="my-2" v-if="showFormAdd">
         <form name="addTask" id="addTask" method="post" @submit="add">
@@ -46,18 +53,6 @@
 
           <transition name="fade">
             <div class="box-type" v-if="type">
-
-              <div class="form-row">
-                <div class="col">
-                  <h6>
-                    <span class="clickable" @click="cleanForm()">
-                      <font-awesome-icon icon="chevron-left"/>
-                      Atrás
-                    </span>
-                  </h6>
-                </div>
-              </div>
-
               <div class="form-row mt-3">
                 <div class="col-4 col-form-label">
                   <label for="title">Título <span class="text-danger">*</span></label>

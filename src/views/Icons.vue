@@ -1,12 +1,12 @@
 <template>
-  <b-modal :id="`modal-icons-${this.id}`" :ref="`modal-icons-${this.id}`" class="text-white"
+  <b-modal :id="`modal-icons-${this.id}`" :ref="`modal-icons-${this.id}`" class="text-white modal-icons"
     v-b-modal.modal-lg hide-header hide-footer scrollable
     body-bg-variant="dark" body-text-variant="light">
 
-    <div class="form-row mt-3">
+    <div class="search-container bg-dark">
       <div class="col">
         <b-form-input autofocus type="search" class="form-control bg-dark text-white"
-          placeholder="Escriba algo para buscar un ícono" @keyup="applyFilter" v-model="search"/>
+          placeholder="Buscar ícono..." @keyup="applyFilter" v-model="search"/>
           <p class="text-right searchResult"><small>{{ searchResult }}</small></p>
       </div>
     </div>
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="form-row" v-show="!showLoader">
+    <div class="form-row icons-container" v-show="!showLoader">
       <div v-for="(icon, index) in iconList" :key="index" class="col-4">
         <div class="icon-box text-center clickable" @click="select(icon)">
           <font-awesome-icon :icon="icon" size="lg"/>
@@ -112,5 +112,27 @@
 
   .searchResult {
     color: #95c1f0;
+  }
+
+  .search-container {
+    position: fixed;
+    width: 91%;
+    z-index: 1;
+    margin-left: 0 !important;
+    height: 80px;
+    padding-top: 17px;
+    border-bottom: 1px solid #575859;
+    left: 15px;
+  }
+
+  .icons-container {
+    margin-top: 90px;
+  }
+</style>
+
+<style>
+  #modal-icons-edit .modal-body,
+  #modal-icons-add .modal-body {
+    padding-top: 0px !important;
   }
 </style>
