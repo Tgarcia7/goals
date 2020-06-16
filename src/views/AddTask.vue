@@ -221,7 +221,7 @@
         this.close()
 
         this.$emit('saveTask', newTask)
-        this.$refs.swal.toast('success', 'Meta agregada correctamente')
+        this.$refs.swal.toast('success', 'Meta agregada')
       },
       close: function () {
         this.$refs['modal-add'].hide()

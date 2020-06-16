@@ -107,7 +107,9 @@
   }
 
   .navbar-container .dropdown-toggle:active,
-  .navbar-container .dropdown-toggle:focus {
+  .navbar-container .dropdown-toggle:focus,
+  .navbar-container .navbar-toggler-icon:active,
+  .navbar-container .navbar-toggler-icon:focus {
     outline: 0;
   }
 

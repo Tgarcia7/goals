@@ -3,9 +3,13 @@
     <b-alert v-model="updateExists" variant="success" dismissible fade
       class="mb-2 rounded-0" style="z-index: 1000;" @click="refreshApp">
 
-      ¡Nueva versión disponible!
-      <b-button variant="success" pill size="sm" 
-        v-if="updateExists" @click="refreshApp">Actualizar</b-button>
+      <div class="row">
+        <div class="col">
+          ¡Nueva versión<span class="hide-xxs"> disponible</span>!
+          <b-button variant="success" pill size="sm" 
+            v-if="updateExists" @click="refreshApp">Actualizar</b-button>
+        </div>
+      </div>
     
     </b-alert>
 
@@ -37,14 +41,14 @@
         if (this.refreshing) return
         this.refreshing = true
         
-        await this.$refs.swal.toast('', 'Actualizando', true, true)
+        await this.$refs.swal.toast('', 'Actualizando...', true, true)
         sessionStorage.setItem('appUpdated', true)
         window.location.reload()
       })
     },
     mounted: function () {
       if (sessionStorage.getItem('appUpdated')) {
-        this.$refs.swal.toast('success', 'Aplicación actualizada')
+        this.$refs.swal.toast('success', 'Actualización aplicada')
         sessionStorage.removeItem('appUpdated')
       }
     },
@@ -66,3 +70,15 @@
     }
   }
 </script>
+
+<style>
+  /* 
+    ##Device = Small phones
+    ##Screen = 300px to small phones
+  */
+  @media (max-width: 350px) {
+    .hide-xxs {
+      display: none;
+    }
+  }
+</style>
