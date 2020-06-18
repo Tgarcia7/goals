@@ -3,7 +3,7 @@
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <div class="container">
         <div class="return-container clickable" @click="$router.back();">
-          <a class="nav mr-auto text-white" 
+          <a class="nav mr-auto" 
             v-if="this.$route.meta.showReturn">
             <font-awesome-icon icon="chevron-left" size="lg"/>
           </a>
@@ -135,5 +135,9 @@
     width: 40px;
     height: 40px;
     padding: 10px;
+  }
+
+  .fa-chevron-left {
+    color: #9a9da0;
   }
 </style>
