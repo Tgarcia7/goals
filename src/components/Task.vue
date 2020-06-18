@@ -28,23 +28,29 @@
           <div class="col text-truncate text-left clickable" @click="edit()">
             {{ title }}
           </div>
-          <div class="col-4" v-if="type === 'objective' && progress === 'doing'">
+          <div class="col-4" v-if="type === 'objective' && progress === 'doing' && status">
             <small>
               <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('up')">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
                 </span>
             </small>
           </div>
+          <div class="col-4 clickable action-restore" @click="restore()" v-else-if="type === 'simple' && !status">
+            <font-awesome-icon icon="reply" size="lg"/>
+          </div>
         </div>
         <div class="row" v-if="type !== 'simple'">
           <div class="col clickable" @click="edit()">
             <b-progress :value="barWidth" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
-          <div class="col-4">
+          <div class="col-4" v-if="status">
             <small v-if="type === 'objective' || progress === 'done'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
             <span v-else-if="type === 'steps' && progress === 'doing'" class="badge badge-dark btn-tasks clickable" @click="editSubTasks()">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
+          </div>
+          <div class="col-4 clickable action-restore" @click="restore()" v-else>
+            <font-awesome-icon icon="reply" size="lg"/>
           </div>
         </div>
         <div class="row">
@@ -54,13 +60,16 @@
               {{ date }} 
             </small>
           </div>
-          <div class="col-4">
-              <small v-if="type === 'objective' && progress === 'doing'">
-                <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('down')">
-                  <font-awesome-icon icon="chevron-down" size="lg"/>
-                </span>
-              </small>
-              <small v-else-if="type === 'steps' && progress === 'doing'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
+          <div class="col-4" v-if="status">
+            <small v-if="type === 'objective' && progress === 'doing'">
+              <span class="badge badge-dark btn-tasks btns-up-down clickable" @click="upDownObjective('down')">
+                <font-awesome-icon icon="chevron-down" size="lg"/>
+              </span>
+            </small>
+            <small v-else-if="type === 'steps' && progress === 'doing'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
+          </div>
+          <div class="col-4 clickable" @click="restore()" v-else>
+            <small>Restaurar</small>
           </div>
         </div>
       </div>
@@ -168,7 +177,7 @@
         }
       },
       onSwipe: function (event) {
-        if (this.isApp()) {
+        if (this.isApp() && this.status === 1) {
           if (event.type === 'swiperight') {
             this.swipeRight(event)
           } else if (event.type === 'swipeleft') {
@@ -202,6 +211,9 @@
       },
       archive: function () {
         this.$emit('archive', this.id)
+      },
+      restore: function () {
+        this.$emit('restore', this.id)
       }
     },
     mounted: function () {
@@ -365,5 +377,9 @@
       transition: all 0.3s ease 0s;
       left: 0px;
     }
+  }
+
+  .action-restore:hover {
+    color: #dc3545;
   }
 </style>

@@ -55,7 +55,7 @@
             toast: true,
             position: position,
             showConfirmButton: false,
-            timer: 2000,
+            timer: 3000,
             timerProgressBar: progressBar,
             onBeforeOpen: () => {
               if (showLoading) vm.$swal.showLoading()

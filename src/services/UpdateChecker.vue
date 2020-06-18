@@ -74,9 +74,9 @@
 <style>
   /* 
     ##Device = Small phones
-    ##Screen = 300px to small phones
+    ##Screen = 370px to small phones
   */
-  @media (max-width: 350px) {
+  @media (max-width: 370px) {
     .hide-xxs {
       display: none;
     }

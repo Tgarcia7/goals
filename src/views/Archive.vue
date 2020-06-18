@@ -5,9 +5,9 @@
       <div class="tasks-container">
         <transition name="fade-empty">
           <div v-if="!tasks.length" class="empty">
-            <font-awesome-icon icon="cloud-sun" size="8x"/>
-            <h3 class="mt-3">¡Todo listo!</h3>
-            <h5>No tienes metas pendientes por realizar</h5>
+            <font-awesome-icon icon="archive" size="8x"/>
+            <h3 class="mt-3">¡Archivo vacío!</h3>
+            <h5>No tienes metas archivadas</h5>
           </div>
         </transition>
 
@@ -17,7 +17,7 @@
             :id="task.id" 
             :icon="task.icon"
             :title="task.title"
-            :date="formatDoingDate(task.date)"
+            :date="task.date"
             :progress="task.progress"
             :status="task.status"
             :objectiveDone="task.objectiveDone"
@@ -25,10 +25,7 @@
             :type="task.type"
             :stepsList="task.stepsList"
             @viewTask="viewTask(task, false)"
-            @viewSubTask="viewTask(task, true)"
-            @upDownObjective="upDownObjective"
-            @moveTo="moveTo"
-            @archive="archive"
+            @restore="restore"
             :class="`main-task-row task_${task.id}`"/>
       </transition-group>
       
@@ -36,16 +33,9 @@
           <p><small>Fin de la lista</small></p>
         </div>
       </div>
-
-      <button type="button" class="btn btn-success btn-circle btn-lg btn-add" 
-        v-b-modal.modal-add @click="cleanSelected">
-        <font-awesome-icon icon="plus"/>
-      </button>
     </div>
-    
-    <AddTask @saveTask="saveTask"/>
 
-    <EditTask 
+    <ViewTask 
       :id="this.selectedTask.id" 
       :icon="this.selectedTask.icon"
       :title="this.selectedTask.title"
@@ -56,9 +46,8 @@
       :objectiveTotal="this.selectedTask.objectiveTotal"
       :type="this.selectedTask.type"
       :stepsList="this.selectedTask.stepsList"
-      :selected="true"
-      :tasksOnly="this.tasksOnly"
-      @saveEditedTask="saveEditedTask"/>
+      :dateCompleted="this.selectedTask.dateCompleted"
+      :selected="true"/>
 
     <Swal ref="swal"/>
 
@@ -68,48 +57,23 @@
 <script>
   import Task from '../components/Task.vue'
   import tasksData from '../assets/tasks.json'
-  import AddTask from '../views/AddTask.vue'
-  import EditTask from '../views/EditTask.vue'
   import Swal from '../services/Swal.vue'
   import TaskMixin from '../mixins/TaskMixin'
+  import ViewTask from '../views/ViewTask.vue'
 
   export default {
     name: 'Home',
     mixins: [TaskMixin],
     data: function () {
       return {
-        tasks: tasksData.filter( item => item.progress === 'doing' && item.status === 1 ),
-        selectedTask: {}, 
-        tasksOnly: false
+        tasks: tasksData.filter( item => item.status === 0 ),
+        selectedTask: {}
       }
     },
     components: {
       Task,
-      AddTask,
-      EditTask,
-      Swal
-    },
-    methods: { 
-      saveTask: function (newTask) {
-        // Calculates next id. Must come from db
-        newTask.id = this.tasks.length ? this.tasks[this.tasks.length-1].id + 1 : 0
-
-        this.$set(this.tasks, this.tasks.length, newTask)
-      }, 
-      saveEditedTask: function (editedTask) {
-        let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
-
-        this.$set(this.tasks, idxFound, editedTask)
-      },
-      upDownObjective: function (idElement, doneUpdated) {
-        this.cleanSelected()
-        let editedTask = this.tasks.find( element => element.id === idElement ),
-            idxFound = this.tasks.indexOf( editedTask )
-
-        editedTask.objectiveDone = doneUpdated
-        
-        this.$set(this.tasks, idxFound, editedTask)
-      }
+      Swal,
+      ViewTask
     }
   }
 </script>

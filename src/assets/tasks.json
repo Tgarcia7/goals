@@ -165,5 +165,51 @@
     "stepsList": [],
     "dateCompleted": "2020-03-11",
     "dateCreated": "2020-01-01"
+  },
+  {
+    "id": 12,
+    "icon": ["fab", "node"],
+    "title": "Aprender node",
+    "date": null,
+    "objectiveDone": null,
+    "objectiveTotal": null,
+    "type": "simple",
+    "status": 0,
+    "progress": "done",
+    "stepsList": [],
+    "dateCompleted": "2020-03-11",
+    "dateCreated": "2020-01-01"
+  },
+  {
+    "id": 13,
+    "icon": ["fab", "vuejs"],
+    "title": "Aprender Vue.js",
+    "date": "2020-02-16",
+    "objectiveDone": 3,
+    "objectiveTotal": 3,
+    "type": "steps",
+    "status": 0,
+    "progress": "done",
+    "stepsList": [
+      {"status": true, "description": "Vue router"},
+      {"status": true, "description": "Vuex"},
+      {"status": true, "description": "Vue i18n"}
+    ],
+    "dateCompleted": "2020-04-04",
+    "dateCreated": "2020-01-01"
+  },
+  {
+    "id": 14,
+    "icon": ["fas", "clipboard-check"],
+    "title": "Natación",
+    "date": "2020-12-22",
+    "objectiveDone": 10,
+    "objectiveTotal": 10,
+    "type": "objective",
+    "status": 0,
+    "progress": "done",
+    "stepsList": [],
+    "dateCompleted": "2020-04-12",
+    "dateCreated": "2020-01-01"
   }
 ]

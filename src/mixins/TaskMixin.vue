@@ -159,6 +159,17 @@
 
         this.$refs.swal.toast('success', 'Meta archivada')
       },
+      restore: function (idElement) {
+        let editedTask = this.tasks.find( element => element.id === idElement ),
+            idxFound = this.tasks.indexOf( editedTask )
+
+        editedTask.status = 1
+          
+        this.$set(this.tasks, idxFound, editedTask)
+        this.tasks.splice(idxFound, 1)
+
+        this.$refs.swal.toast('success', 'Meta restaurada')
+      },
       viewTask: function (task, subTasksOnly) {
         let modal = 'modal-view'
 

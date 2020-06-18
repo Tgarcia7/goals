@@ -2,9 +2,10 @@
   <div class="navbar-container">
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <div class="container">
-        <!-- <a class="nav mr-auto text-white" href="/">
-          <font-awesome-icon icon="chevron-left" size="lg" />
-        </a> -->
+        <a class="nav mr-auto text-white clickable" 
+          v-if="this.$route.meta.showReturn">
+          <font-awesome-icon icon="chevron-left" size="lg" @click="$router.back();"/>
+        </a>
 
         <b-navbar-brand>
           <router-link class="main-logo" to="/goals/">
@@ -35,8 +36,10 @@
                     <span class="mr-2">Cuenta</span>
                   </span>
               </template>
-              <b-dropdown-item href="#" class="text-right">Perfil</b-dropdown-item>
-              <b-dropdown-item href="#" class="text-right">Archivadas</b-dropdown-item>
+              <b-dropdown-item class="text-right">Perfil</b-dropdown-item>
+              <b-dropdown-item class="text-right">
+                <router-link to="/goals/archive">Archivadas</router-link>
+              </b-dropdown-item>
               <b-dropdown-item @click="logout()" class="text-right">Cerrar sesión</b-dropdown-item>
             </b-nav-item-dropdown>
 
@@ -120,5 +123,9 @@
   .navbar-container ul li a:hover {
     background-color: #414950;
     color: white;
+  }
+
+  .navbar-container .dropdown-item a {
+    text-decoration: none;
   }
 </style>

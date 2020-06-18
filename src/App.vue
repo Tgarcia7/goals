@@ -4,7 +4,7 @@
     <UpdateChecker v-if="!this.$route.meta.isPublic"/>
     <router-view></router-view>
     <vue-progress-bar class="progress-bar" v-if="!this.$route.meta.isPublic"></vue-progress-bar>
-    <TheFooter v-if="!this.$route.meta.isPublic"/>
+    <TheFooter v-if="!this.$route.meta.isPublic && !this.$route.meta.hideFooter"/>
   </div>
 </template>
 

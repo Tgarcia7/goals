@@ -5,6 +5,7 @@ import Home from '@/views/Home.vue'
 import Done from '@/views/Done.vue'
 import Statistics from '@/views/Statistics.vue'
 import Login from '@/views/Login.vue'
+import Archive from '@/views/Archive.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,8 @@ const routes = [
   { path: '/goals/', component: Home, name: 'home' },
   { path: '/goals/done', component: Done, name: 'done' },
   { path: '/goals/statistics', component: Statistics, name: 'statistics' },
-  { path: '/goals/login', component: Login, name: 'login', meta: { isPublic: true } }
+  { path: '/goals/login', component: Login, name: 'login', meta: { isPublic: true } },
+  { path: '/goals/archive', component: Archive, name: 'archive', meta: { hideFooter: true, showReturn: true } }
 ]
 
 const router = new VueRouter({
