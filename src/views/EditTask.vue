@@ -211,7 +211,6 @@
         let updatedTask = Object.assign({}, this.task)
 
         this.$emit('saveEditedTask', updatedTask)
-        this.$refs.swal.toast('success', 'Meta actualizada')
       },
       close: function () {
         this.$refs['modal-edit'].hide()

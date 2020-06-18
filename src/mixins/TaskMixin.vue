@@ -143,9 +143,7 @@
         this.tasks.splice(idxFound, 1)
 
         if (location === 'done') {
-          this.$refs.swal.toast('success', 'Meta completada')
-        } else {
-          this.$refs.swal.toast('success', 'Movida a en proceso')
+          this.$refs.swal.toast(null, MESSAGES[0])
         }
       },
       archive: function (idElement) {
@@ -156,8 +154,6 @@
           
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
-
-        this.$refs.swal.toast('success', 'Meta archivada')
       },
       restore: function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),

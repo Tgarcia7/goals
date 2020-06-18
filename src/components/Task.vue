@@ -17,7 +17,7 @@
     </div>
 
     <div :class="`${taskClasses} task-main-content ${editableArea ? 'clickable' : ''}`"
-      @click="editableArea ? edit() : ''">
+      @click="editableArea ? edit() : ''" v-if="!showCompletedMsg">
       <div class="col-2 clickable" @click="edit()">
         <div class="circle">
           <font-awesome-icon :icon="icon" size="lg"/>
@@ -75,6 +75,15 @@
       </div>
     </div>
 
+    <transition name="fade">
+      <div :class="`${taskClasses} task-main-content ${editableArea ? 'clickable' : ''}`" 
+        v-if="showCompletedMsg">
+        <div class="col-12 my-auto">
+          {{ this.messages[getRandomInt(0, this.messages.length)] }}
+        </div>
+      </div>
+    </transition>
+
     <hr class="divider">
   </div>
 </template>
@@ -99,7 +108,18 @@
     },
     data: function () {
       return { 
-        
+        showCompletedMsg: false,
+        messages: [
+          '¡Felicidades! 🎉 Meta alcanzada',
+          '¡Estás en llamas! 🔥🔥🔥', 
+          '¡Impresionante! 🎯', 
+          '¡Hoy es tu día! 🥇', 
+          '¡Buen trabajo! 🎖', 
+          '¡Muy bien! Sigue así 🏆', 
+          '¡Meta alcanzada! 🏅', 
+          '¡Felicidades! 🥳', 
+          '¡No te detengas! 👏🏼', 
+        ]
       }
     },
     computed: {
@@ -206,8 +226,19 @@
         }
       },
       moveTo: function () {
-        let to = this.progress === 'done' ? 'doing' : 'done'
-        this.$emit('moveTo', this.id, to)
+        let to = this.progress === 'done' ? 'doing' : 'done',
+            vm = this
+
+        if (to === 'done') {
+          this.showCompletedMsg = true
+
+          setTimeout(() => { 
+            vm.$emit('moveTo', this.id, to) 
+          }, 1500)
+        } else {
+          this.$emit('moveTo', this.id, to)
+        }
+
       },
       archive: function () {
         this.$emit('archive', this.id)
@@ -222,7 +253,7 @@
     }, 
     updated: function () {
       // activate done btn
-      if (this.objectiveDone === this.objectiveTotal) {
+      if (this.objectiveDone === this.objectiveTotal && !this.showCompletedMsg) {
         let task = document.querySelector(`.task_${this.id}`)
         setTimeout(() => { task.classList.add('active-left') }, 500)
       }
@@ -382,5 +413,14 @@
 
   .action-restore:hover {
     color: #17a2b8;
+  }
+
+  .fade-enter-active {
+    transition: all .7s ease;
+  }
+  
+  .fade-enter, .fade-leave {
+    opacity: 0;
+    transform: translateY(-50px);
   }
 </style>
