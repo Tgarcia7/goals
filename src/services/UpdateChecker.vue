@@ -48,7 +48,8 @@
     },
     mounted: function () {
       if (sessionStorage.getItem('appUpdated')) {
-        this.$refs.swal.toast('success', 'Actualización aplicada')
+        let vm = this
+        setTimeout(() => { vm.$refs.swal.toast('success', 'Actualización aplicada') }, 1000)
         sessionStorage.removeItem('appUpdated')
       }
     },

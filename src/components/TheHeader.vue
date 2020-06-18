@@ -2,10 +2,12 @@
   <div class="navbar-container">
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <div class="container">
-        <a class="nav mr-auto text-white clickable" 
-          v-if="this.$route.meta.showReturn">
-          <font-awesome-icon icon="chevron-left" size="lg" @click="$router.back();"/>
-        </a>
+        <div class="return-container clickable" @click="$router.back();">
+          <a class="nav mr-auto text-white" 
+            v-if="this.$route.meta.showReturn">
+            <font-awesome-icon icon="chevron-left" size="lg"/>
+          </a>
+        </div>
 
         <b-navbar-brand>
           <router-link class="main-logo" to="/goals/">
@@ -127,5 +129,11 @@
 
   .navbar-container .dropdown-item a {
     text-decoration: none;
+  }
+
+  .return-container {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
   }
 </style>

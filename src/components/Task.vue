@@ -320,7 +320,7 @@
   @media (min-width: 992px) {
     .action-right {
       position: absolute; 
-      width: 70px;
+      width: 74px;
       right: 218px;
       z-index: 10;
       display: none;
@@ -328,10 +328,11 @@
 
     .action-left {
       position: absolute; 
-      width: 70px;
-      right: 290px;
+      width: 74px;
+      right: 288px;
       z-index: 10;
       display: none;
+      border-right: 3px solid black;
     }
 
     .task-row:hover .action-left,.task-row:hover .action-right  {
@@ -356,14 +357,14 @@
 
     .action-right {
       position: absolute; 
-      width: 70px;
+      width: 74px;
       transition: all 0.3s ease 0s;
       left: -85px;
     }
 
     .action-left {
       position: absolute; 
-      width: 70px;
+      width: 74px;
       transition: all 0.3s ease 0s;
       right: -85px;
     }
@@ -380,6 +381,6 @@
   }
 
   .action-restore:hover {
-    color: #dc3545;
+    color: #17a2b8;
   }
 </style>

@@ -46,7 +46,7 @@
           })
         })
       },
-      toast: function (type, text, progressBar = false, showLoading, position = 'top-end') {
+      toast: function (type, text, progressBar = false, showLoading, position = 'top-end', timer = 2000) {
         let vm = this
         return new Promise(function (resolve) {  
           vm.$swal.fire({
@@ -55,7 +55,7 @@
             toast: true,
             position: position,
             showConfirmButton: false,
-            timer: 3000,
+            timer: timer,
             timerProgressBar: progressBar,
             onBeforeOpen: () => {
               if (showLoading) vm.$swal.showLoading()
