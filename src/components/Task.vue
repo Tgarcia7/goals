@@ -79,7 +79,7 @@
       <div :class="`${taskClasses} task-main-content ${editableArea ? 'clickable' : ''}`" 
         v-if="showCompletedMsg">
         <div class="col-12 my-auto">
-          {{ this.messages[getRandomInt(0, this.messages.length)] }}
+          <span v-html="this.messages[this.randomIdx]"></span>
         </div>
       </div>
     </transition>
@@ -110,16 +110,25 @@
       return { 
         showCompletedMsg: false,
         messages: [
-          '¡Felicidades! 🎉 Meta alcanzada',
+          '<span class="success-msg">¡Felicidades!</span> 🎉 Meta alcanzada',
           '¡Estás en llamas! 🔥🔥🔥', 
-          '¡Impresionante! 🎯', 
-          '¡Hoy es tu día! 🥇', 
-          '¡Buen trabajo! 🎖', 
-          '¡Muy bien! Sigue así 🏆', 
-          '¡Meta alcanzada! 🏅', 
-          '¡Felicidades! 🥳', 
-          '¡No te detengas! 👏🏼', 
-        ]
+          '<span class="success-msg">¡Impresionante!</span> Lo has logrado 🎯', 
+          '¡Hoy es tu día! 🌤 Bien hecho', 
+          '¡Buen trabajo! Sigue tus metas 🎖', 
+          '¡Genial! Objetivo alcanzado 🏆', 
+          '¡Sorprendente! Meta alcanzada 🏅', 
+          '¡Imparable! Meta cumplida 🚀', 
+          '<span class="success-msg">¡Felicidades!</span> 🎊 Lo has conseguido', 
+          '¡No te detengas! Lo estás haciendo bien 👏🏽', 
+          'Siempre parece imposible hasta que se hace 🎯', 
+          'Si lo puedes soñar, lo puedes lograr 💭', 
+          'Pequeñas acciones diarias traen grandes resultados 📈', 
+          'Todos pueden alcanzar el éxito pero pocos se atreven 💪🏼',
+          'La pregunta no es quién va a dejarme, es quién va a detenerme 🏋🏾‍♂️',
+          '¡Excelente! Un paso más cerca 🥾',
+          'Cuanto más trabajo, más suerte parece que tengo 🍀'
+        ],
+        randomIdx: 0
       }
     },
     computed: {
@@ -197,7 +206,7 @@
         }
       },
       onSwipe: function (event) {
-        if (this.isApp() && this.status === 1) {
+        if (this.isApp() && this.status === 1 && !this.showCompletedMsg) {
           if (event.type === 'swiperight') {
             this.swipeRight(event)
           } else if (event.type === 'swipeleft') {
@@ -229,12 +238,11 @@
         let to = this.progress === 'done' ? 'doing' : 'done',
             vm = this
 
-        if (to === 'done') {
+        if (to === 'done' && 
+          ( this.objectiveDone >= this.objectiveTotal || !this.objectiveTotal )) {
           this.showCompletedMsg = true
-
-          setTimeout(() => { 
-            vm.$emit('moveTo', this.id, to) 
-          }, 1500)
+          
+          setTimeout(() => { vm.$emit('moveTo', this.id, to) }, 3000)
         } else {
           this.$emit('moveTo', this.id, to)
         }
@@ -250,6 +258,8 @@
     mounted: function () {
       this.startTimer()
       this.initListeners()
+
+      this.randomIdx = this.getRandomInt(0, this.messages.length-1)
     }, 
     updated: function () {
       // activate done btn
@@ -422,5 +432,18 @@
   .fade-enter, .fade-leave {
     opacity: 0;
     transform: translateY(-50px);
+  }
+</style>
+
+<style>
+  .success-msg {
+    animation: color-change 4s infinite;
+  }
+
+  @keyframes color-change {
+    0% { color: rgb(237, 105, 105); }
+    33% { color: rgb(208, 105, 237); }
+    66% { color: rgb(127, 127, 238); }
+    100% { color: rgb(237, 105, 105); }
   }
 </style>

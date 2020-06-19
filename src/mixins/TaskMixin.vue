@@ -125,7 +125,7 @@
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
 
-        if(editedTask.progress === 'doing') {
+        if (editedTask.progress === 'doing') {
           if (editedTask.objectiveDone < editedTask.objectiveTotal) {
             let response = await 
               this.$refs.swal.regular('question', 'La meta no ha sido completada', '¿Desea moverla de todas formas?')
@@ -137,14 +137,11 @@
         } else {
           editedTask.dateCompleted = null
         }
+        
         editedTask.progress = location
         
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
-
-        if (location === 'done') {
-          this.$refs.swal.toast(null, MESSAGES[0])
-        }
       },
       archive: function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
@@ -163,8 +160,6 @@
           
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
-
-        this.$refs.swal.toast('success', 'Meta restaurada')
       },
       viewTask: function (task, subTasksOnly) {
         let modal = 'modal-view'
