@@ -15,18 +15,20 @@
       </div>
     </div>
     <div class="row my-4">
-      <div class="col-4 btn-actions clickable mr-auto" v-if="!changingPassword">
+      <div class="col-sm-2"></div>
+      <div class="col-4 col-sm-3 col-md-2 btn-actions clickable mr-auto" v-if="!changingPassword">
         <button type="button" class="btn btn-outline-dark text-white btn-sm btn-block" @click="editing = !editing">
           <span v-if="!editing">Editar <font-awesome-icon icon="pen" size="sm"/></span>
           <span v-else><font-awesome-icon icon="chevron-left" size="sm"/> Cancelar</span>
         </button>
       </div>
-      <div :class="`${changingPassword ? '' : 'ml-auto'} col-5 btn-actions clickable`" v-if="!editing">
+      <div :class="`${changingPassword ? '' : 'ml-auto'} col-5 col-sm-3 col-md-2 btn-actions clickable`" v-if="!editing">
         <button type="button" class="btn btn-outline-dark text-white btn-sm btn-block" @click="changingPassword = !changingPassword">
           <span v-if="!changingPassword">Contraseña <font-awesome-icon icon="key" size="sm"/></span>
           <span v-else><font-awesome-icon icon="chevron-left" size="sm"/> Cancelar</span>
         </button>
       </div>
+      <div class="col-sm-2"></div>
     </div>
 
     <transition name="fade-form">
@@ -62,41 +64,43 @@
               </div>
             </div>
 
-            <transition name="fade">
-              <div class="row mt-3" v-if="!editing && socialAuthenticated.facebook">
-                <div class="col-2">
-                  <font-awesome-icon :icon="['fab', 'facebook']" size="lg"/>
+            <div v-if="!editing && socialAuthenticated">
+              <transition name="fade">
+                <div class="row mt-3" v-if="socialAuthenticated.facebook">
+                  <div class="col-2">
+                    <font-awesome-icon :icon="['fab', 'facebook']" size="lg"/>
+                  </div>
+                  <div class="col text-left">
+                      <span>{{ socialAuthenticated.facebook }} </span> 
+                      <font-awesome-icon class="text-success" icon="check-circle" size="sm"/>
+                  </div>
                 </div>
-                <div class="col text-left">
-                    <span>{{ socialAuthenticated.facebook }} </span> 
-                    <font-awesome-icon class="text-success" icon="check-circle" size="sm"/>
-                </div>
-              </div>
-            </transition>
+              </transition>
 
-            <transition name="fade">
-              <div class="row mt-3" v-if="!editing && socialAuthenticated.google">
-                <div class="col-2">
-                  <font-awesome-icon :icon="['fab', 'google']" size="lg"/>
+              <transition name="fade">
+                <div class="row mt-3" v-if="socialAuthenticated.google">
+                  <div class="col-2">
+                    <font-awesome-icon :icon="['fab', 'google']" size="lg"/>
+                  </div>
+                  <div class="col text-left">
+                      <span>{{ socialAuthenticated.google }} </span> 
+                      <font-awesome-icon class="text-success" icon="check-circle" size="sm"/>
+                  </div>
                 </div>
-                <div class="col text-left">
-                    <span>{{ socialAuthenticated.google }} </span> 
-                    <font-awesome-icon class="text-success" icon="check-circle" size="sm"/>
-                </div>
-              </div>
-            </transition>
+              </transition>
 
-            <transition name="fade">
-              <div class="row mt-3" v-if="!editing && socialAuthenticated.github">
-                <div class="col-2">
-                  <font-awesome-icon :icon="['fab', 'github']" size="lg"/>
+              <transition name="fade">
+                <div class="row mt-3" v-if="socialAuthenticated.github">
+                  <div class="col-2">
+                    <font-awesome-icon :icon="['fab', 'github']" size="lg"/>
+                  </div>
+                  <div class="col text-left">
+                      <span>{{ socialAuthenticated.github }} </span> 
+                      <font-awesome-icon class="text-success" icon="check-circle" size="sm"/>
+                  </div>
                 </div>
-                <div class="col text-left">
-                    <span>{{ socialAuthenticated.github }} </span> 
-                    <font-awesome-icon class="text-success" icon="check-circle" size="sm"/>
-                </div>
-              </div>
-            </transition>
+              </transition>
+            </div>
 
             <transition name="fade">
               <div class="row mt-5" v-if="editing">
