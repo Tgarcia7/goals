@@ -11,6 +11,7 @@ api.authenticate = function (user) {
     } else {
       user.name = userData.name
       localStorage.setItem('token', JSON.stringify(user))
+      localStorage.setItem('user', JSON.stringify(user))
       resolve()
     }
     //  axios({ url: `${baseUrl}/auth`, { email, password }, method: 'POST' })

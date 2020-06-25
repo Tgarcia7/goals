@@ -38,7 +38,9 @@
                     <span class="mr-2">Cuenta</span>
                   </span>
               </template>
-              <b-dropdown-item class="text-right">Perfil</b-dropdown-item>
+              <b-dropdown-item class="text-right">
+                <router-link to="/goals/profile">Perfil</router-link>
+              </b-dropdown-item>
               <b-dropdown-item class="text-right">
                 <router-link to="/goals/archive">Archivadas</router-link>
               </b-dropdown-item>

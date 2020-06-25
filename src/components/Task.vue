@@ -362,7 +362,7 @@
     .action-right {
       position: absolute; 
       width: 74px;
-      right: 218px;
+      right: 135px;
       z-index: 10;
       display: none;
     }
@@ -370,7 +370,7 @@
     .action-left {
       position: absolute; 
       width: 74px;
-      right: 288px;
+      right: 205px;
       z-index: 10;
       display: none;
       border-right: 3px solid black;

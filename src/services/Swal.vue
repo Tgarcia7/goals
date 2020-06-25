@@ -6,7 +6,7 @@
   export default {
     name: 'Swal',
     methods: {
-      regular: function (type, title, text) {
+      regular: function (type, title, text, cancelButton = true) {
         let vm = this
         return new Promise(function (resolve) {  
           vm.$swal.fire({
@@ -16,7 +16,7 @@
             position: 'center',
             confirmButtonText: 'Aceptar',
             cancelButtonText: 'Cancelar',
-            showCancelButton: true,
+            showCancelButton: cancelButton,
             backdrop: 'rgba(66, 66, 64,0.4)',
             allowOutsideClick: false
           }).then(result => {
