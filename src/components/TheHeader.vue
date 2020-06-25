@@ -38,12 +38,15 @@
                     <span class="mr-2">Cuenta</span>
                   </span>
               </template>
-              <b-dropdown-item class="text-right">
-                <router-link to="/goals/profile">Perfil</router-link>
-              </b-dropdown-item>
-              <b-dropdown-item class="text-right">
-                <router-link to="/goals/archive">Archivadas</router-link>
-              </b-dropdown-item>
+
+              <router-link to="/goals/profile" tag="b-dropdown-item" class="text-right">
+                Perfil
+              </router-link>
+
+              <router-link to="/goals/archive" tag="b-dropdown-item" class="text-right">
+                Archivadas
+              </router-link>
+              
               <b-dropdown-item @click="logout()" class="text-right">Cerrar sesión</b-dropdown-item>
             </b-nav-item-dropdown>
 
