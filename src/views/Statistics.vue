@@ -65,8 +65,7 @@
 </template>
 
 <script>
-  import GraphsData from '../assets/graphs.json'
-  import StatsData from '../assets/stats.json'
+  import GraphsData from '../assets/statistics.json'
 
   import BarChart from '../components/charts/Bar.vue'
   import LineChart from '../components/charts/Line.vue'
@@ -80,8 +79,8 @@
     },
     data: function () {
       return {
-        graphs: GraphsData,
-        stats: StatsData,
+        graphs: GraphsData.graphs,
+        stats: GraphsData.stats,
         currentYear: this.$moment(this.$moment()).year()
       }
     }
