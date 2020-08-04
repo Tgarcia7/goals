@@ -24,36 +24,33 @@
         <div v-for="(graph, index) in graphs" :key="index" class="row">
           <div class="col bg-dark mb-3 chart-container pb-3 pt-3">
 
-            <div class="row text-white" v-if="graph.year">
-              <div class="col-4 clickable" @click="graph.year --">
+            <div class="row text-white" v-if="graph.byYear">
+              <div class="col-4 clickable" @click="year --">
                 <font-awesome-icon icon="chevron-left"/>
               </div>
               <div class="col-4">
-                <strong>{{ graph.year }}</strong>
+                <strong>{{ year }}</strong>
               </div>
-              <div class="col-4 clickable" v-if="graph.year < currentYear"  
-                @click="graph.year ++">
+              <div class="col-4 clickable" v-if="year < currentYear"  
+                @click="year ++">
                 <font-awesome-icon icon="chevron-right"/> 
               </div>
             </div>
 
             <bar-chart v-if="graph.type === 'Bar'" 
-              :chartdata="graph.chartdata" 
-              :options="graph.options"
+              :chartdata="graph"
               :heigth="graph.height"
-              :year="graph.year">
+              :year="graph.byYear ? year : null">
             </bar-chart>
             <line-chart v-else-if="graph.type === 'Line'" 
-              :chartdata="graph.chartdata" 
-              :options="graph.options"
+              :chartdata="graph"
               :height="graph.height"
-              :year="graph.year">
+              :year="graph.byYear ? year : null">
             </line-chart>
             <doughnut-chart v-else-if="graph.type === 'Doughnut'" 
-              :chartdata="graph.chartdata" 
-              :options="graph.options"
+              :chartdata="graph"
               :height="graph.height"
-              :year="graph.year">
+              :year="graph.byYear ? year : null">
             </doughnut-chart>
             
           </div>
@@ -81,7 +78,8 @@
       return {
         graphs: GraphsData.graphs,
         stats: GraphsData.stats,
-        currentYear: this.$moment(this.$moment()).year()
+        currentYear: this.$moment(this.$moment()).year(),
+        year: this.$moment(this.$moment()).year()
       }
     }
   }
