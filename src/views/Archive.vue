@@ -4,12 +4,20 @@
 
       <div class="tasks-container">
         <transition name="fade-empty">
-          <div v-if="!tasks.length" class="empty">
+          <div v-if="!tasks.length && !loading & loading !== null" class="empty">
             <font-awesome-icon icon="archive" size="8x"/>
             <h3 class="mt-3">¡Archivo vacío!</h3>
             <h5>No tienes metas archivadas</h5>
           </div>
         </transition>
+
+        <div class="form-row loading-container" v-if="loading">
+          <div class="col mx-auto">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+          </div>
+        </div>
 
         <transition-group name="taskslist">
           <Task v-for="(task) in tasks" 
@@ -56,7 +64,7 @@
 
 <script>
   import Task from '../components/Task.vue'
-  import tasksData from '../assets/tasks.json'
+  import Api from '../services/api'
   import Swal from '../services/Swal.vue'
   import TaskMixin from '../mixins/TaskMixin'
   import ViewTask from '../views/ViewTask.vue'
@@ -66,9 +74,20 @@
     mixins: [TaskMixin],
     data: function () {
       return {
-        tasks: tasksData.filter( item => item.status === 0 ),
-        selectedTask: {}
+        tasks: [],
+        selectedTask: {},
+        loading: null
       }
+    },
+    mounted: async function () {
+      const vm = this
+      const loadingTimeout = setTimeout(() => {vm.loading = true}, 1500)
+
+      const goals = await Api.getGoals()
+      this.tasks = goals.filter( item => item.status === 0 )
+      
+      clearTimeout(loadingTimeout)
+      this.loading = false
     },
     components: {
       Task,

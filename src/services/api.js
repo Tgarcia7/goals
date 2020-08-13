@@ -1,29 +1,36 @@
 import userData from '../assets/user.json'
+import configService from './config'
+import axios from 'axios'
 
-const api = {}
-
-api.baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'api.goals.com'
+const api = { baseUrl: configService.apiUrl, baseToken: configService.baseToken }
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
 api.authenticate = function (user) {
-  return new Promise((resolve, reject) => {
-    if (user.email !== 'tgarciamiranda@gmail.com') {
-      reject('Usuario y/o contraseña incorrecta')
-    } else {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        data: { email: user.email, password: user.password},
+        url: `${api.baseUrl}/signIn`,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 401) return reject('Usuario y/o contraseña incorrecta')
+
       user.name = userData.name
-      localStorage.setItem('token', JSON.stringify(user))
-      localStorage.setItem('user', JSON.stringify(user))
-      resolve()
+      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
+      axios.defaults.headers.common['Authorization'] = response.data.token
+
+      resolve(response)
+    } catch (error) {
+      console.error(error)
+      localStorage.removeItem('token')
+      reject('Usuario y/o contraseña incorrecta')
     }
-    //  axios({ url: `${baseUrl}/auth`, { email, password }, method: 'POST' })
-    //   .then(res => {
-    //     localStorage.setItem('token', res.data.token)
-    //     localStorage.setItem('user', window.atob(res.data.token.split('.')[1]))
-    //     resolve(res)
-    //   })
-    //   .catch(err => { 
-    //     reject(err)
-    //     localStorage.removeItem('token')
-    //   })
   })
 }
 
@@ -47,7 +54,7 @@ api.socialAuth = function (token) {
 api.logout = function () {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
-  //delete axios.defaults.headers.common['Authorization']
+  delete axios.defaults.headers.common['Authorization']
 }
 
 api.forgetPassword = function (email) {
@@ -61,15 +68,105 @@ api.forgetPassword = function (email) {
   })
 }
 
-// api.getStatus = function () {
-//   return trae.get('${baseUrl}/')
-//     .then(res => res.data)
-//     .catch(err => console.log('[ERROR]', err))
-// }
+api.getGoals = function () {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        url: `${api.baseUrl}/goals`
+      }
 
-// api.checkToken = function () {
-//   return trae.get('/check')
-//     .then(res => res.data)
-// }
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.setGoal = function (goal) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      goal.userId = getUser()
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        url: `${api.baseUrl}/goals`,
+        data: goal
+      }
+
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.updateGoal = function (goal) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateGoal = JSON.parse(JSON.stringify(goal))
+      updateGoal._id = updateGoal.id
+      delete updateGoal.id
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        url: `${api.baseUrl}/goals/${updateGoal._id}`,
+        data: updateGoal
+      }
+
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.getGraphsStats = function () {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        url: `${api.baseUrl}/graphs-stats/`
+      }
+
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+function getUser () {
+  let payload = JSON.parse(localStorage.getItem('user'))
+  return payload.userId
+}
+
+function parseJwt (token) {
+  let base64Url = token.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  let jsonPayload = decodeURIComponent(atob(base64)
+    .split('')
+    .map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
+
+  return JSON.parse(jsonPayload)
+};
 
 export default api

@@ -1,10 +1,18 @@
 <template>
   <main class="flex-shrink-0" role="main">
     <div class="container">
-      <div v-if="!stats.length && !graphs.length" class="empty">
+      <div v-if="!stats.length && !graphs.length && !loading & loading !== null" class="empty">
         <font-awesome-icon icon="chart-bar" size="8x"/>
         <h3 class="mt-3">Completa algunas metas </h3>
         <h5>para alimentar tus estadísticas</h5>
+      </div>
+
+      <div class="form-row loading-container" v-if="loading">
+        <div class="col mx-auto">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Cargando...</span>
+          </div>
+        </div>
       </div>
 
       <div class="col-11 mx-auto" v-else>
@@ -62,7 +70,7 @@
 </template>
 
 <script>
-  import GraphsData from '../assets/statistics.json'
+  import Api from '../services/api'
 
   import BarChart from '../components/charts/Bar.vue'
   import LineChart from '../components/charts/Line.vue'
@@ -76,11 +84,23 @@
     },
     data: function () {
       return {
-        graphs: GraphsData.graphs,
-        stats: GraphsData.stats,
+        graphs: [],
+        stats: [],
         currentYear: this.$moment(this.$moment()).year(),
-        year: this.$moment(this.$moment()).year()
+        year: this.$moment(this.$moment()).year(),
+        loading: null
       }
+    },
+    mounted: async function () {
+      const vm = this
+      const loadingTimeout = setTimeout(() => {vm.loading = true}, 1500)
+
+      const grapsStats = await Api.getGraphsStats()
+      this.graphs = grapsStats.graphs
+      this.stats = grapsStats.stats
+      
+      clearTimeout(loadingTimeout)
+      this.loading = false
     }
   }
 </script>

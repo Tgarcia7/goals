@@ -1,4 +1,6 @@
 <script>
+  import Api from '../services/api'
+
   export default {
     methods: {
       formatDoingDate: function(stringDate) {
@@ -140,24 +142,27 @@
         
         editedTask.progress = location
         
+        await Api.updateGoal(editedTask)
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
       },
-      archive: function (idElement) {
+      archive: async function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
 
         editedTask.status = 0
           
+        await Api.updateGoal(editedTask)
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
       },
-      restore: function (idElement) {
+      restore: async function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
             idxFound = this.tasks.indexOf( editedTask )
 
         editedTask.status = 1
           
+        await Api.updateGoal(editedTask)
         this.$set(this.tasks, idxFound, editedTask)
         this.tasks.splice(idxFound, 1)
       },

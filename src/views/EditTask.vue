@@ -134,7 +134,7 @@
     name: 'EditTask',
     mixins: [Utils],
     props: {
-      id: Number, 
+      id: String, 
       icon: Array, 
       title: String, 
       date: String, 
