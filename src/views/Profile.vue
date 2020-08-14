@@ -18,7 +18,7 @@
       <div class="col-sm-2"></div>
       <div class="col-4 col-sm-3 col-md-2 btn-actions clickable mr-auto" v-if="!changingPassword">
         <button type="button" class="btn btn-outline-dark text-white btn-sm btn-block" @click="editing = !editing">
-          <span v-if="!editing">Editar <font-awesome-icon icon="pen" size="sm"/></span>
+          <span v-if="!editing" @click="resetData()">Editar <font-awesome-icon icon="pen" size="sm"/></span>
           <span v-else><font-awesome-icon icon="chevron-left" size="sm"/> Cancelar</span>
         </button>
       </div>
@@ -64,6 +64,12 @@
               </div>
             </div>
 
+            <div class="row mt-3 text-danger error-msg" v-if="editing">
+              <div class="col">
+                <span v-if="error">{{ error }}</span>
+              </div>
+            </div>
+
             <div v-if="!editing && socialAuthenticated">
               <transition name="fade">
                 <div class="row mt-3" v-if="socialAuthenticated.facebook">
@@ -103,7 +109,7 @@
             </div>
 
             <transition name="fade">
-              <div class="row mt-5" v-if="editing">
+              <div class="row mt-3" v-if="editing">
                 <div class="col mx-auto">
                   <button type="submit" class="btn btn-success btn-sm btn-block main-btn">
                     <strong>Guardar cambios</strong>
@@ -118,7 +124,19 @@
     </transition>
 
     <transition name="fade-form">
-      <form @submit.prevent="newPasswords" id="password-form" class="text-white" v-if="changingPassword">
+      <form @submit.prevent="changePassword" id="password-form" class="text-white" v-if="changingPassword">
+
+        <div class="row mt-3">
+          <div class="col text-left">
+            <input 
+              v-model="newPasswords.current"
+              class="form-control input-login"
+              type="password"
+              placeholder="Contraseña actual"
+              @change="error = ''"
+              required>
+          </div>
+        </div>
 
         <div class="row mt-3">
           <div class="col text-left">
@@ -145,13 +163,14 @@
         <div class="row mt-3 text-danger error-msg">
           <div class="col">
             <span v-if="comparePasswords">Las contraseñas no coinciden</span>
+            <span v-else-if="error">{{ error }}</span>
           </div>
         </div>
 
         <div class="row mt-3" v-if="changingPassword">
           <div class="col mx-auto">
-            <button type="submit" class="btn btn-success btn-sm btn-block main-btn" @click="changePassword"
-              :disabled="newPasswords.confirm && newPasswords.password && comparePasswords">
+            <button type="submit" class="btn btn-success btn-sm btn-block main-btn"
+              :disabled="newPasswords.current && newPasswords.confirm && newPasswords.password && comparePasswords">
               <strong>Cambiar contraseña</strong>
             </button>
           </div>
@@ -166,6 +185,7 @@
 
 <script>
   import Swal from '../services/Swal.vue'
+  import Api from '../services/api'
 
   const USER = JSON.parse(localStorage.getItem('user'))
 
@@ -176,6 +196,7 @@
     },
     data () {
       return {
+        id: USER.userId,
         email: USER.email,
         password: USER.password,
         username: USER.name,
@@ -186,6 +207,7 @@
           username: USER.name
         },
         newPasswords: {
+          current: '',
           password: '',
           confirm: ''
         },
@@ -193,21 +215,38 @@
           facebook: 'Tey Miranda',
           github: null,
           google: null
-        }
+        },
+        error: ''
       }
     },
     methods: {
-      editUser: function () {
+      editUser: async function () {
         this.email = this.edit.email
         this.username = this.edit.username
-        this.editing = false
 
-        this.$refs.swal.toast('success', 'Información actualizada')
-
+        const user = {
+          id: this.id, 
+          email: this.email,
+          name: this.username
+        }
+        
+        try {
+          await Api.updateUser(user)
+          this.editing = false
+          this.error = ''
+          this.$refs.swal.toast('success', 'Información actualizada')
+        } catch (error) {
+          this.error = error
+        }
       },
-      changePassword: function () {
-        this.$refs.swal.toast('success', 'Contraseña reestablecida')
-        this.resetData()
+      changePassword: async function () {
+        try {
+          await Api.changePassword(this.id, this.email, this.newPasswords.current, this.newPasswords.password)
+          this.$refs.swal.toast('success', 'Contraseña reestablecida')
+          this.resetData()
+        } catch (error) {
+          this.error = error
+        }
       },
       resetData: function () {
         this.email = USER.email
@@ -222,7 +261,8 @@
         this.newPasswords = { 
           password: '',
           confirm: ''
-        } 
+        },
+        this.error = ''
       },
       updatePhoto: function () {
         this.$refs.swal.toast('success', 'Foto actualizada')

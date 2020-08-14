@@ -90,7 +90,7 @@ api.getGoals = function () {
 api.setGoal = function (goal) {
   return new Promise(async (resolve, reject) => {
     try {
-      goal.userId = getUser()
+      goal.userId = getUser().userId
 
       const requestOptions = {
         method: 'POST',
@@ -154,7 +154,11 @@ api.getGraphsStats = function () {
 
 function getUser () {
   let payload = JSON.parse(localStorage.getItem('user'))
-  return payload.userId
+  return payload
+}
+
+function setUser (user) {
+  localStorage.setItem('user', JSON.stringify(user))
 }
 
 function parseJwt (token) {
@@ -167,6 +171,74 @@ function parseJwt (token) {
     }).join(''))
 
   return JSON.parse(jsonPayload)
-};
+}
+
+api.updateUser = function (user) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateUser = JSON.parse(JSON.stringify(user))
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        url: `${api.baseUrl}/users/${updateUser.id}`,
+        data: updateUser,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 409) return reject('El email ya está registrado')
+
+      const storageUser = getUser()
+      storageUser.name = updateUser.name
+      storageUser.email = updateUser.email
+      setUser(storageUser)
+
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.changePassword = function (id, email, password, newPassword) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateUser = {
+        email,
+        newPassword, 
+        password
+      }
+
+      const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        url: `${api.baseUrl}/users/${id}/change-password`,
+        data: updateUser,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+
+      if (response.status === 401) return reject('Contraseña incorrecta')
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.changeLanguage = function (newLanguage) {
+  const user = {
+    id: getUser().userId,
+    lang: newLanguage
+  }
+
+  api.updateUser(user)
+}
 
 export default api
