@@ -1,36 +1,73 @@
 import userData from '../assets/user.json'
+import config from '../config'
+import axios from 'axios'
 
-const api = {}
+const api = { baseUrl: config.apiUrl, baseToken: config.baseToken }
+const token = localStorage.getItem('token')
+axios.defaults.headers.common['Authorization'] = token ? `Bearer ${localStorage.getItem('token')}` : ''
 
-api.baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080' : 'api.goals.com'
-
+/*** Users ***/
 api.authenticate = function (user) {
-  return new Promise((resolve, reject) => {
-    if (user.email !== 'tgarciamiranda@gmail.com') {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        data: { email: user.email, password: user.password},
+        url: `${api.baseUrl}/signIn`,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 401) return reject('Usuario y/o contraseña incorrecta')
+      const authUser = parseJwt(response.data.token).sub
+      const authToken = response.data.token
+
+      localStorage.setItem('token', authToken)
+      localStorage.setItem('user', JSON.stringify(authUser))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
+
+      resolve(response)
+    } catch (error) {
+      console.error(error)
+      localStorage.removeItem('token')
       reject('Usuario y/o contraseña incorrecta')
-    } else {
-      user.name = userData.name
-      localStorage.setItem('token', JSON.stringify(user))
-      localStorage.setItem('user', JSON.stringify(user))
-      resolve()
     }
-    //  axios({ url: `${baseUrl}/auth`, { email, password }, method: 'POST' })
-    //   .then(res => {
-    //     localStorage.setItem('token', res.data.token)
-    //     localStorage.setItem('user', window.atob(res.data.token.split('.')[1]))
-    //     resolve(res)
-    //   })
-    //   .catch(err => { 
-    //     reject(err)
-    //     localStorage.removeItem('token')
-    //   })
   })
 }
 
 api.register = function (user) {
-  return new Promise((resolve) => {
-    localStorage.setItem('token', JSON.stringify(user))
-    resolve()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const newUser = {
+        name: user.username,
+        email: user.email,
+        password: user.password
+      }
+      
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        data: newUser,
+        url: `${api.baseUrl}/signUp`,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 409) return reject('El email ya está registrado')
+
+      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+
+      resolve(response)
+    } catch (error) {
+      console.error(error)
+      localStorage.removeItem('token')
+      reject('Error al registrar al usuario')
+    }
   })
 }
 
@@ -47,7 +84,7 @@ api.socialAuth = function (token) {
 api.logout = function () {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
-  //delete axios.defaults.headers.common['Authorization']
+  delete axios.defaults.headers.common['Authorization']
 }
 
 api.forgetPassword = function (email) {
@@ -61,15 +98,178 @@ api.forgetPassword = function (email) {
   })
 }
 
-// api.getStatus = function () {
-//   return trae.get('${baseUrl}/')
-//     .then(res => res.data)
-//     .catch(err => console.log('[ERROR]', err))
-// }
+api.updateUser = function (user) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateUser = JSON.parse(JSON.stringify(user))
 
-// api.checkToken = function () {
-//   return trae.get('/check')
-//     .then(res => res.data)
-// }
+      const requestOptions = {
+        method: 'PUT',
+        url: `${api.baseUrl}/users/${updateUser.id}`,
+        data: updateUser,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 409) return reject('El email ya está registrado')
+
+      const storageUser = getStorageUser()
+      storageUser.name = updateUser.name
+      storageUser.email = updateUser.email
+      setStorageUser(storageUser)
+
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.changePassword = function (id, email, password, newPassword) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateUser = {
+        email,
+        newPassword, 
+        password
+      }
+
+      const requestOptions = {
+        method: 'PATCH',
+        url: `${api.baseUrl}/users/${id}/change-password`,
+        data: updateUser,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+
+      if (response.status === 401) return reject('Contraseña incorrecta')
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.changeLanguage = function (newLanguage) {
+  const user = {
+    id: getStorageUser().userId,
+    lang: newLanguage
+  }
+
+  api.updateUser(user)
+}
+
+/*** Goals ***/
+api.getGoals = function () {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const requestOptions = {
+        method: 'GET',
+        url: `${api.baseUrl}/goals`,
+        validateStatus: status => status < 500
+      }
+
+      const response = await axios(requestOptions)    
+      const goals = response.status === 404 ? [] : response.data
+      
+      resolve(goals)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.setGoal = function (goal) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      goal.userId = getStorageUser().userId
+
+      const requestOptions = {
+        method: 'POST',
+        url: `${api.baseUrl}/goals`,
+        data: goal,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.updateGoal = function (goal) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateGoal = JSON.parse(JSON.stringify(goal))
+      updateGoal._id = updateGoal.id
+      delete updateGoal.id
+
+      const requestOptions = {
+        method: 'PUT',
+        url: `${api.baseUrl}/goals/${updateGoal._id}`,
+        data: updateGoal,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.getGraphsStats = function () {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const requestOptions = {
+        method: 'GET',
+        url: `${api.baseUrl}/graphs-stats/`,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+/*** Utils ***/
+function getStorageUser () {
+  let payload = JSON.parse(localStorage.getItem('user'))
+  return payload
+}
+
+function setStorageUser (user) {
+  localStorage.setItem('user', JSON.stringify(user))
+}
+
+function parseJwt (token) {
+  let base64Url = token.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  let jsonPayload = decodeURIComponent(atob(base64)
+    .split('')
+    .map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
+
+  return JSON.parse(jsonPayload)
+}
 
 export default api

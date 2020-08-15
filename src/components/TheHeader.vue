@@ -27,8 +27,8 @@
                     <span class="mr-2">Idioma</span>
                   </span>
               </template>
-              <b-dropdown-item href="#" class="text-right" left>English</b-dropdown-item>
-              <b-dropdown-item href="#" class="text-right">Español</b-dropdown-item>
+              <b-dropdown-item @click="changeLanguage('en')" class="text-right" left>English</b-dropdown-item>
+              <b-dropdown-item @click="changeLanguage('es')" href="#" class="text-right">Español</b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item-dropdown text="Usuario" class="text-right">
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-  import api from '../services/api'
+  import Api from '../services/api'
   import Swal from '../services/Swal.vue'
 
   export default {
@@ -78,10 +78,18 @@
     },
     methods: {
       logout: async function () {
-        api.logout()
+        Api.logout()
         let userResponse = await 
           this.$refs.swal.regular('question', 'Cerrar sesión', '¿Está seguro que desea salir de su cuenta?')
         if (userResponse.value) this.$router.push({ name: 'login' })
+      },
+      changeLanguage: async function (newLanguage) {
+        try {
+          await Api.changeLanguage(newLanguage)
+          this.$refs.swal.toast('success', 'Idioma actualizado')
+        } catch (error) {
+          console.error(error)
+        }
       }
     }
   }

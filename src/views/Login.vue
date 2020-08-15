@@ -292,12 +292,13 @@
       },
       register: async function () {
         try {
-          await api.register({ 
+          const newUser = { 
             email: this.emailRegister, 
             password: this.passwordRegister,
             confirmPassword: this.confirmPasswordRegister,
             username: this.usernameRegister
-          })
+          }
+          await api.register(newUser)
           
           this.loadingMessage = 'Creando cuenta...'
           this.loading = true

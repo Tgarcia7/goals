@@ -44,7 +44,7 @@
             <b-progress :value="barWidth" :variant="barColor" striped :height="'7px'" :animated="true" :max="100"></b-progress>
           </div>
           <div class="col-4" v-if="status">
-            <small v-if="type === 'objective' || progress === 'done'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
+            <small v-if="type === 'objective' || progress === 'done'">{{ objectiveDone || 0 }} / {{ objectiveTotal || 0 }}</small>
             <span v-else-if="type === 'steps' && progress === 'doing'" class="badge badge-dark btn-tasks clickable" @click="editSubTasks()">
               <font-awesome-icon icon="tasks" size="lg"/>
             </span>
@@ -66,7 +66,7 @@
                 <font-awesome-icon icon="chevron-down" size="lg"/>
               </span>
             </small>
-            <small v-else-if="type === 'steps' && progress === 'doing'">{{ objectiveDone }} / {{ objectiveTotal }}</small>
+            <small v-else-if="type === 'steps' && progress === 'doing'">{{ objectiveDone || 0 }} / {{ objectiveTotal || 0 }}</small>
           </div>
           <div class="col-4 clickable" @click="restore()" v-else>
             <small>Restaurar</small>
@@ -95,14 +95,14 @@
     name: 'Task',
     mixins: [Utils],
     props: {
-      id: { type: Number, required: true }, 
+      id: { type: String, required: true }, 
       icon: { type: Array, required: true }, 
       title: { type: String, required: true }, 
       date: String,  
       status: { type: Number, default: 1, validator: val => [1, 0].includes(val) }, 
       progress: { type: String, required: true, validator: val => ['doing', 'done'].includes(val) },
-      objectiveDone: Number,
-      objectiveTotal: Number,
+      objectiveDone: { type: Number, default: 0 },
+      objectiveTotal: { type: Number, default: 0 },
       type: { type: String, required: true, validator: val => ['steps', 'objective', 'simple'].includes(val) },
       stepsList: { type: Array }
     },

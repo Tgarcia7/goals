@@ -4,12 +4,20 @@
 
       <div class="tasks-container">
         <transition name="fade-empty">
-          <div v-if="!tasks.length" class="empty">
+          <div v-if="!tasks.length && !loading & loading !== null" class="empty">
             <font-awesome-icon icon="cloud-sun" size="8x"/>
             <h3 class="mt-3">¡Todo listo!</h3>
             <h5>No tienes metas pendientes por realizar</h5>
           </div>
         </transition>
+
+        <div class="form-row loading-container" v-if="loading">
+          <div class="col mx-auto">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+          </div>
+        </div>
 
         <transition-group name="taskslist">
           <Task v-for="(task) in tasks" 
@@ -67,7 +75,7 @@
 
 <script>
   import Task from '../components/Task.vue'
-  import tasksData from '../assets/tasks.json'
+  import Api from '../services/api'
   import AddTask from '../views/AddTask.vue'
   import EditTask from '../views/EditTask.vue'
   import Swal from '../services/Swal.vue'
@@ -78,9 +86,10 @@
     mixins: [TaskMixin],
     data: function () {
       return {
-        tasks: tasksData.filter( item => item.progress === 'doing' && item.status === 1 ),
+        tasks: [],
         selectedTask: {}, 
-        tasksOnly: false
+        tasksOnly: false,
+        loading: null
       }
     },
     components: {
@@ -89,26 +98,60 @@
       EditTask,
       Swal
     },
+    created: async function () {
+      const loadingTimeout = this.initLoader()
+
+      try {
+        const goals = await Api.getGoals()
+        this.tasks = goals.filter( item => item.progress === 'doing' && item.status === 1 )
+      } catch (error) {
+        console.error(error)
+      }
+      
+      this.stopLoader(loadingTimeout)
+    },
     methods: { 
-      saveTask: function (newTask) {
-        // Calculates next id. Must come from db
-        newTask.id = this.tasks.length ? this.tasks[this.tasks.length-1].id + 1 : 0
+      saveTask: async function (newTask) {
+        try {
+          let result = await Api.setGoal(newTask)
+          newTask.id = result.goal._id
 
-        this.$set(this.tasks, this.tasks.length, newTask)
+          this.$set(this.tasks, this.tasks.length, newTask)
+        } catch (error) {
+          console.error(error)
+        }
       }, 
-      saveEditedTask: function (editedTask) {
-        let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
+      saveEditedTask: async function (editedTask) {
+        try {
+          await Api.updateGoal(editedTask)
+          let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
 
-        this.$set(this.tasks, idxFound, editedTask)
+          this.$set(this.tasks, idxFound, editedTask)
+        } catch (error) {
+          console.error(error)
+        }
       },
-      upDownObjective: function (idElement, doneUpdated) {
-        this.cleanSelected()
-        let editedTask = this.tasks.find( element => element.id === idElement ),
-            idxFound = this.tasks.indexOf( editedTask )
+      upDownObjective: async function (idElement, doneUpdated) {
+        try {
+          this.cleanSelected()
+          let editedTask = this.tasks.find( element => element.id === idElement ),
+              idxFound = this.tasks.indexOf( editedTask )
 
-        editedTask.objectiveDone = doneUpdated
-        
-        this.$set(this.tasks, idxFound, editedTask)
+          editedTask.objectiveDone = doneUpdated
+          await Api.updateGoal(editedTask)
+
+          this.$set(this.tasks, idxFound, editedTask)
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      initLoader: function () {
+        const vm = this
+        return setTimeout(() => { vm.loading = true }, 1500)
+      },
+      stopLoader: function (loadingTimeout) {
+        clearTimeout(loadingTimeout)
+        this.loading = false
       }
     }
   }

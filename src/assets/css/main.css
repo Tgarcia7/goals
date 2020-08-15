@@ -69,3 +69,8 @@ body, .login-container {
   margin-top: 100px;
   color: #4d545b;
 }
+
+.loading-container {
+  margin-top: 230px;
+  color: #6b856f;
+}
