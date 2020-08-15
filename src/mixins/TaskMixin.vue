@@ -142,9 +142,13 @@
         
         editedTask.progress = location
         
-        await Api.updateGoal(editedTask)
-        this.$set(this.tasks, idxFound, editedTask)
-        this.tasks.splice(idxFound, 1)
+        try {
+          await Api.updateGoal(editedTask)
+          this.$set(this.tasks, idxFound, editedTask)
+          this.tasks.splice(idxFound, 1)
+        } catch (error) {
+          console.error(error)
+        }
       },
       archive: async function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
@@ -152,9 +156,13 @@
 
         editedTask.status = 0
           
-        await Api.updateGoal(editedTask)
-        this.$set(this.tasks, idxFound, editedTask)
-        this.tasks.splice(idxFound, 1)
+        try {
+          await Api.updateGoal(editedTask)
+          this.$set(this.tasks, idxFound, editedTask)
+          this.tasks.splice(idxFound, 1)
+        } catch (error) {
+          console.error(error)
+        }
       },
       restore: async function (idElement) {
         let editedTask = this.tasks.find( element => element.id === idElement ),
@@ -162,9 +170,13 @@
 
         editedTask.status = 1
           
-        await Api.updateGoal(editedTask)
-        this.$set(this.tasks, idxFound, editedTask)
-        this.tasks.splice(idxFound, 1)
+        try {
+          await Api.updateGoal(editedTask)
+          this.$set(this.tasks, idxFound, editedTask)
+          this.tasks.splice(idxFound, 1)
+        } catch (error) {
+          console.error(error)
+        }
       },
       viewTask: function (task, subTasksOnly) {
         let modal = 'modal-view'

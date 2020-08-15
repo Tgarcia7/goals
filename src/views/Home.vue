@@ -98,40 +98,60 @@
       EditTask,
       Swal
     },
-    mounted: async function () {
-      const vm = this
-      const loadingTimeout = setTimeout(() => {vm.loading = true}, 1500)
+    created: async function () {
+      const loadingTimeout = this.initLoader()
 
-      const goals = await Api.getGoals()
-      this.tasks = goals.filter( item => item.progress === 'doing' && item.status === 1 )
+      try {
+        const goals = await Api.getGoals()
+        this.tasks = goals.filter( item => item.progress === 'doing' && item.status === 1 )
+      } catch (error) {
+        console.error(error)
+      }
       
-      clearTimeout(loadingTimeout)
-      this.loading = false
+      this.stopLoader(loadingTimeout)
     },
     methods: { 
       saveTask: async function (newTask) {
-        let result = await Api.setGoal(newTask)
-        newTask.id = result.goal._id
+        try {
+          let result = await Api.setGoal(newTask)
+          newTask.id = result.goal._id
 
-        this.$set(this.tasks, this.tasks.length, newTask)
+          this.$set(this.tasks, this.tasks.length, newTask)
+        } catch (error) {
+          console.error(error)
+        }
       }, 
       saveEditedTask: async function (editedTask) {
-        await Api.updateGoal(editedTask)
+        try {
+          await Api.updateGoal(editedTask)
+          let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
 
-        let idxFound = this.tasks.findIndex( element => element.id === editedTask.id )
-
-        this.$set(this.tasks, idxFound, editedTask)
+          this.$set(this.tasks, idxFound, editedTask)
+        } catch (error) {
+          console.error(error)
+        }
       },
       upDownObjective: async function (idElement, doneUpdated) {
-        this.cleanSelected()
-        let editedTask = this.tasks.find( element => element.id === idElement ),
-            idxFound = this.tasks.indexOf( editedTask )
+        try {
+          this.cleanSelected()
+          let editedTask = this.tasks.find( element => element.id === idElement ),
+              idxFound = this.tasks.indexOf( editedTask )
 
-        editedTask.objectiveDone = doneUpdated
+          editedTask.objectiveDone = doneUpdated
+          await Api.updateGoal(editedTask)
 
-        await Api.updateGoal(editedTask)
-        
-        this.$set(this.tasks, idxFound, editedTask)
+          this.$set(this.tasks, idxFound, editedTask)
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      initLoader: function () {
+        const vm = this
+        return setTimeout(() => { vm.loading = true }, 1500)
+      },
+      stopLoader: function (loadingTimeout) {
+        clearTimeout(loadingTimeout)
+        this.loading = false
       }
     }
   }

@@ -1,10 +1,12 @@
 import userData from '../assets/user.json'
-import configService from './config'
+import config from '../config'
 import axios from 'axios'
 
-const api = { baseUrl: configService.apiUrl, baseToken: configService.baseToken }
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+const api = { baseUrl: config.apiUrl, baseToken: config.baseToken }
+const token = localStorage.getItem('token')
+axios.defaults.headers.common['Authorization'] = token ? `Bearer ${localStorage.getItem('token')}` : ''
 
+/*** Users ***/
 api.authenticate = function (user) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -19,11 +21,12 @@ api.authenticate = function (user) {
       let response = await axios(requestOptions)
       
       if (response.status === 401) return reject('Usuario y/o contraseña incorrecta')
+      const authUser = parseJwt(response.data.token).sub
+      const authToken = response.data.token
 
-      user.name = userData.name
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
-      axios.defaults.headers.common['Authorization'] = response.data.token
+      localStorage.setItem('token', authToken)
+      localStorage.setItem('user', JSON.stringify(authUser))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
 
       resolve(response)
     } catch (error) {
@@ -35,9 +38,36 @@ api.authenticate = function (user) {
 }
 
 api.register = function (user) {
-  return new Promise((resolve) => {
-    localStorage.setItem('token', JSON.stringify(user))
-    resolve()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const newUser = {
+        name: user.username,
+        email: user.email,
+        password: user.password
+      }
+      
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        data: newUser,
+        url: `${api.baseUrl}/signUp`,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 409) return reject('El email ya está registrado')
+
+      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+
+      resolve(response)
+    } catch (error) {
+      console.error(error)
+      localStorage.removeItem('token')
+      reject('Error al registrar al usuario')
+    }
   })
 }
 
@@ -68,18 +98,86 @@ api.forgetPassword = function (email) {
   })
 }
 
+api.updateUser = function (user) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateUser = JSON.parse(JSON.stringify(user))
+
+      const requestOptions = {
+        method: 'PUT',
+        url: `${api.baseUrl}/users/${updateUser.id}`,
+        data: updateUser,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+      
+      if (response.status === 409) return reject('El email ya está registrado')
+
+      const storageUser = getStorageUser()
+      storageUser.name = updateUser.name
+      storageUser.email = updateUser.email
+      setStorageUser(storageUser)
+
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.changePassword = function (id, email, password, newPassword) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let updateUser = {
+        email,
+        newPassword, 
+        password
+      }
+
+      const requestOptions = {
+        method: 'PATCH',
+        url: `${api.baseUrl}/users/${id}/change-password`,
+        data: updateUser,
+        validateStatus: status => status < 500
+      }
+
+      let response = await axios(requestOptions)
+
+      if (response.status === 401) return reject('Contraseña incorrecta')
+      
+      resolve(response.data)
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
+
+api.changeLanguage = function (newLanguage) {
+  const user = {
+    id: getStorageUser().userId,
+    lang: newLanguage
+  }
+
+  api.updateUser(user)
+}
+
+/*** Goals ***/
 api.getGoals = function () {
   return new Promise(async (resolve, reject) => {
     try {
       const requestOptions = {
         method: 'GET',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        url: `${api.baseUrl}/goals`
+        url: `${api.baseUrl}/goals`,
+        validateStatus: status => status < 500
       }
 
-      let response = await axios(requestOptions)
+      const response = await axios(requestOptions)    
+      const goals = response.status === 404 ? [] : response.data
       
-      resolve(response.data)
+      resolve(goals)
     } catch (error) {
       console.error(error)
       reject(error)
@@ -90,13 +188,13 @@ api.getGoals = function () {
 api.setGoal = function (goal) {
   return new Promise(async (resolve, reject) => {
     try {
-      goal.userId = getUser().userId
+      goal.userId = getStorageUser().userId
 
       const requestOptions = {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
         url: `${api.baseUrl}/goals`,
-        data: goal
+        data: goal,
+        validateStatus: status => status < 500
       }
 
       let response = await axios(requestOptions)
@@ -118,9 +216,9 @@ api.updateGoal = function (goal) {
 
       const requestOptions = {
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
         url: `${api.baseUrl}/goals/${updateGoal._id}`,
-        data: updateGoal
+        data: updateGoal,
+        validateStatus: status => status < 500
       }
 
       let response = await axios(requestOptions)
@@ -138,8 +236,8 @@ api.getGraphsStats = function () {
     try {
       const requestOptions = {
         method: 'GET',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        url: `${api.baseUrl}/graphs-stats/`
+        url: `${api.baseUrl}/graphs-stats/`,
+        validateStatus: status => status < 500
       }
 
       let response = await axios(requestOptions)
@@ -152,12 +250,13 @@ api.getGraphsStats = function () {
   })
 }
 
-function getUser () {
+/*** Utils ***/
+function getStorageUser () {
   let payload = JSON.parse(localStorage.getItem('user'))
   return payload
 }
 
-function setUser (user) {
+function setStorageUser (user) {
   localStorage.setItem('user', JSON.stringify(user))
 }
 
@@ -171,74 +270,6 @@ function parseJwt (token) {
     }).join(''))
 
   return JSON.parse(jsonPayload)
-}
-
-api.updateUser = function (user) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let updateUser = JSON.parse(JSON.stringify(user))
-
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        url: `${api.baseUrl}/users/${updateUser.id}`,
-        data: updateUser,
-        validateStatus: status => status < 500
-      }
-
-      let response = await axios(requestOptions)
-      
-      if (response.status === 409) return reject('El email ya está registrado')
-
-      const storageUser = getUser()
-      storageUser.name = updateUser.name
-      storageUser.email = updateUser.email
-      setUser(storageUser)
-
-      resolve(response.data)
-    } catch (error) {
-      console.error(error)
-      reject(error)
-    }
-  })
-}
-
-api.changePassword = function (id, email, password, newPassword) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let updateUser = {
-        email,
-        newPassword, 
-        password
-      }
-
-      const requestOptions = {
-        method: 'PATCH',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        url: `${api.baseUrl}/users/${id}/change-password`,
-        data: updateUser,
-        validateStatus: status => status < 500
-      }
-
-      let response = await axios(requestOptions)
-
-      if (response.status === 401) return reject('Contraseña incorrecta')
-      
-      resolve(response.data)
-    } catch (error) {
-      console.error(error)
-      reject(error)
-    }
-  })
-}
-
-api.changeLanguage = function (newLanguage) {
-  const user = {
-    id: getUser().userId,
-    lang: newLanguage
-  }
-
-  api.updateUser(user)
 }
 
 export default api

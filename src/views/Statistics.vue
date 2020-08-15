@@ -92,15 +92,27 @@
       }
     },
     mounted: async function () {
-      const vm = this
-      const loadingTimeout = setTimeout(() => {vm.loading = true}, 1500)
+      const loadingTimeout = this.initLoader()
 
-      const grapsStats = await Api.getGraphsStats()
-      this.graphs = grapsStats.graphs
-      this.stats = grapsStats.stats
+      try {
+        const grapsStats = await Api.getGraphsStats()
+        this.graphs = grapsStats.graphs
+        this.stats = grapsStats.stats
+      } catch (error) {
+        console.error(error)
+      }
       
-      clearTimeout(loadingTimeout)
-      this.loading = false
+      this.stopLoader(loadingTimeout)
+    },
+    methods: { 
+      initLoader: function () {
+        const vm = this
+        return setTimeout(() => { vm.loading = true }, 1500)
+      },
+      stopLoader: function (loadingTimeout) {
+        clearTimeout(loadingTimeout)
+        this.loading = false
+      }
     }
   }
 </script>

@@ -80,15 +80,27 @@
         loading: null
       }
     },
-    mounted: async function () {
-      const vm = this
-      const loadingTimeout = setTimeout(() => {vm.loading = true}, 1500)
-
-      const goals = await api.getGoals()
-      this.tasks = goals.filter( item => item.progress === 'done' && item.status === 1 )
+    created: async function () {
+      const loadingTimeout = this.initLoader()
       
-      clearTimeout(loadingTimeout)
-      this.loading = false
+      try {
+        const goals = await api.getGoals()
+        this.tasks = goals.filter( item => item.progress === 'done' && item.status === 1 )
+      } catch (error) {
+        console.error(error)
+      }
+      
+      this.stopLoader(loadingTimeout)
+    },
+    methods: {
+      initLoader: function () {
+        const vm = this
+        return setTimeout(() => { vm.loading = true }, 1500)
+      },
+      stopLoader: function (loadingTimeout) {
+        clearTimeout(loadingTimeout)
+        this.loading = false
+      }
     },
     components: {
       Task,
