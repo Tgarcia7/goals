@@ -1,10 +1,13 @@
 import userData from '../assets/user.json'
 import config from '../config'
 import axios from 'axios'
+import Router from '../router'
 
 const api = { baseUrl: config.apiUrl, baseToken: config.baseToken }
 const token = localStorage.getItem('token')
+const refreshToken = localStorage.getItem('refresh-token')
 axios.defaults.headers.common['Authorization'] = token ? `Bearer ${localStorage.getItem('token')}` : ''
+setInterceptors()
 
 /*** Users ***/
 api.authenticate = function (user) {
@@ -19,12 +22,15 @@ api.authenticate = function (user) {
       }
 
       let response = await axios(requestOptions)
-      
+
       if (response.status === 401) return reject('Usuario y/o contraseña incorrecta')
+      
       const authUser = parseJwt(response.data.token).sub
       const authToken = response.data.token
+      const refreshToken = response.data.refreshToken
 
       localStorage.setItem('token', authToken)
+      localStorage.setItem('refresh-token', refreshToken)
       localStorage.setItem('user', JSON.stringify(authUser))
       axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
 
@@ -32,7 +38,7 @@ api.authenticate = function (user) {
     } catch (error) {
       console.error(error)
       localStorage.removeItem('token')
-      reject('Usuario y/o contraseña incorrecta')
+      reject('Error de autenticación')
     }
   })
 }
@@ -50,13 +56,10 @@ api.register = function (user) {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${api.baseToken}` },
         data: newUser,
-        url: `${api.baseUrl}/signUp`,
-        validateStatus: status => status < 500
+        url: `${api.baseUrl}/signUp`
       }
 
       let response = await axios(requestOptions)
-      
-      if (response.status === 409) return reject('El email ya está registrado')
 
       localStorage.setItem('token', response.data.token)
       localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
@@ -64,6 +67,8 @@ api.register = function (user) {
 
       resolve(response)
     } catch (error) {
+      if (error.response.status === 409) return reject('El email ya está registrado')
+
       console.error(error)
       localStorage.removeItem('token')
       reject('Error al registrar al usuario')
@@ -106,13 +111,10 @@ api.updateUser = function (user) {
       const requestOptions = {
         method: 'PUT',
         url: `${api.baseUrl}/users/${updateUser.id}`,
-        data: updateUser,
-        validateStatus: status => status < 500
+        data: updateUser
       }
 
       let response = await axios(requestOptions)
-      
-      if (response.status === 409) return reject('El email ya está registrado')
 
       const storageUser = getStorageUser()
       storageUser.name = updateUser.name
@@ -121,6 +123,8 @@ api.updateUser = function (user) {
 
       resolve(response.data)
     } catch (error) {
+      if (error.response.status === 409) return reject('El email ya está registrado')
+
       console.error(error)
       reject(error)
     }
@@ -143,9 +147,9 @@ api.changePassword = function (id, email, password, newPassword) {
         validateStatus: status => status < 500
       }
 
-      let response = await axios(requestOptions)
-
       if (response.status === 401) return reject('Contraseña incorrecta')
+
+      let response = await axios(requestOptions)
       
       resolve(response.data)
     } catch (error) {
@@ -164,21 +168,63 @@ api.changeLanguage = function (newLanguage) {
   api.updateUser(user)
 }
 
+function setInterceptors () {
+  axios.interceptors.response.use(response => {
+    return response
+  }, error => {
+    if (error.response.status !== 401 || !token) return Promise.reject(error)
+
+    return api.requestNewtoken()
+      .then(newToken => {
+        error.config.headers['Authorization'] = `Bearer ${newToken}`
+        return axios.request(error.config)
+      })
+  })
+}
+
+api.requestNewtoken = async function () {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userEmail = getStorageUser().email
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${api.baseToken}` },
+        data: { email: userEmail, refreshToken },
+        url: `${api.baseUrl}/users/refresh-token`
+      }
+
+      let response = await axios(requestOptions)
+
+      const authToken = response.data.message
+
+      localStorage.setItem('token', authToken)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
+
+      resolve(authToken)
+    } catch (error) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('refresh-token')
+      Router.push({ name: 'login' })
+    }
+  })
+}
+
 /*** Goals ***/
 api.getGoals = function () {
   return new Promise(async (resolve, reject) => {
     try {
       const requestOptions = {
         method: 'GET',
-        url: `${api.baseUrl}/goals`,
-        validateStatus: status => status < 500
+        url: `${api.baseUrl}/goals`
       }
 
       const response = await axios(requestOptions)    
-      const goals = response.status === 404 ? [] : response.data
+      const goals = response.data
       
       resolve(goals)
     } catch (error) {
+      if (error.response.status === 404) resolve([])
+
       console.error(error)
       reject(error)
     }
@@ -193,8 +239,7 @@ api.setGoal = function (goal) {
       const requestOptions = {
         method: 'POST',
         url: `${api.baseUrl}/goals`,
-        data: goal,
-        validateStatus: status => status < 500
+        data: goal
       }
 
       let response = await axios(requestOptions)
@@ -217,8 +262,7 @@ api.updateGoal = function (goal) {
       const requestOptions = {
         method: 'PUT',
         url: `${api.baseUrl}/goals/${updateGoal._id}`,
-        data: updateGoal,
-        validateStatus: status => status < 500
+        data: updateGoal
       }
 
       let response = await axios(requestOptions)
@@ -236,8 +280,7 @@ api.getGraphsStats = function () {
     try {
       const requestOptions = {
         method: 'GET',
-        url: `${api.baseUrl}/graphs-stats/`,
-        validateStatus: status => status < 500
+        url: `${api.baseUrl}/graphs-stats/`
       }
 
       let response = await axios(requestOptions)
