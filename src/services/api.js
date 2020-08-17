@@ -143,16 +143,15 @@ api.changePassword = function (id, email, password, newPassword) {
       const requestOptions = {
         method: 'PATCH',
         url: `${api.baseUrl}/users/${id}/change-password`,
-        data: updateUser,
-        validateStatus: status => status < 500
+        data: updateUser
       }
-
-      if (response.status === 401) return reject('Contraseña incorrecta')
 
       let response = await axios(requestOptions)
       
       resolve(response.data)
     } catch (error) {
+      if (error.response.status === 400) return reject('Contraseña incorrecta')
+
       console.error(error)
       reject(error)
     }
@@ -183,7 +182,7 @@ function setInterceptors () {
 }
 
 api.requestNewtoken = async function () {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve) => {
     try {
       const userEmail = getStorageUser().email
       const requestOptions = {

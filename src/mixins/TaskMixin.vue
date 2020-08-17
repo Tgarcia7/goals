@@ -6,8 +6,8 @@
       formatDoingDate: function(stringDate) {
         if (!stringDate) return null
 
-        let taskDate = this.$moment(stringDate).startOf('day'),
-            today = this.$moment().startOf('day'),
+        let taskDate = this.$moment.utc(stringDate).startOf('day'),
+            today = this.$moment.utc().startOf('day'),
             diffMonths = this.$moment(taskDate).diff(today, 'months'),
             diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
             diffDays = this.$moment(taskDate).diff(today, 'days'),

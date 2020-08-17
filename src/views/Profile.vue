@@ -187,8 +187,6 @@
   import Swal from '../services/Swal.vue'
   import Api from '../services/api'
 
-  const USER = JSON.parse(localStorage.getItem('user'))
-
   export default {
     name: 'login',
     components: {
@@ -196,15 +194,15 @@
     },
     data () {
       return {
-        id: USER.userId,
-        email: USER.email,
-        password: USER.password,
-        username: USER.name,
+        id: '',
+        email: '',
+        password: '',
+        username: '',
         editing: false,
         changingPassword: false,
         edit: {
-          email: USER.email,
-          username: USER.name
+          email: '',
+          username: ''
         },
         newPasswords: {
           current: '',
@@ -219,6 +217,16 @@
         error: ''
       }
     },
+    created: function () {
+      const USER = JSON.parse(localStorage.getItem('user'))
+
+      this.id = USER.userId
+      this.email = USER.email
+      this.password = USER.password
+      this.username = USER.name
+      this.edit.email = USER.email,
+      this.edit.username = USER.name
+    },
     methods: {
       editUser: async function () {
         this.email = this.edit.email
@@ -229,7 +237,7 @@
           email: this.email,
           name: this.username
         }
-        
+
         try {
           await Api.updateUser(user)
           this.editing = false
@@ -249,6 +257,9 @@
         }
       },
       resetData: function () {
+        const USER = JSON.parse(localStorage.getItem('user'))
+
+        this.id = USER.userId,
         this.email = USER.email
         this.password = USER.password
         this.username = USER.name
@@ -259,6 +270,7 @@
           username: USER.name
         }        
         this.newPasswords = { 
+          current: '',
           password: '',
           confirm: ''
         },

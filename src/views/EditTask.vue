@@ -249,8 +249,8 @@
       formatedDate: function () {
         let date = this.date
 
-        if (date && !date.includes('-')) {
-          date = this.$moment(date).format('YYYY-MM-DD')
+        if (date && date.includes('-')) {
+          date = this.$moment.utc(date).format('YYYY-MM-DD')
         }
 
         return date

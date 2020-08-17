@@ -117,6 +117,7 @@
           newTask.id = result.goal._id
 
           this.$set(this.tasks, this.tasks.length, newTask)
+          this.$refs.swal.toast('success', 'Meta agregada')
         } catch (error) {
           console.error(error)
         }
