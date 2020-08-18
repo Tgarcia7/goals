@@ -1,6 +1,6 @@
 <template>
   <main class="flex-shrink-0" role="main">
-    <div class="container">
+    <div class="container task-list-container">
 
       <div class="tasks-container">
         <transition name="fade-empty">

@@ -340,12 +340,12 @@
   }
 
   .active-right div.task-main-content {
-    left: 85px;
+    left: 100px;
     position: relative;
   }
 
   .active-left div.task-main-content {
-    right: 85px;
+    right: 100px;
     position: relative;
   }
 
@@ -361,15 +361,15 @@
   @media (min-width: 992px) {
     .action-right {
       position: absolute; 
-      width: 74px;
-      right: 135px;
+      width: 100px;
+      right: 105px;
       z-index: 10;
       display: none;
     }
 
     .action-left {
       position: absolute; 
-      width: 74px;
+      width: 100px;
       right: 205px;
       z-index: 10;
       display: none;
@@ -398,26 +398,26 @@
 
     .action-right {
       position: absolute; 
-      width: 74px;
-      transition: all 0.3s ease 0s;
-      left: -85px;
-    }
-
-    .action-left {
-      position: absolute; 
-      width: 74px;
-      transition: all 0.3s ease 0s;
-      right: -85px;
-    }
-
-    .active-left div.action-left {
-      transition: all 0.3s ease 0s;
-      right: 0px;
+      width: 100px;
+      transition: all 0.1s ease 0s;
+      left: -100px;
     }
 
     .active-right div.action-right {
       transition: all 0.3s ease 0s;
       left: 0px;
+    }
+
+    .action-left {
+      position: absolute; 
+      width: 100px;
+      transition: all 0.1s ease 0s;
+      right: -100px;
+    }
+
+    .active-left div.action-left {
+      transition: all 0.3s ease 0s;
+      right: 0px;
     }
   }
 
@@ -432,6 +432,14 @@
   .fade-enter, .fade-leave {
     opacity: 0;
     transform: translateY(-50px);
+  }
+
+  .task-main-content {
+    border-radius: 8px;
+    z-index: 100;
+    background: #1e242a;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 </style>
 
