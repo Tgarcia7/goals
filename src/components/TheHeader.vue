@@ -2,9 +2,8 @@
   <div class="navbar-container">
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
       <div class="container">
-        <div class="return-container clickable" @click="$router.back();">
-          <a class="nav mr-auto" 
-            v-if="this.$route.meta.showReturn">
+        <div class="return-container clickable" @click="$router.back();" v-if="this.$route.meta.showReturn">
+          <a class="nav mr-auto">
             <font-awesome-icon icon="chevron-left" size="lg"/>
           </a>
         </div>
