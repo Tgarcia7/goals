@@ -23,7 +23,7 @@
             :id="task.id" 
             :icon="task.icon"
             :title="task.title"
-            :date="'Hecho ' + formatCompletedDate(task.dateCompleted)"
+            :date="`Hecho ${formatCompletedDate(task.dateCompleted)}`"
             :progress="task.progress"
             :status="task.status"
             :objectiveDone="task.objectiveDone"

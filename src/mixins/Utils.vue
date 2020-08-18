@@ -19,8 +19,10 @@
               
         return window_width < 992
       },
-      dateDisplayFormat: function (date) {
-        if (date) {
+      dateDisplayFormat: function (stringDate) {
+        let date
+        if (stringDate) {
+          date = this.stringToDate(stringDate)
           date = this.$moment(date).format('DD/MM/YYYY')
         }
 
@@ -30,6 +32,13 @@
         min = Math.ceil(min)
         max = Math.floor(max)
         return Math.floor(Math.random() * (max - min + 1)) + min
+      },
+      stringToDate: function (stringDate) {
+        const removeTime = stringDate.split('T')[0]
+        const splitDate = removeTime.split('-')
+        const date = new Date(splitDate[0], splitDate[1]-1, splitDate[2])
+
+        return date
       }
     }
   }

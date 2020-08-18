@@ -55,7 +55,7 @@
         </div>
         <div class="row">
           <div class="col text-left clickable" @click="edit()">
-            <small :class="date && date.includes('tarde') ? 'text-muted' : ''"> 
+            <small :class="date && date.includes('tarde') ? 'text-muted' : ''" v-if="status"> 
               <font-awesome-icon :icon="['far', 'clock']" v-if="date && date.includes('tarde')"/>
               {{ date }} 
             </small>
@@ -98,7 +98,7 @@
       id: { type: String, required: true }, 
       icon: { type: Array, required: true }, 
       title: { type: String, required: true }, 
-      date: String,  
+      date: { type: String, default: '' },  
       status: { type: Number, default: 1, validator: val => [1, 0].includes(val) }, 
       progress: { type: String, required: true, validator: val => ['doing', 'done'].includes(val) },
       objectiveDone: { type: Number, default: 0 },

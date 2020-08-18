@@ -4,13 +4,14 @@
   export default {
     methods: {
       formatDoingDate: function(stringDate) {
-        if (!stringDate) return null
+        if (!stringDate) return ''
+        const goalDate = this.stringToDate(stringDate)
 
-        let taskDate = this.$moment.utc(stringDate).startOf('day'),
-            today = this.$moment.utc().startOf('day'),
-            diffMonths = this.$moment(taskDate).diff(today, 'months'),
-            diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
-            diffDays = this.$moment(taskDate).diff(today, 'days'),
+        let taskDate = this.$moment(goalDate).startOf('day'),
+            today = this.$moment().startOf('day'),
+            diffMonths = taskDate.diff(today, 'months'),
+            diffWeeks = taskDate.diff(today, 'weeks'),
+            diffDays = taskDate.diff(today, 'days'),
             resultDate = stringDate,
             formated = false,
             outdated = diffDays < 0 ? true : false
@@ -65,13 +66,14 @@
         return resultDate
       },
       formatCompletedDate: function (stringDate){
-        if (!stringDate) return null
+        if (!stringDate) return ''
+        const goalDate = this.stringToDate(stringDate)
 
-        let taskDate = this.$moment(stringDate).startOf('day'),
+        let taskDate = this.$moment(goalDate).startOf('day'),
             today = this.$moment().startOf('day'),
-            diffMonths = this.$moment(taskDate).diff(today, 'months'),
-            diffWeeks = this.$moment(taskDate).diff(today, 'weeks'),
-            diffDays = this.$moment(taskDate).diff(today, 'days'),
+            diffMonths = taskDate.diff(today, 'months'),
+            diffWeeks = taskDate.diff(today, 'weeks'),
+            diffDays = taskDate.diff(today, 'days'),
             resultDate = stringDate,
             formated = false,
             outdated = diffDays < 0 ? true : false
@@ -135,7 +137,7 @@
             if(!response.value) return
           } 
 
-          editedTask.dateCompleted = this.$moment(this.$moment()).format('YYYY-MM-DD')
+          editedTask.dateCompleted = this.$moment().format('YYYY-MM-DD')
         } else {
           editedTask.dateCompleted = null
         }
@@ -190,7 +192,14 @@
         this.markSelected(task)
 
         this.$bvModal.show(modal)
-      }
+      },
+      stringToDate: function (stringDate) {
+        const removeTime = stringDate.split('T')[0]
+        const splitDate = removeTime.split('-')
+        const date = new Date(splitDate[0], splitDate[1]-1, splitDate[2])
+
+        return date
+      } 
     }
   }
 </script>
