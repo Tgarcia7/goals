@@ -227,7 +227,7 @@
             </div>
 
             <transition name="fade">
-              <div class="fixed-bottom social-auth py-3" v-if="loginForm || registerForm">
+              <div class="fixed-bottom social-auth py-3" v-if="socialAuthAvailable && (loginForm || registerForm)">
                 <div class="row text-white">
                   <div class="col">
                     <small>O iniciar con</small>
@@ -262,8 +262,8 @@
     name: 'login',
     data () {
       return {
-        email: '',
-        password: '',
+        email: 'demo@gmail.com',
+        password: 'demo',
         error: '',
         loading: true,
         loginForm: true,
@@ -276,7 +276,8 @@
         emailForget: '',
         message: '',
         forgetCompletedBtn: false,
-        loadingMessage: ''
+        loadingMessage: '',
+        socialAuthAvailable: false
       }
     },
     methods: {
