@@ -19,7 +19,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto col-xs-6">
 
-            <b-nav-item-dropdown text="Idioma" class="text-right">
+            <b-nav-item-dropdown text="Idioma" class="text-right" v-show="false">
               <template slot="button-content">
                   <span class="menu-item">
                     <font-awesome-icon icon="globe-americas" />
