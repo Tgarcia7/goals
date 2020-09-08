@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
-import config from './auth-config.json'
+import config from './auth-config'
 
 let baseUrl = window.location.href.includes('localhost') ? 'http://localhost:8080/goals/' : 'https://tgarcia7.github.io/goals/'
 
