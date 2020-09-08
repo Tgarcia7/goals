@@ -17,6 +17,12 @@ jobs:
         npm run build
       env:
         VUE_APP_API_TOKEN: ${{ secrets.API_TOKEN }}
+        VUE_APP_API_FACEBOOK_ID: ${{ secrets.VUE_APP_API_FACEBOOK_ID }}
+        VUE_APP_API_FACEBOOK_SECRET: ${{ secrets.VUE_APP_API_FACEBOOK_SECRET }}
+        VUE_APP_API_GH_ID: ${{ secrets.VUE_APP_API_GH_ID }}
+        VUE_APP_API_GH_SECRET: ${{ secrets.VUE_APP_API_GH_SECRET }}
+        VUE_APP_API_GOOGLE_ID: ${{ secrets.VUE_APP_API_GOOGLE_ID }}
+        VUE_APP_API_GOOGLE_SECRET: ${{ secrets.VUE_APP_API_GOOGLE_SECRET }}
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
