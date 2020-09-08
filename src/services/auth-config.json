@@ -1,16 +1,16 @@
 {
-    "auth": {
-      "google": {
-        "clientId": "1092507295860-r22ded0u75j9gu8p1a6m9i17lsvvcv7b.apps.googleusercontent.com",
-        "clientSecret": "euYmpEHo_Ndt3Wa_Va7rMfBe"
-      },
-      "facebook": {
-        "clientId": "254801129292665",
-        "clientSecret": "f74b0333f3e54ceefa7d103ea1dec206"
-      },
-      "github": {
-        "clientId": "6273287292fe233f6d7c",
-        "clientSecret": "60e68bdd7049b5968fc2a0b38c688c516d2ab783"
-      }
+  "auth": {
+    "google": {
+      "clientId": "1092507295860-r22ded0u75j9gu8p1a6m9i17lsvvcv7b.apps.googleusercontent.com",
+      "clientSecret": "euYmpEHo_Ndt3Wa_Va7rMfBe"
+    },
+    "facebook": {
+      "clientId": "254801129292665",
+      "clientSecret": "f74b0333f3e54ceefa7d103ea1dec206"
+    },
+    "github": {
+      "clientId": "6273287292fe233f6d7c",
+      "clientSecret": "60e68bdd7049b5968fc2a0b38c688c516d2ab783"
     }
   }
+}
