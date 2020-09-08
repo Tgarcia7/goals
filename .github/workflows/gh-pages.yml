@@ -16,7 +16,7 @@ jobs:
         npm install
         npm run build
       env:
-        VUE_APP_API_TOKEN: ${{ secrets.API_TOKEN }}
+        VUE_APP_API_TOKEN: ${{ secrets.VUE_APP_API_TOKEN }}
         VUE_APP_FACEBOOK_ID: ${{ secrets.VUE_APP_FACEBOOK_ID }}
         VUE_APP_FACEBOOK_SECRET: ${{ secrets.VUE_APP_FACEBOOK_SECRET }}
         VUE_APP_GH_ID: ${{ secrets.VUE_APP_GH_ID }}
