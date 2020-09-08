@@ -24,6 +24,8 @@
       setTimeout(() => {
         this.$Progress.finish() // Only for App.vue
       }, 900)
+
+      console.log(process.env)
     },
     created () {
       this.$Progress.start() // Only for App.vue
