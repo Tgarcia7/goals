@@ -194,7 +194,7 @@
 
             <div class="row text-white">
               <div class="col-7">
-                <small class="clickable" v-if="loginForm" @click="showForm('forget')">¿Olvidó su contraseña?</small>
+                <!-- <small class="clickable" v-if="loginForm" @click="showForm('forget')">¿Olvidó su contraseña?</small> -->
               </div>
               <div class="col-5 ml-auto">
                 <small class="clickable text-right" @click="showForm('register')" v-if="loginForm">Registrarse</small>
