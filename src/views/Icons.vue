@@ -91,6 +91,7 @@
             document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.position = 'fixed'
             document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.bottom = '0'
             document.querySelector(`#modal-icons-${this.id} .modal-dialog`).style.width = '96%'
+            document.querySelector(`#modal-icons-${this.id} .modal-body`).style.overflowY = 'hidden'
           }
         })
       }
@@ -128,7 +129,7 @@
   .modal-body .icons-container {
     max-height: 250px;
     overflow-y: auto;
-  }
+  } 
 </style>
 
 <style>
@@ -136,8 +137,4 @@
   #modal-icons-add .modal-body {
     padding-top: 0px !important;
   }
-
-  .modal-body {
-    overflow-y: hidden !important;
-  }  
 </style>
