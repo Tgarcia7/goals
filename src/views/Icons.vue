@@ -126,7 +126,7 @@
   }
 
   .modal-body .icons-container {
-    max-height: 230px;
+    max-height: 250px;
     overflow-y: auto;
   }
 </style>
