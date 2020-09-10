@@ -115,18 +115,19 @@
   }
 
   .search-container {
-    position: fixed;
-    width: 91%;
-    z-index: 1;
     margin-left: 0 !important;
     height: 80px;
     padding-top: 17px;
     border-bottom: 1px solid #575859;
-    left: 15px;
   }
 
   .icons-container {
-    margin-top: 90px;
+    margin-top: 20px;
+  }
+
+  .modal-body .icons-container {
+    max-height: 230px;
+    overflow-y: auto;
   }
 </style>
 
@@ -135,4 +136,8 @@
   #modal-icons-add .modal-body {
     padding-top: 0px !important;
   }
+
+  .modal-body {
+    overflow-y: hidden !important;
+  }  
 </style>
