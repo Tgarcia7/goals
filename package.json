@@ -7,8 +7,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "generate-assets": "vue-asset-generate -a ./src/assets/img/icon.png -o ./public/img/icons/"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -42,7 +41,6 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.47.0",
     "sass-loader": "^8.0.2",
-    "vue-pwa-asset-generator": "^1.6.1",
     "vue-template-compiler": "^2.6.14"
   }
 }
