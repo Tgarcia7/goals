@@ -15,6 +15,10 @@
         </div>
       </div>
 
+      <div v-if="error" class="alert alert-danger mx-3" role="alert">
+        {{ error }}
+      </div>
+
       <div class="col-11 mx-auto" v-else>
         <div class="row">
           <div v-for="(stat, index) in stats" :key="index" 
@@ -86,22 +90,33 @@
       return {
         graphs: [],
         stats: [],
-        currentYear: this.$moment(this.$moment()).year(),
-        year: this.$moment(this.$moment()).year(),
-        loading: null
+        currentYear: this.$moment().year(),
+        year: this.$moment().year(),
+        loading: null,
+        error: null
       }
     },
     mounted: async function () {
       const loadingTimeout = this.initLoader()
 
       try {
-        const grapsStats = await Api.getGraphsStats()
-        this.graphs = grapsStats.graphs
-        this.stats = grapsStats.stats
+        const graphsStats = await Api.getGraphsStats()
+
+        if (graphsStats && typeof graphsStats === 'object') {
+          this.graphs = Array.isArray(graphsStats.graphs) ? graphsStats.graphs : []
+          this.stats = Array.isArray(graphsStats.stats) ? graphsStats.stats : []
+        } else {
+          this.graphs = []
+          this.stats = []
+        }
+        this.error = null
       } catch (error) {
-        console.error(error)
+        console.error('Failed to load statistics:', error.message || error)
+        this.error = 'No se pudieron cargar las estadísticas'
+        this.graphs = []
+        this.stats = []
       }
-      
+
       this.stopLoader(loadingTimeout)
     },
     methods: { 
