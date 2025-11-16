@@ -4,7 +4,7 @@
 
       <div class="tasks-container">
         <transition name="fade-empty">
-          <div v-if="!tasks.length && !loading & loading !== null" class="empty">
+          <div v-if="!tasks.length && !loading && loading !== null" class="empty">
             <font-awesome-icon icon="cloud-sun" size="8x"/>
             <h3 class="mt-3">¡Todo listo!</h3>
             <h5>No tienes metas pendientes por realizar</h5>

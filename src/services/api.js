@@ -1,301 +1,377 @@
-import userData from '../assets/user.json'
 import config from '../config'
 import axios from 'axios'
 import Router from '../router'
 
 const api = { baseUrl: config.apiUrl, baseToken: config.baseToken }
-const token = localStorage.getItem('token')
-const refreshToken = localStorage.getItem('refresh-token')
-axios.defaults.headers.common['Authorization'] = token ? `Bearer ${localStorage.getItem('token')}` : ''
+
+// Token refresh lock to prevent race conditions
+let isRefreshing = false
+let refreshSubscribers = []
+
+// Initialize authorization header
+const storedToken = localStorage.getItem('token')
+if (storedToken) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`
+}
 setInterceptors()
 
 /*** Users ***/
-api.authenticate = function (user) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        data: { email: user.email, password: user.password},
-        url: `${api.baseUrl}/signIn`,
-        validateStatus: status => status < 500
-      }
-
-      let response = await axios(requestOptions)
-
-      if (response.status === 401) return reject('Usuario y/o contraseña incorrecta')
-      
-      const authUser = parseJwt(response.data.token).sub
-      const authToken = response.data.token
-      const refreshToken = response.data.refreshToken
-
-      localStorage.setItem('token', authToken)
-      localStorage.setItem('refresh-token', refreshToken)
-      localStorage.setItem('user', JSON.stringify(authUser))
-      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
-
-      resolve(response)
-    } catch (error) {
-      console.error(error)
-      localStorage.removeItem('token')
-      reject('Error de autenticación')
+api.authenticate = async function (user) {
+  try {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${api.baseToken}` },
+      data: { email: user.email, password: user.password },
+      url: `${api.baseUrl}/signIn`,
+      validateStatus: status => status < 500
     }
-  })
+
+    const response = await axios(requestOptions)
+
+    if (response.status === 401) {
+      throw new Error('Usuario y/o contraseña incorrecta')
+    }
+
+    const authUser = parseJwt(response.data.token).sub
+    const authToken = response.data.token
+    const refreshToken = response.data.refreshToken
+
+    localStorage.setItem('token', authToken)
+    localStorage.setItem('refresh-token', refreshToken)
+    localStorage.setItem('user', JSON.stringify(authUser))
+    axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
+
+    return response
+  } catch (error) {
+    console.error('Authentication error:', error.message)
+    localStorage.removeItem('token')
+    throw new Error(error.message || 'Error de autenticación')
+  }
 }
 
-api.register = function (user) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const newUser = {
-        name: user.username,
-        email: user.email,
-        password: user.password
-      }
-      
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        data: newUser,
-        url: `${api.baseUrl}/signUp`
-      }
-
-      let response = await axios(requestOptions)
-
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-
-      resolve(response)
-    } catch (error) {
-      if (error.response.status === 409) return reject('El email ya está registrado')
-
-      console.error(error)
-      localStorage.removeItem('token')
-      reject('Error al registrar al usuario')
+api.register = async function (user) {
+  try {
+    const newUser = {
+      name: user.username,
+      email: user.email,
+      password: user.password
     }
-  })
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${api.baseToken}` },
+      data: newUser,
+      url: `${api.baseUrl}/signUp`
+    }
+
+    const response = await axios(requestOptions)
+
+    localStorage.setItem('token', response.data.token)
+    localStorage.setItem('refresh-token', response.data.refreshToken || '')
+    localStorage.setItem('user', JSON.stringify(parseJwt(response.data.token).sub))
+    axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+
+    return response
+  } catch (error) {
+    if (error.response?.status === 409) {
+      throw new Error('El email ya está registrado')
+    }
+
+    console.error('Registration error:', error.message)
+    localStorage.removeItem('token')
+    throw new Error('Error al registrar al usuario')
+  }
 }
 
-api.socialAuth = function (token) {
-  return new Promise(async (resolve) => {
-    console.log(token)
-    // request to database with token
-    localStorage.setItem('token', JSON.stringify(userData))
-    resolve()
-      
-  })
+api.socialAuth = async function (authResult, provider) {
+  try {
+    // TODO: Implement proper social auth with backend
+    // For now, store the token from the auth result
+    if (authResult && authResult.access_token) {
+      localStorage.setItem('token', authResult.access_token)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authResult.access_token}`
+    }
+    return authResult
+  } catch (error) {
+    console.error('Social auth error:', error.message)
+    throw new Error('Error en autenticación social')
+  }
 }
 
 api.logout = function () {
   localStorage.removeItem('token')
+  localStorage.removeItem('refresh-token')
   localStorage.removeItem('user')
   delete axios.defaults.headers.common['Authorization']
 }
 
-api.forgetPassword = function (email) {
-  return new Promise(async (resolve, reject) => {
-    if (email !== 'tgarciamiranda@gmail.com') {
-      reject('El correo ingresado no está asociado con ninguna cuenta')
-    } else {
-      resolve('¡Listo! Las instrucciones para reestablecer la contraseña fueron enviadas a la cuenta ingresada')
-      resolve()
+api.forgetPassword = async function (email) {
+  try {
+    // TODO: Replace with actual backend call
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${api.baseToken}` },
+      data: { email },
+      url: `${api.baseUrl}/users/forgot-password`
     }
-  })
+
+    await axios(requestOptions)
+    return '¡Listo! Las instrucciones para reestablecer la contraseña fueron enviadas a la cuenta ingresada'
+  } catch (error) {
+    if (error.response?.status === 404) {
+      throw new Error('El correo ingresado no está asociado con ninguna cuenta')
+    }
+    console.error('Password reset error:', error.message)
+    throw new Error('Error al enviar instrucciones de recuperación')
+  }
 }
 
-api.updateUser = function (user) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let updateUser = JSON.parse(JSON.stringify(user))
+api.updateUser = async function (user) {
+  try {
+    const updateUser = JSON.parse(JSON.stringify(user))
 
-      const requestOptions = {
-        method: 'PUT',
-        url: `${api.baseUrl}/users/${updateUser.id}`,
-        data: updateUser
-      }
+    const requestOptions = {
+      method: 'PUT',
+      url: `${api.baseUrl}/users/${updateUser.id}`,
+      data: updateUser
+    }
 
-      let response = await axios(requestOptions)
+    const response = await axios(requestOptions)
 
-      const storageUser = getStorageUser()
-      storageUser.name = updateUser.name
-      storageUser.email = updateUser.email
+    const storageUser = getStorageUser()
+    if (storageUser) {
+      storageUser.name = updateUser.name || storageUser.name
+      storageUser.email = updateUser.email || storageUser.email
       setStorageUser(storageUser)
-
-      resolve(response.data)
-    } catch (error) {
-      if (error.response.status === 409) return reject('El email ya está registrado')
-
-      console.error(error)
-      reject(error)
     }
-  })
+
+    return response.data
+  } catch (error) {
+    if (error.response?.status === 409) {
+      throw new Error('El email ya está registrado')
+    }
+
+    console.error('Update user error:', error.message)
+    throw error
+  }
 }
 
-api.changePassword = function (id, email, password, newPassword) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let updateUser = {
-        email,
-        newPassword, 
-        password
-      }
-
-      const requestOptions = {
-        method: 'PATCH',
-        url: `${api.baseUrl}/users/${id}/change-password`,
-        data: updateUser
-      }
-
-      let response = await axios(requestOptions)
-      
-      resolve(response.data)
-    } catch (error) {
-      if (error.response.status === 400) return reject('Contraseña incorrecta')
-
-      console.error(error)
-      reject(error)
+api.changePassword = async function (id, email, password, newPassword) {
+  try {
+    const updateUser = {
+      email,
+      newPassword,
+      password
     }
-  })
+
+    const requestOptions = {
+      method: 'PATCH',
+      url: `${api.baseUrl}/users/${id}/change-password`,
+      data: updateUser
+    }
+
+    const response = await axios(requestOptions)
+    return response.data
+  } catch (error) {
+    if (error.response?.status === 400) {
+      throw new Error('Contraseña incorrecta')
+    }
+
+    console.error('Change password error:', error.message)
+    throw error
+  }
 }
 
 api.changeLanguage = function (newLanguage) {
+  const storageUser = getStorageUser()
+  if (!storageUser) {
+    console.error('No user found in storage')
+    return
+  }
+
   const user = {
-    id: getStorageUser().userId,
+    id: storageUser.userId,
     lang: newLanguage
   }
 
   api.updateUser(user)
 }
 
-function setInterceptors () {
-  axios.interceptors.response.use(response => {
-    return response
-  }, error => {
-    if (error.response.status !== 401 || !token) return Promise.reject(error)
+function subscribeTokenRefresh (callback) {
+  refreshSubscribers.push(callback)
+}
 
-    return api.requestNewtoken()
-      .then(newToken => {
-        error.config.headers['Authorization'] = `Bearer ${newToken}`
-        return axios.request(error.config)
-      })
-  })
+function onTokenRefreshed (newToken) {
+  refreshSubscribers.forEach(callback => callback(newToken))
+  refreshSubscribers = []
+}
+
+function setInterceptors () {
+  axios.interceptors.response.use(
+    response => response,
+    async error => {
+      const originalRequest = error.config
+
+      // Check if error has response and is 401
+      if (!error.response || error.response.status !== 401) {
+        return Promise.reject(error)
+      }
+
+      // Don't retry if already retried or no token
+      if (originalRequest._retry || !localStorage.getItem('token')) {
+        return Promise.reject(error)
+      }
+
+      if (isRefreshing) {
+        // Wait for token refresh to complete
+        return new Promise(resolve => {
+          subscribeTokenRefresh(newToken => {
+            originalRequest.headers['Authorization'] = `Bearer ${newToken}`
+            resolve(axios.request(originalRequest))
+          })
+        })
+      }
+
+      originalRequest._retry = true
+      isRefreshing = true
+
+      try {
+        const newToken = await api.requestNewtoken()
+        onTokenRefreshed(newToken)
+        originalRequest.headers['Authorization'] = `Bearer ${newToken}`
+        return axios.request(originalRequest)
+      } catch (refreshError) {
+        return Promise.reject(refreshError)
+      } finally {
+        isRefreshing = false
+      }
+    }
+  )
 }
 
 api.requestNewtoken = async function () {
-  return new Promise(async (resolve) => {
-    try {
-      const userEmail = getStorageUser().email
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${api.baseToken}` },
-        data: { email: userEmail, refreshToken },
-        url: `${api.baseUrl}/users/refresh-token`
-      }
+  try {
+    const storageUser = getStorageUser()
+    const storedRefreshToken = localStorage.getItem('refresh-token')
 
-      let response = await axios(requestOptions)
-
-      const authToken = response.data.message
-
-      localStorage.setItem('token', authToken)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
-
-      resolve(authToken)
-    } catch (error) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('refresh-token')
-      Router.push({ name: 'login' })
+    if (!storageUser || !storedRefreshToken) {
+      throw new Error('No refresh token available')
     }
-  })
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${api.baseToken}` },
+      data: { email: storageUser.email, refreshToken: storedRefreshToken },
+      url: `${api.baseUrl}/users/refresh-token`
+    }
+
+    const response = await axios(requestOptions)
+    const authToken = response.data.message || response.data.token
+
+    localStorage.setItem('token', authToken)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
+
+    return authToken
+  } catch (error) {
+    console.error('Token refresh failed:', error.message)
+    localStorage.removeItem('token')
+    localStorage.removeItem('refresh-token')
+    localStorage.removeItem('user')
+    Router.push({ name: 'login' })
+    throw new Error('Session expired')
+  }
 }
 
 /*** Goals ***/
-api.getGoals = function () {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const requestOptions = {
-        method: 'GET',
-        url: `${api.baseUrl}/goals`
-      }
-
-      const response = await axios(requestOptions)    
-      const goals = response.data
-      
-      resolve(goals)
-    } catch (error) {
-      if (error.response.status === 404) resolve([])
-
-      console.error(error)
-      reject(error)
+api.getGoals = async function () {
+  try {
+    const requestOptions = {
+      method: 'GET',
+      url: `${api.baseUrl}/goals`
     }
-  })
+
+    const response = await axios(requestOptions)
+    return response.data
+  } catch (error) {
+    if (error.response?.status === 404) {
+      return []
+    }
+
+    console.error('Get goals error:', error.message)
+    throw error
+  }
 }
 
-api.setGoal = function (goal) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      goal.userId = getStorageUser().userId
-
-      const requestOptions = {
-        method: 'POST',
-        url: `${api.baseUrl}/goals`,
-        data: goal
-      }
-
-      let response = await axios(requestOptions)
-      
-      resolve(response.data)
-    } catch (error) {
-      console.error(error)
-      reject(error)
+api.setGoal = async function (goal) {
+  try {
+    const storageUser = getStorageUser()
+    if (!storageUser) {
+      throw new Error('User not found')
     }
-  })
+
+    goal.userId = storageUser.userId
+
+    const requestOptions = {
+      method: 'POST',
+      url: `${api.baseUrl}/goals`,
+      data: goal
+    }
+
+    const response = await axios(requestOptions)
+    return response.data
+  } catch (error) {
+    console.error('Set goal error:', error.message)
+    throw error
+  }
 }
 
-api.updateGoal = function (goal) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let updateGoal = JSON.parse(JSON.stringify(goal))
-      updateGoal._id = updateGoal.id
-      delete updateGoal.id
+api.updateGoal = async function (goal) {
+  try {
+    const updateGoal = JSON.parse(JSON.stringify(goal))
+    updateGoal._id = updateGoal.id
+    delete updateGoal.id
 
-      const requestOptions = {
-        method: 'PUT',
-        url: `${api.baseUrl}/goals/${updateGoal._id}`,
-        data: updateGoal
-      }
-
-      let response = await axios(requestOptions)
-      
-      resolve(response.data)
-    } catch (error) {
-      console.error(error)
-      reject(error)
+    const requestOptions = {
+      method: 'PUT',
+      url: `${api.baseUrl}/goals/${updateGoal._id}`,
+      data: updateGoal
     }
-  })
+
+    const response = await axios(requestOptions)
+    return response.data
+  } catch (error) {
+    console.error('Update goal error:', error.message)
+    throw error
+  }
 }
 
-api.getGraphsStats = function () {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const requestOptions = {
-        method: 'GET',
-        url: `${api.baseUrl}/graphs-stats/`
-      }
-
-      let response = await axios(requestOptions)
-      
-      resolve(response.data)
-    } catch (error) {
-      console.error(error)
-      reject(error)
+api.getGraphsStats = async function () {
+  try {
+    const requestOptions = {
+      method: 'GET',
+      url: `${api.baseUrl}/graphs-stats/`
     }
-  })
+
+    const response = await axios(requestOptions)
+    return response.data
+  } catch (error) {
+    console.error('Get stats error:', error.message)
+    throw error
+  }
 }
 
 /*** Utils ***/
 function getStorageUser () {
-  let payload = JSON.parse(localStorage.getItem('user'))
-  return payload
+  try {
+    const userStr = localStorage.getItem('user')
+    if (!userStr) {
+      return null
+    }
+    return JSON.parse(userStr)
+  } catch (error) {
+    console.error('Failed to parse user from storage:', error.message)
+    return null
+  }
 }
 
 function setStorageUser (user) {
@@ -303,15 +379,31 @@ function setStorageUser (user) {
 }
 
 function parseJwt (token) {
-  let base64Url = token.split('.')[1]
-  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  let jsonPayload = decodeURIComponent(atob(base64)
-    .split('')
-    .map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-    }).join(''))
+  if (!token || typeof token !== 'string') {
+    throw new Error('Invalid token')
+  }
 
-  return JSON.parse(jsonPayload)
+  const parts = token.split('.')
+  if (parts.length !== 3) {
+    throw new Error('Invalid token format')
+  }
+
+  try {
+    const base64Url = parts[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        })
+        .join('')
+    )
+
+    return JSON.parse(jsonPayload)
+  } catch (error) {
+    throw new Error('Failed to parse JWT: ' + error.message)
+  }
 }
 
 export default api

@@ -1,7 +1,7 @@
 <template>
   <main class="flex-shrink-0" role="main">
     <div class="container">
-      <div v-if="!stats.length && !graphs.length && !loading & loading !== null" class="empty">
+      <div v-if="!stats.length && !graphs.length && !loading && loading !== null" class="empty">
         <font-awesome-icon icon="chart-bar" size="8x"/>
         <h3 class="mt-3">Completa algunas metas </h3>
         <h5>para alimentar tus estadísticas</h5>

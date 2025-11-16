@@ -288,24 +288,24 @@
           this.loadingMessage = 'Iniciando sesión...'
           setTimeout(() => { this.$router.push({ name: 'home' }) }, 3000)
         } catch (error) {
-          this.error = error
+          this.error = error.message || String(error)
         }
       },
       register: async function () {
         try {
-          const newUser = { 
-            email: this.emailRegister, 
+          const newUser = {
+            email: this.emailRegister,
             password: this.passwordRegister,
             confirmPassword: this.confirmPasswordRegister,
             username: this.usernameRegister
           }
           await api.register(newUser)
-          
+
           this.loadingMessage = 'Creando cuenta...'
           this.loading = true
           setTimeout(() => { this.$router.push({ name: 'home' }) }, 2000)
         } catch (error) {
-          this.error = error
+          this.error = error.message || String(error)
         }
       },
       forget: async function () {
@@ -316,25 +316,28 @@
           this.loadingMessage = 'Por favor espere...'
           this.loading = true
           this.message = await api.forgetPassword(this.emailForget)
-          setTimeout(() => { 
+          setTimeout(() => {
             this.loading = false
             this.forgetCompletedBtn = true
           }, 3000)
         } catch (error) {
-          setTimeout(() => { 
+          setTimeout(() => {
             this.loading = false
             this.forgetCompletedBtn = true
           }, 3000)
-          this.message = error
+          this.message = error.message || String(error)
         }
       },
       socialAuthenticate: async function (provider) {
-        let vm = this
-        this.$auth.authenticate(provider).then(async function (result) {
+        try {
+          const result = await this.$auth.authenticate(provider)
           await api.socialAuth(result, provider)
-          vm.loading = true
-          setTimeout(() => { vm.$router.push({ name: 'home' }) }, 2000)
-        })
+          this.loading = true
+          this.loadingMessage = 'Autenticando...'
+          setTimeout(() => { this.$router.push({ name: 'home' }) }, 2000)
+        } catch (error) {
+          this.error = error.message || 'Error en autenticación social'
+        }
       },
       showForm: function (form) {
         this.error = ''

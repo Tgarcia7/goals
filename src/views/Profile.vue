@@ -218,14 +218,28 @@
       }
     },
     created: function () {
-      const USER = JSON.parse(localStorage.getItem('user'))
+      try {
+        const userStr = localStorage.getItem('user')
+        if (!userStr) {
+          this.$router.push({ name: 'login' })
+          return
+        }
+        const USER = JSON.parse(userStr)
+        if (!USER) {
+          this.$router.push({ name: 'login' })
+          return
+        }
 
-      this.id = USER.userId
-      this.email = USER.email
-      this.password = USER.password
-      this.username = USER.name
-      this.edit.email = USER.email,
-      this.edit.username = USER.name
+        this.id = USER.userId
+        this.email = USER.email
+        this.password = USER.password
+        this.username = USER.name
+        this.edit.email = USER.email
+        this.edit.username = USER.name
+      } catch (error) {
+        console.error('Failed to load user data:', error.message)
+        this.$router.push({ name: 'login' })
+      }
     },
     methods: {
       editUser: async function () {
@@ -233,7 +247,7 @@
         this.username = this.edit.username
 
         const user = {
-          id: this.id, 
+          id: this.id,
           email: this.email,
           name: this.username
         }
@@ -244,7 +258,7 @@
           this.error = ''
           this.$refs.swal.toast('success', 'Información actualizada')
         } catch (error) {
-          this.error = error
+          this.error = error.message || String(error)
         }
       },
       changePassword: async function () {
@@ -253,28 +267,36 @@
           this.$refs.swal.toast('success', 'Contraseña reestablecida')
           this.resetData()
         } catch (error) {
-          this.error = error
+          this.error = error.message || String(error)
         }
       },
       resetData: function () {
-        const USER = JSON.parse(localStorage.getItem('user'))
+        try {
+          const userStr = localStorage.getItem('user')
+          if (!userStr) return
 
-        this.id = USER.userId,
-        this.email = USER.email
-        this.password = USER.password
-        this.username = USER.name
-        this.editing = false
-        this.changingPassword = false
-        this.edit = {
-          email: USER.email,
-          username: USER.name
-        }        
-        this.newPasswords = { 
-          current: '',
-          password: '',
-          confirm: ''
-        },
-        this.error = ''
+          const USER = JSON.parse(userStr)
+          if (!USER) return
+
+          this.id = USER.userId
+          this.email = USER.email
+          this.password = USER.password
+          this.username = USER.name
+          this.editing = false
+          this.changingPassword = false
+          this.edit = {
+            email: USER.email,
+            username: USER.name
+          }
+          this.newPasswords = {
+            current: '',
+            password: '',
+            confirm: ''
+          }
+          this.error = ''
+        } catch (error) {
+          console.error('Failed to reset data:', error.message)
+        }
       },
       updatePhoto: function () {
         this.$refs.swal.toast('success', 'Foto actualizada')
