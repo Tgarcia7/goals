@@ -50,8 +50,9 @@
           labels: this.chartdata.labels || [],
           datasets: [
             {
-              backgroundColor: ['rgba(0,123,255,0.2)', 'rgba(23,162,184,0.2)', 'rgba(248,249,250,0.4)'],
-              borderColor: ['rgba(0,123,255,1)', 'rgba(23,162,184,1)', 'rgba(248,249,250,1)'],
+              // Green theme colors: Primary green, Golden accent, Neutral gray
+              backgroundColor: ['rgba(6,160,6,0.3)', 'rgba(214,158,46,0.3)', 'rgba(174,176,180,0.3)'],
+              borderColor: ['rgba(6,160,6,1)', 'rgba(214,158,46,1)', 'rgba(174,176,180,1)'],
               borderWidth: [2, 2, 2],
               data: this.localData
             }

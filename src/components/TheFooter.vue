@@ -29,29 +29,63 @@
 </script>
 
 <style scoped>
+  /* Active state - Green glow for consistency */
   a.exact-active {
-    text-shadow: 0 0 3px #e1d7d4;
-    color: white !important;
+    color: var(--green-400) !important;
+    text-shadow: var(--shadow-glow-green-sm);
   }
 
   a.exact-active svg {
-    filter: drop-shadow(0 0 3px #aaa3a1)
-  }
-  
-  a {
-    color: #6c757d !important;
+    filter: drop-shadow(0 0 8px var(--green-300));
+    color: var(--green-400);
   }
 
-  footer{
+  a.exact-active span {
+    font-weight: var(--font-semibold);
+  }
+
+  /* Default state */
+  a {
+    color: var(--gray-500) !important;
+    transition: var(--transition-colors);
+  }
+
+  a:hover {
+    color: var(--gray-400) !important;
+  }
+
+  a svg {
+    transition: var(--transition-all);
+    font-size: 1.3em;
+  }
+
+  a:hover svg {
+    transform: translateY(-2px);
+  }
+
+  a span {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    letter-spacing: 0.025em;
+    display: block;
+    margin-top: var(--space-1);
+  }
+
+  /* Footer container */
+  footer {
     max-height: 70px;
-    font-size: 14px;
-    padding-bottom: env(safe-area-inset-bottom, 10px) !important;
+    font-size: var(--text-sm);
+    padding-bottom: env(safe-area-inset-bottom, 10px);
+    background-color: var(--bg-surface) !important;
+    border-top: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   /* Add extra padding for mobile devices */
   @media (max-width: 991px) {
     footer {
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 15px) !important;
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 15px);
     }
   }
 

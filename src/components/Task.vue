@@ -308,19 +308,33 @@
     height: 44px;
     padding-top: 11px;
     border-radius: 50%;
-    box-shadow: 0px 0px 2px #aeb0b4;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-700);
+    transition: var(--transition-all);
+  }
+
+  .circle:hover {
+    border-color: var(--green-500);
+    box-shadow: var(--shadow-glow-green-sm);
   }
 
   .divider {
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
-    border: 1 !important;
-    border-top: 1px solid rgb(53, 51, 51);
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    border-top: 1px solid var(--border-color);
     width: 87%;
+    opacity: 0.5;
   }
 
   .btn-tasks {
-    box-shadow: 0px 0px 3px #888;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-all);
+  }
+
+  .btn-tasks:hover {
+    box-shadow: var(--shadow-md);
+    transform: scale(1.1);
   }
 
   .btns-up-down {
@@ -336,7 +350,7 @@
   }
 
   .task-row {
-    color: #aeb0b4 !important;
+    color: var(--text-secondary) !important;
   }
 
   .disable-selection {
@@ -435,36 +449,36 @@
   }
 
   .action-restore:hover {
-    color: #17a2b8;
+    color: var(--green-400);
   }
 
   .fade-enter-active {
-    transition: all .7s ease;
+    transition: all var(--transition-slow);
   }
-  
+
   .fade-enter, .fade-leave {
     opacity: 0;
     transform: translateY(-50px);
   }
 
   .task-main-content {
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     z-index: 100;
-    background: #1e242a;
-    padding-left: 8px;
-    padding-right: 8px;
+    background: var(--bg-base);
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+    transition: var(--transition-all);
+  }
+
+  .task-main-content:hover {
+    background: var(--bg-elevated);
   }
 </style>
 
 <style>
   .success-msg {
-    animation: color-change 4s infinite;
-  }
-
-  @keyframes color-change {
-    0% { color: rgb(237, 105, 105); }
-    33% { color: rgb(208, 105, 237); }
-    66% { color: rgb(127, 127, 238); }
-    100% { color: rgb(237, 105, 105); }
+    animation: successGlow 3s ease-in-out infinite;
+    font-weight: var(--font-semibold);
+    font-size: var(--text-lg);
   }
 </style>

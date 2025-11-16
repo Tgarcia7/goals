@@ -160,34 +160,44 @@
 
 <style scoped>
   .btn-circle.btn-lg {
-    width: 45px;
-    height: 45px;
-    padding: 0px 10px;
-    border-radius: 50%;
-    box-shadow: 0px 0px 6px #797979;
-  } 
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg), var(--shadow-glow-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-all);
+  }
+
+  .btn-circle.btn-lg:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: var(--shadow-xl), var(--shadow-glow-green);
+  }
+
+  .btn-circle.btn-lg:active {
+    transform: scale(0.95);
+  }
 
   .btn-add {
     position: fixed;
-    bottom: 3.5em;
-    right: 1em;
+    bottom: 5em;
+    right: 1.5em;
+    z-index: var(--z-fixed);
   }
 
-  /* 
-    ##Device = Desktops
-    ##Screen = 1281px to higher resolution desktops
-  */
+  /* Desktop positioning */
   @media (min-width: 1281px) {
     .btn-add {
-      position: fixed;
-      bottom: 3.5em;
+      bottom: 5em;
       right: 8.5em;
     }
   }
 
   .fade-empty-enter-active {
-    transition: opacity 1s ease;
-    transition-delay: .5s;
+    transition: opacity var(--transition-slower);
+    transition-delay: 0.3s;
   }
 
   .fade-empty-enter, .fade-empty-leave-to {

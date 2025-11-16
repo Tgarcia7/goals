@@ -134,11 +134,28 @@
 
 <style scoped>
   .container {
-    margin-bottom: 150px;
+    margin-bottom: var(--space-20);
   }
 
   .info-container, .chart-container {
-    border-left: 2px solid #1e242a;
-    border-right: 2px solid #1e242a;
+    border-left: 2px solid var(--bg-base);
+    border-right: 2px solid var(--bg-base);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-all);
+  }
+
+  .info-container:hover, .chart-container:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .info-container h3 {
+    color: var(--green-400);
+    font-weight: var(--font-bold);
+  }
+
+  .info-container small {
+    color: var(--text-tertiary);
   }
 </style>
