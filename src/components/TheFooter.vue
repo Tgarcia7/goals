@@ -43,8 +43,16 @@
   }
 
   footer{
-    max-height: 56px;
+    max-height: 70px;
     font-size: 14px;
+    padding-bottom: env(safe-area-inset-bottom, 10px) !important;
+  }
+
+  /* Add extra padding for mobile devices */
+  @media (max-width: 991px) {
+    footer {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 15px) !important;
+    }
   }
 
   .container {
