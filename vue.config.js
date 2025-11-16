@@ -1,6 +1,7 @@
 module.exports = {
   lintOnSave: false,
   publicPath: process.env.NODE_ENV === 'production' ? '/goals/' : '/goals/',
+  transpileDependencies: [],
   pwa: {
     name: 'Goals',
     themeColor: '#343a40',
