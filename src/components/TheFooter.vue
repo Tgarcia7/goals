@@ -73,9 +73,9 @@
 
   /* Footer container */
   footer {
-    max-height: 70px;
+    max-height: 80px;
     font-size: var(--text-sm);
-    padding-bottom: env(safe-area-inset-bottom, 10px);
+    padding-bottom: env(safe-area-inset-bottom, 12px) !important;
     background-color: var(--bg-surface) !important;
     border-top: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
@@ -85,7 +85,7 @@
   /* Add extra padding for mobile devices */
   @media (max-width: 991px) {
     footer {
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 15px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px) !important;
     }
   }
 
