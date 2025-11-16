@@ -349,7 +349,7 @@ api.getGraphsStats = async function () {
   try {
     const requestOptions = {
       method: 'GET',
-      url: `${api.baseUrl}/graphs-stats/`
+      url: `${api.baseUrl}/graphs-stats`
     }
 
     const response = await axios(requestOptions)
