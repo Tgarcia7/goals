@@ -289,7 +289,7 @@
         this.task.stepsList.push({'status': false, 'description': ''})
       },
       removeStep: function (index) {
-        this.task.stepsList.splice(index, index+1)
+        this.task.stepsList.splice(index, 1)
       }
     }
   }

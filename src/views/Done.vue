@@ -4,7 +4,7 @@
 
       <div class="tasks-container">
 
-        <div v-if="!tasks.length && !loading & loading !== null" class="empty">
+        <div v-if="!tasks.length && !loading && loading !== null" class="empty">
           <font-awesome-icon icon="tasks" size="8x"/>
           <h5 class="mt-3">Aquí se desplegarán tus metas completadas</h5>
         </div>

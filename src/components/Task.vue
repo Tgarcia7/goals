@@ -79,7 +79,7 @@
       <div :class="`${taskClasses} task-main-content ${editableArea ? 'clickable' : ''}`" 
         v-if="showCompletedMsg">
         <div class="col-12 my-auto">
-          <span v-html="this.messages[this.randomIdx]"></span>
+          <span class="success-msg">{{ this.messages[this.randomIdx] }}</span>
         </div>
       </div>
     </transition>
@@ -107,22 +107,24 @@
       stepsList: { type: Array }
     },
     data: function () {
-      return { 
+      return {
         showCompletedMsg: false,
+        moveToTimeout: null,
+        activateTimeout: null,
         messages: [
-          '<span class="success-msg">¡Felicidades!</span> 🎉 Meta alcanzada',
-          '¡Estás en llamas! 🔥🔥🔥', 
-          '<span class="success-msg">¡Impresionante!</span> Lo has logrado 🎯', 
-          '¡Hoy es tu día! 🌤 Bien hecho', 
-          '¡Buen trabajo! Sigue tus metas 🎖', 
-          '¡Genial! Objetivo alcanzado 🏆', 
-          '¡Sorprendente! Meta alcanzada 🏅', 
-          '¡Imparable! Meta cumplida 🚀', 
-          '<span class="success-msg">¡Felicidades!</span> 🎊 Lo has conseguido', 
-          '¡No te detengas! Lo estás haciendo bien 👏🏽', 
-          'Siempre parece imposible hasta que se hace 🎯', 
-          'Si lo puedes soñar, lo puedes lograr 💭', 
-          'Pequeñas acciones diarias traen grandes resultados 📈', 
+          '¡Felicidades! 🎉 Meta alcanzada',
+          '¡Estás en llamas! 🔥🔥🔥',
+          '¡Impresionante! Lo has logrado 🎯',
+          '¡Hoy es tu día! 🌤 Bien hecho',
+          '¡Buen trabajo! Sigue tus metas 🎖',
+          '¡Genial! Objetivo alcanzado 🏆',
+          '¡Sorprendente! Meta alcanzada 🏅',
+          '¡Imparable! Meta cumplida 🚀',
+          '¡Felicidades! 🎊 Lo has conseguido',
+          '¡No te detengas! Lo estás haciendo bien 👏🏽',
+          'Siempre parece imposible hasta que se hace 🎯',
+          'Si lo puedes soñar, lo puedes lograr 💭',
+          'Pequeñas acciones diarias traen grandes resultados 📈',
           'Todos pueden alcanzar el éxito pero pocos se atreven 💪🏼',
           'La pregunta no es quién va a dejarme, es quién va a detenerme 🏋🏾‍♂️',
           '¡Excelente! Un paso más cerca 🥾',
@@ -176,11 +178,8 @@
         this.$emit('upDownObjective', this.id, totalCompleted)
       },
       startTimer: function () {
-        let vue = this
-        let timer = setInterval(function () {
-          vue.barWidth += 10
-          if (vue.barWidth >= vue.barWidth) clearInterval(timer)
-        }, 100)
+        // Timer removed - barWidth is computed from objectiveDone/objectiveTotal
+        // The original implementation had a logic error and memory leak
       },
       edit: function () {
         this.$emit('viewTask')
@@ -224,29 +223,29 @@
           el.classList.remove(selector)
         })
       },
-      scrollListener: function () {
-        let vm = this
-        window.onscroll = function () {  
-          let elementRight = document.querySelector('.active-right')
-          let elementLeft = document.querySelector('.active-left')
+      handleScroll: function () {
+        const elementRight = document.querySelector('.active-right')
+        const elementLeft = document.querySelector('.active-left')
 
-          if (elementRight) vm.clearSwipe('active-right')
-          if (elementLeft) vm.clearSwipe('active-left')
-        }
+        if (elementRight) this.clearSwipe('active-right')
+        if (elementLeft) this.clearSwipe('active-left')
+      },
+      scrollListener: function () {
+        window.addEventListener('scroll', this.handleScroll)
       },
       moveTo: function () {
-        let to = this.progress === 'done' ? 'doing' : 'done',
-            vm = this
+        const to = this.progress === 'done' ? 'doing' : 'done'
 
-        if (to === 'done' && 
-          ( this.objectiveDone >= this.objectiveTotal || !this.objectiveTotal )) {
+        if (to === 'done' &&
+          (this.objectiveDone >= this.objectiveTotal || !this.objectiveTotal)) {
           this.showCompletedMsg = true
-          
-          setTimeout(() => { vm.$emit('moveTo', this.id, to) }, 3000)
+
+          this.moveToTimeout = setTimeout(() => {
+            this.$emit('moveTo', this.id, to)
+          }, 3000)
         } else {
           this.$emit('moveTo', this.id, to)
         }
-
       },
       archive: function () {
         this.$emit('archive', this.id)
@@ -259,13 +258,27 @@
       this.startTimer()
       this.initListeners()
 
-      this.randomIdx = this.getRandomInt(0, this.messages.length-1)
-    }, 
+      this.randomIdx = this.getRandomInt(0, this.messages.length - 1)
+    },
     updated: function () {
       // activate done btn
       if (this.objectiveDone === this.objectiveTotal && !this.showCompletedMsg) {
-        let task = document.querySelector(`.task_${this.id}`)
-        setTimeout(() => { task.classList.add('active-left') }, 500)
+        const task = document.querySelector(`.task_${this.id}`)
+        if (task) {
+          this.activateTimeout = setTimeout(() => {
+            if (task) task.classList.add('active-left')
+          }, 500)
+        }
+      }
+    },
+    beforeDestroy: function () {
+      // Clean up event listeners and timers to prevent memory leaks
+      window.removeEventListener('scroll', this.handleScroll)
+      if (this.moveToTimeout) {
+        clearTimeout(this.moveToTimeout)
+      }
+      if (this.activateTimeout) {
+        clearTimeout(this.activateTimeout)
       }
     }
   }

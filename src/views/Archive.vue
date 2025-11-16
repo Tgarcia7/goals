@@ -4,7 +4,7 @@
 
       <div class="tasks-container">
         <transition name="fade-empty">
-          <div v-if="!tasks.length && !loading & loading !== null" class="empty">
+          <div v-if="!tasks.length && !loading && loading !== null" class="empty">
             <font-awesome-icon icon="archive" size="8x"/>
             <h3 class="mt-3">¡Archivo vacío!</h3>
             <h5>No tienes metas archivadas</h5>

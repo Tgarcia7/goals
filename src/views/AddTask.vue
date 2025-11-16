@@ -244,7 +244,7 @@
         this.stepsList.push({'status': false, 'description': ''})
       },
       removeStep: function (index) {
-        this.stepsList.splice(index, index+1)
+        this.stepsList.splice(index, 1)
       },
       iconSelected: function (icon) {
         this.icon = icon

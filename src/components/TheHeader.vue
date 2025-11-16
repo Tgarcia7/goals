@@ -77,10 +77,12 @@
     },
     methods: {
       logout: async function () {
-        Api.logout()
-        let userResponse = await 
+        const userResponse = await
           this.$refs.swal.regular('question', 'Cerrar sesión', '¿Está seguro que desea salir de su cuenta?')
-        if (userResponse.value) this.$router.push({ name: 'login' })
+        if (userResponse.value) {
+          Api.logout()
+          this.$router.push({ name: 'login' })
+        }
       },
       changeLanguage: async function (newLanguage) {
         try {
