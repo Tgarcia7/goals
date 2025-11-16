@@ -318,58 +318,84 @@
   }
 
   .top-container {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom: 3px solid rgb(165, 165, 165);
+    border-top-left-radius: var(--radius-xl);
+    border-top-right-radius: var(--radius-xl);
+    border-bottom: 3px solid var(--gray-500);
+    background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
   }
 
   .data-container {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: var(--radius-xl);
+    border-bottom-right-radius: var(--radius-xl);
   }
 
   .image-container {
     border-radius: 50%;
     height: 100px;
-    border: 3px solid rgb(165, 165, 165);
+    border: 3px solid var(--gray-500);
     max-width: 100px;
     background-image: url("../assets/img/profile.png");
     background-size: cover;
+    transition: var(--transition-all);
+  }
+
+  .image-container:hover {
+    border-color: var(--green-500);
+    box-shadow: var(--shadow-glow-green);
   }
 
   .icon-edit-container {
     position: relative;
     bottom: -65px;
     right: -52px;
-    background-color: #1e242a;
+    background-color: var(--bg-base);
     border-radius: 50%;
     height: 30px;
     width: 30px;
-    border: 1px solid rgb(165, 165, 165);
-    color: white;
+    border: 1px solid var(--gray-500);
+    color: var(--text-primary);
     padding-top: 1px;
     overflow: hidden;
+    transition: var(--transition-all);
+  }
+
+  .icon-edit-container:hover {
+    background-color: var(--green-500);
+    border-color: var(--green-500);
+    transform: scale(1.1);
   }
 
   .icon-edit-container input {
-    opacity: 0; 
+    opacity: 0;
     position: absolute;
   }
 
   .main-btn {
-    border-radius: 30px;
+    border-radius: var(--radius-full);
     height: 2.5em;
-    font-weight: 600;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
+    font-weight: var(--font-semibold);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-all);
+  }
+
+  .main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow-green-sm);
   }
 
   #profile-form .input-login,
   #password-form .input-login {
-    border-radius: 30px;
+    border-radius: var(--radius-full);
     height: 2em;
-    font-weight: 600;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
-    color: black;
+    font-weight: var(--font-semibold);
+    box-shadow: var(--shadow-sm);
+    color: var(--text-inverse);
+    transition: var(--transition-all);
+  }
+
+  #profile-form .input-login:focus,
+  #password-form .input-login:focus {
+    box-shadow: var(--shadow-md), 0 0 0 3px var(--green-200);
   }
 
   .data-container .row {
@@ -377,27 +403,27 @@
   }
 
   .fade-enter-active {
-    transition: opacity .5s ease;
-    transition-delay: .5s;
+    transition: opacity var(--transition-slow);
+    transition-delay: 0.3s;
   }
-  
+
   .fade-leave-active {
-    transition: opacity .5s ease;
+    transition: opacity var(--transition-slow);
   }
-  
+
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
 
   .fade-form-enter-active {
-    transition: opacity .5s ease;
-    transition-delay: .5s;
+    transition: opacity var(--transition-slow);
+    transition-delay: 0.3s;
   }
-  
+
   .fade-form-leave-active {
-    transition: opacity .5s ease;
+    transition: opacity var(--transition-slow);
   }
-  
+
   .fade-form-enter, .fade-form-leave-to {
     opacity: 0;
   }
@@ -407,10 +433,10 @@
   }
 
   .btn {
-    border-radius: 2em;
+    border-radius: var(--radius-full);
   }
 
   .error-msg {
-    height: 24px; 
+    height: 24px;
   }
 </style>

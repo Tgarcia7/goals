@@ -117,12 +117,14 @@
 
 <style>
   .navbar-container ul {
-    background-color: #343a40;
+    background-color: var(--bg-overlay);
     border: 0;
+    border-radius: var(--radius-lg);
   }
 
   .navbar-container ul li a {
-    color: white;
+    color: var(--text-primary);
+    transition: var(--transition-colors);
   }
 
   .navbar-container .dropdown-toggle:active,
@@ -133,12 +135,12 @@
   }
 
   .navbar-container .menu-item span {
-    padding-left: 10px;
+    padding-left: var(--space-3);
   }
 
   .navbar-container ul li a:hover {
-    background-color: #414950;
-    color: white;
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
   }
 
   .navbar-container .dropdown-item a {
@@ -148,10 +150,21 @@
   .return-container {
     width: 40px;
     height: 40px;
-    padding: 10px;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-all);
+  }
+
+  .return-container:hover {
+    background-color: var(--bg-elevated);
   }
 
   .fa-chevron-left {
-    color: #9a9da0;
+    color: var(--gray-400);
+    transition: var(--transition-colors);
+  }
+
+  .return-container:hover .fa-chevron-left {
+    color: var(--green-400);
   }
 </style>

@@ -314,7 +314,7 @@
   }
 
   .steps-list-trash:hover {
-    color: #dc3545;
+    color: var(--color-danger);
   }
 
   /* CHECKBOX */
@@ -349,18 +349,20 @@
     left: 0;
     height: 26px;
     width: 26px;
-    background-color: #eee;
-    border-radius: 3px;
+    background-color: var(--gray-200);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-all);
   }
 
   /* On mouse-over, add a grey background color */
   .check-container:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color: var(--gray-300);
   }
 
-  /* When the checkbox is checked, add a blue background */
+  /* When the checkbox is checked, add a GREEN background */
   .check-container input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color: var(--green-500);
+    box-shadow: var(--shadow-glow-green-sm);
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */

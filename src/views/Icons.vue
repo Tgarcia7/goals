@@ -101,35 +101,39 @@
 
 <style scoped>
   .icon-box {
-    border: 1px solid white;
-    padding: 4px;
-    margin: 7px;
+    border: 1px solid var(--gray-600);
+    padding: var(--space-1);
+    margin: var(--space-2);
+    border-radius: var(--radius-md);
+    transition: var(--transition-all);
   }
 
   .icon-box:hover {
-    border: 1px solid #95c1f0;
-    color: #95c1f0;
+    border-color: var(--green-500);
+    color: var(--green-400);
+    box-shadow: var(--shadow-glow-green-sm);
+    transform: scale(1.1);
   }
 
   .searchResult {
-    color: #95c1f0;
+    color: var(--green-400);
   }
 
   .search-container {
     margin-left: 0 !important;
     height: 80px;
     padding-top: 17px;
-    border-bottom: 1px solid #575859;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .icons-container {
-    margin-top: 20px;
+    margin-top: var(--space-5);
   }
 
   .modal-body .icons-container {
     max-height: 250px;
     overflow-y: auto;
-  } 
+  }
 </style>
 
 <style>

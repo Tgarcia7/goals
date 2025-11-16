@@ -395,38 +395,62 @@
 </script>
 
 <style scoped>
-  #login-form .main-btn, 
-  #register-form .main-btn, 
+  #login-form .main-btn,
+  #register-form .main-btn,
   #forget-form .main-btn {
-    border-radius: 30px;
+    border-radius: var(--radius-full);
     height: 3em;
-    font-weight: 600;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
+    font-weight: var(--font-semibold);
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition-all);
+  }
+
+  #login-form .main-btn:hover,
+  #register-form .main-btn:hover,
+  #forget-form .main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl), var(--shadow-glow-green);
+  }
+
+  #login-form .main-btn:active,
+  #register-form .main-btn:active,
+  #forget-form .main-btn:active {
+    transform: translateY(0);
   }
 
   #login-form .input-login,
   #register-form .input-login,
   #forget-form .input-login {
-    border-radius: 30px;
+    border-radius: var(--radius-full);
     height: 3.1em;
-    font-weight: 600;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
-    color: black;
+    font-weight: var(--font-semibold);
+    box-shadow: var(--shadow-md);
+    color: var(--text-inverse);
     padding: 0.375rem 3.75rem;
+    border: 2px solid transparent;
+    transition: var(--transition-all);
+  }
+
+  #login-form .input-login:focus,
+  #register-form .input-login:focus,
+  #forget-form .input-login:focus {
+    border-color: var(--green-500);
+    box-shadow: var(--shadow-lg), 0 0 0 3px var(--green-200);
   }
 
   #register-form .input-login{
     height: 2.7em; /* Overwrites height only in register */
   }
 
-  #login-form .input-group-text, 
-  #register-form .input-group-text, 
+  #login-form .input-group-text,
+  #register-form .input-group-text,
   #forget-form .input-group-text {
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    background-color: white;
+    border-top-left-radius: var(--radius-full);
+    border-bottom-left-radius: var(--radius-full);
+    background-color: var(--gray-50);
     border-right: 0px;
     z-index: 10;
+    color: var(--gray-600);
   }
 
   #login-form .input-icon,
@@ -436,40 +460,51 @@
   }
 
   .fade-enter-active {
-    transition: opacity .5s ease;
-    transition-delay: .5s;
+    transition: opacity var(--transition-slow);
+    transition-delay: 0.3s;
   }
-  
+
   .fade-leave-active {
-    transition: opacity .5s ease;
+    transition: opacity var(--transition-slow);
   }
-  
+
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
 
   .logo {
-    transition: width 0.5s ease;
+    transition: all var(--transition-slow);
     width: 70%;
   }
 
   .logo.active {
-    transition: width 0.5s ease;
+    transition: all var(--transition-slow);
     width: 45%;
   }
 
   .logo.full-logo {
-    transition: all .5s ease;
+    transition: all var(--transition-slow);
     width: 100%;
-    -webkit-filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 1));
-    filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 1)); 
+    filter: drop-shadow(0px 4px 30px var(--green-300));
   }
 
   .fadeMsgs-enter-active {
-    transition: opacity .5s ease;
+    transition: opacity var(--transition-slow);
   }
-  
+
   .fadeMsgs-enter, .fadeMsgs-leave-to {
     opacity: 0;
+  }
+
+  /* Social auth icons */
+  .social-auth svg {
+    transition: var(--transition-all);
+    opacity: 0.8;
+  }
+
+  .social-auth svg:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    color: var(--green-400);
   }
 </style>

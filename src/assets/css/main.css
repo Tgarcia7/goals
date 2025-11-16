@@ -1,80 +1,496 @@
+/* ═══════════════════════════════════════════════════════════════
+   GOALS APP - Main Stylesheet
+   Modern Dark Theme with Green Accents
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Import CSS Variables */
+@import './variables.css';
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY - Custom Font
+   ═══════════════════════════════════════════════════════════════ */
 @font-face {
   font-family: "Quicksand";
   src: url("../fonts/Quicksand-VariableFont_wght.ttf");
+  font-display: swap;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
 }
 
 html body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 #app {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--text-secondary);
+  min-height: 100vh;
 }
 
-body, .login-container {
-  background-color: #1e242a !important;
-}
-
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════ */
 .clickable {
   cursor: pointer;
+  transition: var(--transition-colors);
 }
 
-.task-row-selected {
-  background-color: #2a3036;
+.clickable:hover {
+  opacity: 0.85;
 }
 
-.progress-bar {
-  top: 56px !important; /* Header size */
-  z-index: 1000 !important;
+.clickable:active {
+  transform: scale(0.98);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT CONTAINERS
+   ═══════════════════════════════════════════════════════════════ */
+body, .login-container {
+  background-color: var(--bg-base);
 }
 
 .tasks-container {
-  margin-bottom: 150px;
+  margin-bottom: var(--space-20);
 }
 
+.task-list-container {
+  padding: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TASK ROW STYLES
+   ═══════════════════════════════════════════════════════════════ */
+.task-row-selected,
 .task-selected {
-  background-color: #2a3036;
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-md);
 }
 
 .main-task-row {
-  padding-left: 6px;
+  padding-left: var(--space-2);
 }
 
-.taskslist-enter-active, .taskslist-leave-active {
-  transition: all .5s;
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS BAR - Top Loading Indicator
+   ═══════════════════════════════════════════════════════════════ */
+.progress-bar {
+  top: 56px;
+  z-index: var(--z-sticky);
 }
 
-.taskslist-enter, .taskslist-leave-to {
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS - Task List Transitions
+   ═══════════════════════════════════════════════════════════════ */
+.taskslist-enter-active,
+.taskslist-leave-active {
+  transition: var(--transition-slow);
+}
+
+.taskslist-enter,
+.taskslist-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
 }
 
 .flip-taskslist-move {
-  transition: transform .5s;
+  transition: transform var(--transition-slow);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   EMPTY & LOADING STATES
+   ═══════════════════════════════════════════════════════════════ */
+.empty {
+  margin-top: var(--space-16);
+  color: var(--text-muted);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.empty h3 {
+  color: var(--text-tertiary);
+  font-weight: var(--font-semibold);
+}
+
+.empty h5 {
+  color: var(--text-muted);
+  font-weight: var(--font-normal);
+}
+
+.loading-container {
+  margin-top: var(--space-20);
+  color: var(--green-500);
+}
+
+.loading-container .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 3px;
+  color: var(--green-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Form Controls
+   ═══════════════════════════════════════════════════════════════ */
 .b-form-spinbutton.form-control .btn {
-  color: white !important;
+  color: var(--text-primary);
 }
 
 .navbar-dark .navbar-toggler {
   border: none;
+  padding: var(--space-2);
 }
 
-.empty {
-  margin-top: 100px;
-  color: #4d545b;
+.navbar-dark .navbar-toggler:focus {
+  box-shadow: none;
+  outline: none;
 }
 
-.loading-container {
-  margin-top: 230px;
-  color: #6b856f;
+/* Modern form inputs */
+.form-control {
+  background-color: var(--bg-input);
+  border: var(--border-width) var(--border-style) var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  transition: var(--transition-all);
 }
 
-.task-list-container {
-  padding: 0px !important;
+.form-control:focus {
+  background-color: var(--bg-surface);
+  border-color: var(--green-500);
+  box-shadow: var(--focus-ring);
+  color: var(--text-primary);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+/* Dark variant form controls */
+.form-control.bg-dark {
+  background-color: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.form-control.bg-dark:focus {
+  background-color: var(--bg-elevated);
+  border-color: var(--green-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Buttons
+   ═══════════════════════════════════════════════════════════════ */
+.btn {
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-all);
+  border: none;
+}
+
+.btn:focus {
+  box-shadow: var(--focus-ring);
+}
+
+/* Success button - Primary action */
+.btn-success {
+  background-color: var(--green-500);
+  color: var(--text-primary);
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background-color: var(--green-600);
+  box-shadow: var(--shadow-glow-green-sm);
+}
+
+.btn-success:active {
+  background-color: var(--green-700);
+}
+
+/* Primary button - Now uses green instead of blue */
+.btn-primary {
+  background-color: var(--green-500);
+  border-color: var(--green-500);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--green-600);
+  border-color: var(--green-600);
+}
+
+.btn-primary:active {
+  background-color: var(--green-700);
+  border-color: var(--green-700);
+}
+
+/* Info button - Neutral gray instead of blue */
+.btn-info {
+  background-color: var(--gray-600);
+  border-color: var(--gray-600);
+  color: var(--text-primary);
+}
+
+.btn-info:hover,
+.btn-info:focus {
+  background-color: var(--gray-500);
+  border-color: var(--gray-500);
+  color: var(--text-primary);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: var(--gray-700);
+  border-color: var(--gray-700);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: var(--gray-600);
+  border-color: var(--gray-600);
+}
+
+/* Dark outline button */
+.btn-outline-dark {
+  border: var(--border-width-thick) var(--border-style) var(--gray-600);
+  color: var(--text-primary);
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--bg-elevated);
+  border-color: var(--gray-500);
+  color: var(--text-primary);
+}
+
+/* Light button */
+.btn-light {
+  background-color: var(--gray-200);
+  color: var(--text-inverse);
+}
+
+.btn-light:hover {
+  background-color: var(--gray-100);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Progress Bars
+   ═══════════════════════════════════════════════════════════════ */
+.progress {
+  background-color: var(--bg-overlay);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar.bg-success,
+.progress-bar.bg-primary {
+  background-color: var(--green-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Badges
+   ═══════════════════════════════════════════════════════════════ */
+.badge-dark {
+  background-color: var(--bg-overlay);
+  color: var(--text-primary);
+}
+
+.badge-success {
+  background-color: var(--green-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Backgrounds
+   ═══════════════════════════════════════════════════════════════ */
+.bg-dark {
+  background-color: var(--bg-surface);
+}
+
+.bg-success {
+  background-color: var(--green-500);
+}
+
+.bg-info {
+  background-color: var(--gray-500);
+}
+
+.bg-danger {
+  background-color: var(--color-danger);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Text Colors
+   ═══════════════════════════════════════════════════════════════ */
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-success {
+  color: var(--green-400);
+}
+
+.text-danger {
+  color: var(--color-danger-light);
+}
+
+.text-primary {
+  color: var(--green-500);
+}
+
+.text-info {
+  color: var(--gray-400);
+}
+
+.text-white {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Spinners
+   ═══════════════════════════════════════════════════════════════ */
+.spinner-border {
+  color: var(--green-500);
+}
+
+.spinner-border.text-primary {
+  color: var(--green-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Modals
+   ═══════════════════════════════════════════════════════════════ */
+.modal-content {
+  background-color: var(--bg-surface);
+  border: var(--border-width) var(--border-style) var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-2xl);
+}
+
+.modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+  border-top-color: var(--border-color);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOTSTRAP OVERRIDES - Dropdowns
+   ═══════════════════════════════════════════════════════════════ */
+.dropdown-menu {
+  background-color: var(--bg-overlay);
+  border: var(--border-width) var(--border-style) var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.dropdown-item {
+  color: var(--text-primary);
+  transition: var(--transition-colors);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Success message animation - Now uses green tones */
+@keyframes successGlow {
+  0%, 100% {
+    color: var(--green-400);
+    text-shadow: 0 0 10px var(--green-300);
+  }
+  50% {
+    color: var(--green-500);
+    text-shadow: 0 0 20px var(--green-400);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITY IMPROVEMENTS
+   ═══════════════════════════════════════════════════════════════ */
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Skip links for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  .tasks-container {
+    margin-bottom: var(--space-16);
+  }
+}
+
+@media (min-width: 992px) {
+  .tasks-container {
+    margin-bottom: var(--space-20);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PERFORMANCE - Will-change hints
+   ═══════════════════════════════════════════════════════════════ */
+.taskslist-enter-active,
+.taskslist-leave-active {
+  will-change: transform, opacity;
+}
+
+.btn:hover {
+  will-change: transform;
 }
